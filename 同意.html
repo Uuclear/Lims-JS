@@ -1,0 +1,346 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	报告审批
+</title><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" />
+    <script src="../../Common/JS/jquery.min.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/handle.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/bootstrap-table.min.css" />
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    
+    <style type="text/css">
+        .table label, p label { margin-bottom: 0; }
+        td > input.form-control { display: inline-block; width: auto; }
+        table.table > tbody > tr > td { border: 1px solid #ddd; padding: 3px 10px; }
+        .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td { line-height: 30px; }
+        th { text-align: center; vertical-align: middle; }
+        .col-xs-7 { width: 58.3333333333%; margin-top: 10px; }
+        .panel-heading { padding: 5px 15px; }
+        .panel-body { padding: 10px 15px; }
+        .table { margin-bottom: 0px; }
+        .bb-btn { position: fixed; top: 10px; left: 0px; padding: 10px; width: 35px; background: #286090; color: #fff; border-radius: 0 4px 4px 0; text-align: center; cursor: pointer; }
+        #bb { display: none; width: 90%; max-height: 470px; margin: 15px 0 0 5%; position: fixed; top: 10px; left: 0; overflow-y: auto; }
+        #bb.active { display: block; }
+        html, body { height: 100%; overflow-y: hidden; }
+        #form1 { height: 100%; }
+    </style>
+</head>
+<body>
+    <form method="post" action="./AuditTestingReport_new2.aspx?testingReportCode=HY188-250321&amp;testingReportId=2284997&amp;reportStatus=2&amp;isBack=0&amp;v=2&amp;sampleId=1487886" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJNDA5MTA3MzU2DxYCHhNWYWxpZGF0ZVJlcXVlc3RNb2RlAgFkZCIpRXd7w39mH//LV4yTQBa1GZgl3Cn3qjgZL7175GAO" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="A0A4E83A" />
+</div>
+        
+        <div class="bb-btn">查看审批记录</div>
+        <div id="bb">
+            <div class="panel panel-default" id="audiths">
+                <div class="panel-heading">授权审批情况</div>
+                <div class="panel-body" id="">
+                    <table id="tbApprocal" class="table">
+                        <tr style="font-weight: 800;">
+                            <td style="width: 120px;"></td>
+                            <td style="width: 200px;">部门名称</td>
+                            <td>领域</td>
+                            <td style="width: 120px;">复核人</td>
+                            <td style="width: 120px;">审核人</td>
+                            <td style="width: 120px;">批准人</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>主体部门</td>
+                            <td>机场组</td>
+                            <td>HBBL2-3</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        
+                    </table>
+                </div>
+                
+                <div class="panel-heading">操作详情信息</div>
+                <div class="panel-body" id="">
+                    <table id="tbAuditDetail" class="table">
+                        <tr style="font-weight: 800;">
+                            <td width="20%">操作人</td>
+                            <td width="20%">操作结果</td>
+                            <td width="20%">操作备注</td>
+                            <td width="20%">操作时间</td>
+                            <td width="20%">操作类别</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>胡跃进</td>
+                            <td>提交申请</td>
+                            <td></td>
+                            <td>2025/3/22 17:18:39</td>
+                            <td></td>
+                        </tr>
+                        
+                    </table>
+                </div>
+                
+                <div class="panel-heading" style="border-top: 1px solid #ddd;">
+                    审批信息
+                    <span style="color: red; margin-left: 35%;"></span>
+                </div>
+                <div class="panel-body" id="">
+                    <table class="table" id="approval">
+                        <tr>
+                            <td style="width: 25%;">
+                                <label for="proposal">审批意见</label>
+                            </td>
+                            <td style="padding: 0;">
+                                <select id="approverResult" style="width: 100%; height: 24px; border: 0; outline: none;">
+                                    <option value="-1">--请选择--</option>
+                                    <option value="同意">同意</option>
+                                    <option value="不同意">不同意</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="proposalAdd">审批意见说明</label>
+                            </td>
+                            <td colspan="3">
+                                <textarea style="width: 100%; outline: none; border: 0; height: 50px; resize: none;" id="remark" data-easyform="null;"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 10px; width: 100%">
+                    <input type="hidden" id="userId" value="3874" />
+                    <input type="hidden" id="userName" value="胡跃进" />
+                    
+                    <button style="padding: 1px 12px;" type="button" class="btn btn-primary" id="submit" onclick="AuditReport('2284997','2')">提 交</button>
+                    
+                    <button style="padding: 1px 12px;" type="button" class="btn btn-primary" id="btn_pageJump" onclick="pageJump('../Experiment/ExperimentResultTest.aspx?testingBasisId=44504&reportId=2284997&sampleid=1487886&testingItemId=91006&testingReportCode=HY188-250321','2')">格式修改</button>
+                    
+                </div>
+            </div>
+        </div>
+        <iframe src="" id="myiframe" width="100%" frameborder="0" height="100%"></iframe>
+        <!-- src="#"   谷歌会加载2次 -->
+    </form>
+
+    <script type="text/javascript">
+        $(".bb-btn").click(function () {
+            if ($("#bb").hasClass("active")) {
+                $("#bb").removeClass("active");
+            } else {
+                $("#bb").addClass("active");
+            }
+        });
+        function pageJump(url, status) {
+            url = url + "&status=" + status + "&v=1";
+            if (url.indexOf("ExperimentResult_jz4.aspx") > 0) {
+                var reportId = GetQueryString("testingReportId");
+                url = "/UI/Experiment/ExperimentResultTest_jz.aspx?reportId=" + reportId;
+            }
+            window.open(url);
+        }
+        $(function () {
+            var index = layer.load(1, {
+                shade: [0.3, '#000'] //0.3透明度的白色背景
+            });
+            CopyPDF();
+            if ($("#myiframe").attr("src") == "") {
+                layer.close(index);
+            }
+            var reportId = GetQueryString("testingReportId");
+            nextView(reportId);
+        })
+
+        function CopyPDF() {
+            var reportId = GetQueryString("testingReportId");
+            var v = GetQueryString("v");   //只显示无章的报告
+            var json = {
+                method: "CopyPDF", reportId: reportId, v: v
+            }
+            ajax2(json, replacePDF, "report/testingReportQuery.ashx", "json");
+        }
+        function replacePDF(data) {
+            layer.closeAll('loading');
+            var reportId = GetQueryString("testingReportId");
+            if (data.state == "1") {
+                $("#myiframe").attr("src", "../../Common/JS/pdfjs/web/viewer.html?file=/FileUpload/report/PDF/" + reportId + ".pdf?" + Math.random());
+            } else if (data.state == "3") { //调用数据库路径
+                if (data.url == "") {
+                    layer.alert("未找到盖章文件，正在重新盖章，请刷新重试！", { icon: 5 });
+                } else
+                    $("#myiframe").attr("src", data.url + "?" + Math.random());
+            } else {
+                layer.alert(data.msg);
+                var json = {
+                    method: "PDFLoadWait", testingReportId: reportId  //只显示/生成无章PDF
+                }
+                if (data.state != "0") {
+                    ajax2(json, function (data) {
+                        layer.closeAll('loading');
+                        if (data.state == 1) {
+                            window.location.reload();
+                        } else {
+                            layer.closeAll("loading");
+                            layer.alert("内容过多，仍需等待，请10秒后再次刷新");
+                        }
+                    }, "Experiment/printConfigure.ashx", "json");
+                }
+            }
+        }
+
+        function AuditReport(reportId, status) {
+            $("#submit").attr({ "disabled": "disabled" });
+            var remark = $("#remark").val();
+            var model = {
+                testingReportId: reportId,
+                auditUserId: $("#userId").val(),
+                auditUserName: $("#userName").val(),
+                auditResult: $("#approverResult").val(),
+                auditRemark: remark,
+                auditStatus: status
+            }
+            var result = $("#approverResult").val();
+            if (result == "-1") {
+                layer.msg("请选择审核意见");
+                $("#submit").removeAttr("disabled");
+                return;
+            }
+            if (result == "不同意" && remark.trim() == "") {
+                layer.msg("请填写审核意见");
+                $("#submit").removeAttr("disabled");
+                return;
+            }
+            var json = {
+                method: "AuditReport_new", model: JSON.stringify(model)
+            }
+            try {
+                ajax2(json, updateSucess2, "report/testingReportQuery.ashx", "json");
+            }
+            catch (e) {
+                layer.msg(e.message, { time: 2000 });
+            }
+        }
+        function updateSucess2(data) {
+            layer.closeAll('loading');
+            if (data.state == "1") {
+                if (data.nextName != null && data.nextName.length > 0) {
+                    var nextName = "";
+                    var dt = data.nextName;
+                    for (var i = 0; i < dt.length; i++) {
+                        if (i < dt.length - 1)
+                            nextName += dt[i].Name + "、";
+                        else
+                            nextName += dt[i].Name
+                    }
+                    layer.alert(data.msg + "<br>" + "下一步审批人有：<br>【" + nextName + "】", function () {
+                        var layerindex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(layerindex);
+                    });
+                } else {
+                    layer.msg(data.msg);
+                    setTimeout(function () {
+                        var layerindex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(layerindex);
+                    }, "2000");
+                }
+                //window.parent.closeActiveTab();
+            } else if (data.state == "0") {
+                layer.alert(data.msg, { icon: 5 });
+            } else {
+                layer.alert(data.msg + "<br>5秒后自动关闭", { icon: 6, btnAlign: 'c', time: 5000 });
+                setTimeout(function () {
+                    var layerindex = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(layerindex);
+                }, "5000");
+            }
+        }
+
+        function BackTask(reportId) {
+            layer.confirm('确定要退回任务，并删除报告？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                var json = {
+                    method: "BackTask", reportId: reportId
+                }
+                var oa = updateSucess;
+                try {
+                    ajax2(json, oa, "report/testingReportQuery.ashx", "json");
+                }
+                catch (e) {
+
+                    layer.msg(e.message, { time: 2000 });
+                }
+            }, function () {
+
+            });
+        }
+
+        function updateSucess(data) {
+            layer.closeAll('loading');
+            if (data.state == "1") {
+                $("#back").attr({ "disabled": "disabled" });
+                $("#submit2").attr({ "disabled": "disabled" });
+                layer.msg(data.msg + "<br/>页面即将关闭");
+                setTimeout(function () { parent.closeActiveTab(); }, 1500);
+            }
+            else
+                layer.msg(data.msg);
+        }
+
+        function EditReportData(sampleId, sampleNo, reportId, taskId, deptCode) {
+            var src = "../Experiment/ExperimentResult.aspx?sampleId=" + sampleId + "&deptCode=" + deptCode + "&reportId=" + reportId;
+            if (sampleNo != "" && sampleNo.length == 14) {
+                window.parent.xiu1(src, deptCode + "：" + sampleNo);
+            } else if (sampleNo.length == 13) {   //13位长度表示校准
+                src = "../Experiment/ExperimentResult_jz.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&reportId=" + reportId;
+                window.parent.xiu1(src, "记录：" + sampleNo);
+            } else {
+                layer.alert("未找到相关样品数据");
+            }
+        }
+        function nextView(reportId) {
+            var jsonData = { method: "NextView", testingReportId: reportId };
+            ajax2(jsonData, nextViewData, "report/testingReportQuery.ashx", "json");
+        }
+
+        function nextViewData(data) {
+            layer.closeAll("loading");
+            if (data.state == 1) {
+                var nextName = "";
+                var dt = data.nextName;
+                for (var i = 0; i < dt.length; i++) {
+                    if (i < dt.length - 1)
+                        nextName += dt[i].Name + "、";
+                    else
+                        nextName += dt[i].Name
+                }
+                if (nextName != "") {
+                    var html = '<tr>';
+                    html += '    <td>(' + nextName + ')</td>';
+                    html += '    <td>(当前待办)</td>';
+                    html += '    <td></td>';
+                    html += '    <td></td>';
+                    html += '    <td></td>';
+                    html += '</tr>';
+                    $("#tbAuditDetail").append(html);
+                }
+            } else {
+                layer.alert(data.msg, { icon: 2 });
+            }
+        }
+    </script>
+</body>
+</html>

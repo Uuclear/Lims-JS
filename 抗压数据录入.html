@@ -1,0 +1,809 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	数据录入向导
+</title><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" /><link href="../../Common/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-table label, p label { margin-bottom: 0; height: 34px; line-height: 34px; }
+        td > input.form-control { display: inline-block; width: auto; }
+        td > input.form-control.col-lg-12 { width: 100%; }
+        .layui-table > tbody > tr > td, .layui-table > tbody > tr > th { border-color: #666; }
+        .div0 { display: none; }
+
+        .div1 { display: block; }
+        .form-group { margin-bottom: 0px !important; }
+        .layui-table td, .layui-table th { padding: 0 !important; margin: 0 !important; line-height: 1.5 !important; }
+        .layui-table > tbody > tr > td { padding: 0px 0px !important; text-align: center; }
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 { padding: 0px !important; min-height: 20px !important; }
+        input { border: 0px !important; outline: none !important; }
+        .form-control { border-radius: 0px !important; height: 34px !important; }
+        select.form-control { padding: 5px 5px; }
+        td { border: 1px solid #ccc; }
+        td input[type=checkbox] { vertical-align: top; }
+        .border_red { border: 1px solid blue !important; }
+    </style>
+</head>
+<body>
+    <form method="post" action="./ExperimentResult.aspx?sampleId=1487876&amp;taskId=1611599&amp;deptCode=S12A&amp;taskStatusCode=2&amp;RWindex=1" id="form1" style="width: 96%; margin-left: 2%;">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTM0MjU1MDMwNg8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgICAQ9kFgoCBA8WBB4HY2hlY2tlZGQeB1Zpc2libGVoZAIFDxYCHwJoZAIHDxYCHglpbm5lcmh0bWwFJDE1MG1tw5cxNTBtbcOXMTUwbW0s5qCH5YeG5YW75oqkLEMyMGQCHA8WAh8DZWQCHQ8WAh8DBWxHQi9UIDUwMDgxLTIwMTkg44CK5re35Yed5Zyf54mp55CG5Yqb5a2m5oCn6IO96K+V6aqM5pa55rOV5qCH5YeG44CLKO+8iOays+a7qOWMl+i3r++8iSnvvJoo5oqX5Y6L5by65bqmKTxicj5kGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBQhvcmRlck5vMRLh4RB8zYZKrT6s0/4R6LbOG8Q8jOs1l5IySOxWkUAr" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="80DB33DB" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdABugVwHj9yyhgGrvkjrNxvaANK0WcYDUnZxCNO4wch/0bgPwaXxXFilJEqxymPCMKHIED1vQoVAaoa+41DK24ktGe+wZNHU535U+vao8WSclkIW9B55TSb+1Jq7loYOLpLe8AO8JnJbzNKt/UiQp4paLmb6I0H3YMP9+ZioIs+SKrhhVJ4zmdmJ/OQ1MKsxEYSAUhpxa+R1syQMVt+Iz0mJAwO+gsHbDTxSZR/wT6bNTTg1alWMxVWIQimfPnQ+3X+T21d76nbQOCQxsbVv4GTpjEgplv7zXPAsq//5s5wsbHXN+WP4bASgo7AEiu4uk7UIUmwqb5fv/IdnVJj4aTzBJaDzGlq3hBAKuO1uOpdFlmbdF2u4FmnEq9DEvvaLQ5WcTIKCJhJc1g8uKGCN/2zHIZPOckUAH6eFAyw5rpGFq96mBc+Q/UFNIoZL9blOFkdxH67kD+rnhuJFB954jdG+DkqcKfWRPgPR8Lht6s9WbSXZOODGvdZfxmFrxomkN/QS19ekpFLY+OGjvCNuSPozsDTjjTdbgo0e5QaIw6nkGHaBqaHKsO2pEVBpt+4r4Lx3LmH6s+c4iQLNoQFQaCS3oU1jBcRUfMEnp4F8h1dNl5g==" />
+</div>
+        <h3 class="text-center">数据录入向导</h3>
+        <table class="layui-table">
+            <tr>
+                <td style="width: 90px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">样品名称</label>
+                </td>
+                <td class="col-xs-3">
+                    <input name="txt_sampleName" type="text" id="txt_sampleName" style="width: 100%; padding: 6px 12px!important;" maxlength="100" class="col-xs-12 form-control" value="混凝土抗压试块" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="exampleInputName2" class="col-xs-12 text-center">样品编号</label>
+                    </div>
+                </td>
+                <td style="width: 135px;">
+                    <input name="txt_sampleNo" type="text" id="txt_sampleNo" class="col-xs-12 form-control" style="width: 100%; padding: 6px 12px!important;" value="HY18-250156-01" />
+                </td>
+                <td style="width: 90px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="clientAddress" class=" text-center">报告类型</label>
+                    </div>
+                </td>
+                <td style="width: 170px; position: relative;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12 text-left" style="background: #eee;">
+                            <input value=" " name="a" type="radio" id="orderNo1" class="col-xs-3" style="margin-top: 8px;" checked="checked" /><span id="orderNo_11" class="col-xs-3" style="line-height: 34px;">中文</span>
+                            
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group col-xs-12">
+                        <label for="samplingDate" class="text-center">到样日期</label>
+                    </div>
+                </td>
+                <td class="cl-xs-3">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <div class="input-group date form_date col-xs-12" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input name="samplingDate" type="text" id="samplingDate" class="col-xs-12 form-control" data-date-format="yyyy-mm-dd" style="padding: 6px 12px!important; width: 100%!important; height: 34px !important; box-sizing: border-box; font-size: 12px;" value="2025-02-22" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">型号规格</label>
+                </td>
+                <td style="width: 140px;">
+                    <label id="txt_specification" style="width: 100%; padding: 0px 12px!important; cursor: not-allowed; background-color: #eee; border: 0px; font-weight: 400; text-align: left;" class="col-xs-12 form-control " value="">150mm×150mm×150mm,标准养护,C20</label>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="sampleLevel" class="text-center">等级</label>
+                    </div>
+                </td>
+                <td style="width: 135px;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="sampleLevel" type="text" id="sampleLevel" class="col-xs-12 form-control" style="width: 100%; padding: 6px 12px!important;" />
+                        </div>
+                    </div>
+                </td>
+
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">商标</label>
+                </td>
+                <td style="width: 170px;">
+                    <div class="col-xs-12">
+                        <input name="txt_trademark" type="text" id="txt_trademark" style="width: 100%; padding: 6px 12px!important;" class="col-xs-12 form-control" />
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="batchNo" class="text-center">批号</label>
+                    </div>
+                </td>
+                <td style="width: 140px;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="txt_batchNo" type="text" id="txt_batchNo" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">生产单位</label>
+                </td>
+                <td class="col-xs-3">
+                    <input name="txt_productiveUnit" type="text" id="txt_productiveUnit" style="width: 100%; padding: 6px 12px!important;" class="col-xs-12 form-control" value="上海航深混凝土有限公司" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">生产日期</label>
+                </td>
+                <td style="width: 135px;">
+                    <input name="txt_productiveDate" type="text" id="txt_productiveDate" style="width: 100%; padding: 6px 12px!important;" class="col-xs-12 form-control" value="2025-02-22" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">样品状态</label>
+                </td>
+                <td colspan="3">
+                    <input name="txt_sampleStatusCode" type="text" id="txt_sampleStatusCode" maxlength="250" style="width: 100% !important; padding: 6px 12px!important;" placeholder="请输入" class="col-xs-12 form-control border_red" value="立方体试件" />
+                </td>
+            </tr>
+            <tr id="ty_no">
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">样品数量</label>
+                </td>
+                <td class="col-xs-3">
+                    <input name="txt_sampleQuantity" type="text" id="txt_sampleQuantity" style="width: 100% !important; padding: 6px 12px!important;" class="col-xs-12 form-control" value="3块" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">代表数量</label>
+                </td>
+                <td style="width: 135px;">
+                    <input name="txt_representQuantity" type="text" id="txt_representQuantity" style="width: 100% !important; padding: 6px 12px!important;" class="col-xs-12 form-control" value="95m&lt;sup>3&lt;/sup>" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label class=" text-center">样品外观</label>
+                    </div>
+                </td>
+                <td style="width: 170px;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="txt_sampleStatusName" type="text" id="txt_sampleStatusName" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="立方体试件" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="batchNo" class="text-center">实验日期</label>
+                    </div>
+                </td>
+                <td style="width: 140px;">
+                    <input name="formatDateAgePeriod" type="text" id="formatDateAgePeriod" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="2025-03-22" />
+                </td>
+            </tr>
+            <tr id="ty_yes">
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">样品数量</label>
+                </td>
+                <td class="col-xs-3">
+                    <input name="txt_sampleQuantity2" type="text" id="txt_sampleQuantity2" style="width: 100% !important; padding: 6px 12px!important;" class="col-xs-12 form-control" value="3块" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">代表数量</label>
+                </td>
+                <td style="width: 135px;">
+                    <input name="txt_representQuantity2" type="text" id="txt_representQuantity2" style="width: 100% !important; padding: 6px 12px!important;" class="col-xs-12 form-control" value="95m&lt;sup>3&lt;/sup>" />
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label class=" text-center">样品外观</label>
+                    </div>
+                </td>
+                <td style="width: 170px;" colspan="3">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="txt_sampleStatusName2" type="text" id="txt_sampleStatusName2" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="立方体试件" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr id="pd_no">
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="sampleRemark" class="text-center">试块记号</label>
+                    </div>
+                </td>
+                <td class="col-xs-3">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="sampleRemark" type="text" id="sampleRemark" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="电缆井DJ2-11垫层保护层浇筑；电缆井J3-20至J3-23之间电缆管道包封浇筑" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="maintainCondition" class="text-center">养护条件</label>
+                    </div>
+                </td>
+                <td style="width: 135px;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="maintainCondition" type="text" id="maintainCondition" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="标准养护" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="agePeriod" class="text-center">龄期</label>
+                    </div>
+                </td>
+                <td style="width: 170px;">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="agePeriod" type="text" id="agePeriod" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="28" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="formatDate" class="text-center">成型日期</label>
+                    </div>
+                </td>
+                <td style="width: 140px;">
+                    <div class="form-group  col-xs-12">
+
+                        <div class="col-xs-12">
+                            <input name="formatDate" type="text" id="formatDate" style="width: 100%; padding: 6px 12px!important;" class="col-xs-12 form-control" readonly="" value="2025-02-22" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr id="pd_yes">
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="sampleRemark" class="text-center">取样部位</label>
+
+                    </div>
+                </td>
+                <td class="col-xs-3">
+                    <div class="form-group  col-xs-12">
+                        <div class="col-xs-12">
+                            <input name="sampleRemark_1" type="text" id="sampleRemark_1" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="电缆井DJ2-11垫层保护层浇筑；电缆井J3-20至J3-23之间电缆管道包封浇筑" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="maintainCondition" class="text-center">固化时间</label>
+
+                    </div>
+                </td>
+                <td style="width: 135px;" colspan="3">
+                    <div class="form-group  col-xs-12">
+
+                        <div class="col-xs-12">
+                            <input name="maintainCondition_1" type="text" id="maintainCondition_1" class="col-xs-12 form-control" style="width: 100% !important; padding: 6px 12px!important;" value="标准养护" />
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 90px; padding: 0px 15px;">
+                    <div class="form-group  col-xs-12">
+                        <label for="formatDate" class="text-center">取样日期</label>
+                    </div>
+                </td>
+                <td style="width: 140px;">
+                    <div class="form-group  col-xs-12">
+
+                        <div class="col-xs-12">
+                            <input name="formatDate_1" type="text" id="formatDate_1" style="width: 100%; padding: 6px 12px!important;" class="col-xs-12 form-control" readonly="" value="2025-02-22" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 90px; height: 40px; padding: 0px 15px; line-height: 20px !important;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">委托备注</label>
+                </td>
+                <td colspan="7" style="text-align: left;">
+                    <span id="lbl_remarks"></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 90px; height: 70px;">
+                    <label for="exampleInputName2" class="col-xs-12 text-center">
+                        检测依据及项目</label>
+                </td>
+                <td colspan="7" style="text-align: left;">
+                    <span id="lbl_testingBasisName">GB/T 50081-2019 《混凝土物理力学性能试验方法标准》(（河滨北路）)：(抗压强度)<br></span>
+                </td>
+            </tr>
+        </table>
+        <input name="hd_ispd" type="hidden" id="hd_ispd" value="1" />
+        <div class='layui-collapse'>  <div class='layui-colla-item'>     <h2 class='layui-colla-title'>S12A-机场组（主）</h2>     <div class='layui-colla-content layui-show'>         <table class='layui-table'><tr><td colspan='10'>GB/T 50081-2019  《混凝土物理力学性能试验方法标准》（河滨北路） ID：1023273</td></tr> <tr>  <th style='width: 40px; text-align: center;'>序号</th>            <th colspan='3' style='text-align: center;width: 25%;'>检测项目</th>         <th style='text-align: center;'>标准值</th>         <th colspan='2' style='text-align: center;width: 30%'>检测结果</th>         <th style='text-align: center;width:140px'>检测方法</th>         <th style='width: 80px; text-align: center;'>单项判定</th>       <th style='width: 100px; text-align: center;'>项目属性</th>      </tr>  <tr><td data-first2='0' style='text-align: center;vertical-align: middle;'>1 </td><td data-first='0' colspan='3' style='vertical-align: middle;'>抗压强度，MPa </td><td data-value='174872' rowspan='5' style='vertical-align: middle;'>---<input type='hidden' data-value='174872a' placeholder='关系' value='' /><input type='hidden' data-value='174872b' placeholder='标准值' value='---' /> <input type='hidden' data-value='174872c' 等级='C20' 规格='150mm×150mm×150mm' 实验条件一='不需提高等级' 种类='标准养护'  placeholder='标准值描述' value='' /></td><td style='vertical-align: middle;'>抗压荷载(kN) </td><td style='vertical-align: middle;' class=' ' data-zu='0' data-id='0-174872' data-pd='0' colspan='1'><table border='0' style='width:100%'><tr> <td style='width:33.00%;'> <input type='text' data-id='0-174872' value=''  maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /> <input type='hidden' data-id='0-174872a' placeholder='检测项目ID' value='91006' /> <input type='hidden' data-id='0-174872b' placeholder='参数值明细ID' value='174872' /> <input type='hidden' data-id='0-174872c' placeholder='分组ID' value='565994' /><input type='hidden' class='isExistTestingReport' placeholder='是否生成过报告' value='0' /></td> <td style='width:33.00%;'> <input type='text' data-id='0-174872' value=''  maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /></td> <td style='width:33.00%;'> <input type='text' data-id='0-174872' value=''  maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /></td></tr></table> </td><td data-first3='0' itemId='91006' style='vertical-align: middle;'><input type='checkbox' name='chb_method' value='44504' data-code='GB/T 50081-2019' checked='checked' disabled='disabled' /><span > GB/T 50081-2019</span></td><td rowspan='5' style='vertical-align: middle;' data-code1='174872'><select class='form-control resultJudge border_red'><option  value=''> 请选择 </option><option  value='合格' >合格</option><option  value='不合格' >不合格</option><option  value='符合' >符合</option><option  value='不符合' >不符合</option><option  value='需复验' >需复验</option><option  value='--' >--</option></select></td><td rowspan='5' style='vertical-align: middle;' data-code2='174872'><select class='form-control itemAttribute border_red'><option  value='0' selected='selected'>系统判定</option><option  value='2' >进行中</option><option  value='3' >实测数据</option></select></td></tr><tr><td style='vertical-align: middle;'>抗压强度(MPa) </td><td style='vertical-align: middle;' class=' ' data-zu='0' data-id='1-174872' data-pd='0' colspan='1'><table border='0' style='width:100%'><tr> <td style='width:33.00%;'> <input type='text' data-id='1-174872' value='' formulaName='formula_hnt1' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /> <input type='hidden' data-id='1-174872a' placeholder='检测项目ID' value='91006' /> <input type='hidden' data-id='1-174872b' placeholder='参数值明细ID' value='174872' /> <input type='hidden' data-id='1-174872c' placeholder='分组ID' value='565995' /><input type='hidden' class='isExistTestingReport' placeholder='是否生成过报告' value='0' /></td> <td style='width:33.00%;'> <input type='text' data-id='1-174872' value='' formulaName='formula_hnt1' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /></td> <td style='width:33.00%;'> <input type='text' data-id='1-174872' value='' formulaName='formula_hnt1' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /></td></tr></table> </td></tr><tr><td style='vertical-align: middle;'>强度代表值 </td><td style='vertical-align: middle;' class=' ' data-zu='0' data-id='2-174872' data-pd='0' colspan='1'><table border='0' style='width:100%'><tr> <td style='width:100.00%;'> <input type='text' data-id='2-174872' value='' formulaName='formula_hnt2' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /> <input type='hidden' data-id='2-174872a' placeholder='检测项目ID' value='91006' /> <input type='hidden' data-id='2-174872b' placeholder='参数值明细ID' value='174872' /> <input type='hidden' data-id='2-174872c' placeholder='分组ID' value='565996' /><input type='hidden' class='isExistTestingReport' placeholder='是否生成过报告' value='0' /></td></tr></table> </td></tr><tr><td style='vertical-align: middle;'>折合标准试块强度(MPa) </td><td style='vertical-align: middle;' class=' ' data-zu='0' data-id='3-174872' data-pd='0' colspan='1'><table border='0' style='width:100%'><tr> <td style='width:100.00%;'> <input type='text' data-id='3-174872' value='' formulaName='formula_hnt5' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /> <input type='hidden' data-id='3-174872a' placeholder='检测项目ID' value='91006' /> <input type='hidden' data-id='3-174872b' placeholder='参数值明细ID' value='174872' /> <input type='hidden' data-id='3-174872c' placeholder='分组ID' value='565997' /><input type='hidden' class='isExistTestingReport' placeholder='是否生成过报告' value='0' /></td></tr></table> </td></tr><tr><td style='vertical-align: middle;'>达到设计强度(%) </td><td style='vertical-align: middle;' class=' ' data-zu='0' data-id='4-174872' data-pd='0' colspan='1'><table border='0' style='width:100%'><tr> <td style='width:100.00%;'> <input type='text' data-id='4-174872' value='' formulaName='formula_hnt3' disabled='disabled' maxlength='400' placeholder='结果值' class='form-control col-lg-12 border_red' /> <input type='hidden' data-id='4-174872a' placeholder='检测项目ID' value='91006' /> <input type='hidden' data-id='4-174872b' placeholder='参数值明细ID' value='174872' /> <input type='hidden' data-id='4-174872c' placeholder='分组ID' value='565998' /><input type='hidden' class='isExistTestingReport' placeholder='是否生成过报告' value='0' /></td></tr></table> </td></tr>           </table>       </div>   </div></div>
+        <input name="trlen_hid" type="hidden" id="trlen_hid" value="[91006]" />
+        <div id="divbut" class="text-center" style="margin: 15px 0;">
+            <input type="button" value="样品修改" class="btn btn-primary" onclick="eidtsamples()" />
+            <input type="button" value="保存" class="btn btn-primary" id="btn_save" />
+            <input type="button" value="生成报告" class="btn btn-primary" id="btn_save2" />
+            <input type="button" value="非标报告" class="btn btn-warning" id="btn_jump" />
+        </div>
+    </form>
+    <script src="../../Common/JS/jquery.min.js"></script>
+    <script src="../../Common/JS/bootstrap.js"></script>
+    <script src="../../Common/layui/layui.all.js"></script>
+    <script src="../../Common/JS/handle.js"></script>
+    <script src="../JS/Experiment/formula.js?v=3.5"></script>
+    <script type="text/javascript"> 
+        layui.use(['dropdown', 'util', 'layer'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+
+        });
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return "";
+        }
+        var saveType = "0";
+        var testingItemIds = "0";
+        $(function () {
+            //$(".glyphicon-remove").on("click", function () {
+            //    $(this).parents("div").find("input").val("");
+            //});
+            layer.closeAll('loading');
+            var ispd = $("#hd_ispd").val();
+            $("#pd_yes").hide();
+            $("#pd_no").hide();
+            $("#ty_yes").hide();
+            $("#ty_no").hide();
+            if (ispd == "1") {
+                $("#ty_no").show();
+                $("#pd_no").show();
+            } else if (ispd == "2") {
+                $("#ty_yes").show();
+                $("#pd_yes").show();
+            } else {
+                $("#ty_yes").show();
+            }
+            $("table.layui-table:eq(0) input").attr("disabled", "disabled");
+            $("#txt_sampleStatusCode").removeAttr("disabled");
+            $("#btn_save").on("click", function () {
+                saveType = "0";
+                Save3();
+            })
+            $("#btn_save2").on("click", function () {
+                saveType = "1";
+                Save3();
+            })
+            $("#btn_jump").on("click", function () {
+                var taskId = "1611599";
+                var testingOrderNos = "HY18-250156";
+                var testingOrderId = "993477";
+                var sampleNos = "HY18-250156-01";
+                var sampleIds = "1487876";
+                var src = "?testingOrderNo=" + testingOrderNos + "&testingOrderId=" + testingOrderId + "&sampleNo=" + sampleNos + "&sampleId=" + sampleIds + "&taskId=" + taskId;
+                window.location.href = "../Task/NonStandardReport.aspx" + src;
+            })
+            $('.layui-collapse table').each(function () {
+                var num = $(this).find("td[data-first]").length; 
+                for (var i = 0; i < num; i++) {
+                    let value = $(this).find("td[data-first]").eq(i).attr("data-first");
+                    let index = $(this).find("td[data-zu='" + value + "']").length;
+                    $(this).find("td[data-first]").eq(i).attr("rowspan", index);
+                    $(this).find("td[data-first2]").eq(i).attr("rowspan", index);
+                    $(this).find("td[data-first3]").eq(i).attr("rowspan", index);
+                }
+                num = $(this).find("td[data-second]").length;
+                for (var i = 0; i < num; i++) {
+                    let value = $(this).find("td[data-second]").eq(i).attr("data-second");
+                    let index = $(this).find("td[data-zus='" + value + "']").length;
+                    $(this).find("td[data-second]").eq(i).attr("rowspan", index);
+                }
+            })
+            $(".NoMake input").attr("disabled", "disabled").removeClass("border_red");
+            $(".NoSave").parent().find("input,select").attr("disabled", "disabled").removeClass("border_red");
+            $(".NoSave").each(function () {   //二级中，只要有一个出过报告，则该一级的检测方法就禁用  2020-10-22
+                var value = $(this).data("zu");
+                $("table td[data-first3='" + value + "']").find("input").attr("disabled", "disabled");
+            });
+            $("input:disabled").removeClass("border_red");
+            getStatus();
+            //var taskStatusCode = GetQueryString("taskStatusCode");
+            //if (taskStatusCode == '5' || taskStatusCode == '3' || taskStatusCode == '0' || taskStatusCode == '9') {   //要查数据库实时状态
+            //    $("#divbut").hide();
+            //} 
+            $("input[type='checkbox'][name='chb_method']").change(function () {
+                var num = $(this).parents("td").find("input:checked").length;
+                if (num == 0) {
+                    layer.alert("至少选择一个方法标准", { icon: 5 });
+                    $(this).prop("checked", true);
+                }
+            })
+        })
+        function Save3() {
+            var trlen = $("#trlen_hid").val();//记录未填写试验记录的项目
+            $("#btn_save").attr("disabled", "disabled");
+            $("#btn_save2").attr("disabled", "disabled");
+            var sampleid = GetQueryString("sampleId");
+            var reportId = GetQueryString("reportId");
+            var sampleNo = $("#txt_sampleNo").val();   //样品编号
+            var sampleStatusCode = $("#txt_sampleStatusCode").val();  //样品状态
+            var resultJudge = "";
+            var itemAttribute = "";
+            var isExistTestingReport = "0";
+            var list = [];
+            var isRight = true;
+            var isEmpty = false;
+            var RWindex = GetQueryString("RWindex");//从任务查询跳转的填写实验记录。当属性只有进行中的以及此项不做的。那么给出提示 不保存
+            var ViewRWindex = 0;//用来此页面的判断
+            var nums = 0;//选了此项不做的个数
+            $("td[data-id]").each(function () {
+                isEmpty = false;
+                var value = $(this).attr("data-id");
+                var code = value.split('-')[1];
+                var parameterDetailId = $(this).find("input[type='hidden'][data-id='" + value + "b']").val();
+                var testingItemId = $(this).find("input[type='hidden'][data-id='" + value + "a']").val();
+                var parameterGroupId = $(this).find("input[type='hidden'][data-id='" + value + "c']").val();
+                var result = "";
+                formulaValue($(this).parent());
+                $(this).find("input[type='text']").each(function () {
+                    if ($(this).val() == "") {
+                        //layer.alert("请填写结果值");
+                        //isRight = false;
+                        isEmpty = true;
+                    }
+                    result += $(this).val().replace(/,/ig, '，') + ",";
+                });   //一个人不可能填写完全部的，所以可以为空
+                var isCheck = true, value1 = "";
+                if ($(this).parent().find("select.resultJudge").length > 0)
+                    value1 = $(this).parent().find("select.resultJudge").val();
+                else
+                    isCheck = false;
+                if (value1 != "")
+                    isCheck = false;
+                if (isCheck)
+                    checkValue($(this).parent());
+                resultJudge = $(this).parents("table").find("td[data-code1='" + code + "'] select.resultJudge").val();
+                itemAttribute = $(this).parents("table").find("td[data-code2='" + code + "'] select.itemAttribute").val();
+                isExistTestingReport = $(this).parent().find("input.isExistTestingReport").val();
+                if (saveType == "1" && isExistTestingReport != 1)
+                    isExistTestingReport = 2;
+                if (itemAttribute == "2") {  //如果是进行中，单项判定就变为“--”
+                    if (!isEmpty) {    //如果填写了结果值，就把进行中强制变为系统判定
+                        itemAttribute = "0";
+                    } else {
+                        resultJudge = "--";
+                    }
+                }
+                if (isEmpty && itemAttribute == "0") { //如果有未填写的并且为系统断定，则强制变成进行中
+                    itemAttribute = "2"
+                }
+                //用来判断该项目是否真的没全部是进行中和此项不做
+                if (itemAttribute == "1" || itemAttribute == "2") {
+                    ViewRWindex++;
+                }
+                if (itemAttribute == "1") {
+                    testingItemIds += "," + testingItemId;
+                }
+                //console.log(value, resultJudge, isCheck);
+                var model = {
+                    "parameterDetailId": parameterDetailId,
+                    "parameterGroupId": parameterGroupId,
+                    "testingItemId": testingItemId,
+                    "result1": result,
+                    "isExistTestingReport": isExistTestingReport,
+                    "resultJudge": resultJudge,
+                    "itemAttribute": itemAttribute
+                }
+                list.push(model);
+                if (trlen.indexOf("[" + testingItemId + "]") > -1) {
+                    trlen = trlen.replace("[" + testingItemId + "]", "");//如果填了试验记录的排除
+                    if (itemAttribute == "1") { //可以填试验记录的如果选了此项不做的，排除计数
+                        nums--;
+                    }
+                }
+            });
+            $("select.itemAttribute").each(function () {
+                var itemAttribute2 = $(this).val();
+                if (itemAttribute2 == "1") {
+                    nums++;
+                }
+            })
+            var list1 = [];
+            $("td[data-first3]").each(function () {
+                var model = {};
+                model.itemId = $(this).attr("itemId");
+                var ids = "";
+                var codes = "";
+                $(this).find("input:checked").each(function () {
+                    ids += $(this).val() + ",";
+                    codes += $(this).data("code") + ",";
+                })
+                ids = SetSub(ids);
+                codes = SetSub(codes);
+                model.ids = ids;
+                model.codes = codes;
+                list1.push(model);
+            });
+            var regex = new RegExp(']', 'g'); // 使用g表示整个字符串都要匹配
+            //console.log($("#trlen_hid").val());
+            //console.log(nums, list);
+            //console.log(trlen);
+            if (ViewRWindex == list.length && RWindex == "1" && list.length != 0) {
+                layer.alert("温馨提示：记录还未填写完整，请确认！", { icon: 5 });
+                $("#btn_save").removeAttr("disabled");
+                $("#btn_save2").removeAttr("disabled");
+                return;
+            }
+            if (saveType == "1") {
+                if (trlen.match(regex) != null) {
+                    if (trlen.match(regex).length != nums) {//nums 此项不做的个数
+                        layer.alert("请确认记录是否填写完毕！", { icon: 5 });
+                        $("#btn_save").removeAttr("disabled");
+                        $("#btn_save2").removeAttr("disabled");
+                        return;
+                    }
+                }
+            }
+            if (isRight) {
+                var json = JSON.stringify(list);
+                var json1 = JSON.stringify(list1);
+                json_data = {
+                    method: "EditSamples", sampleid: sampleid, sampleNo: sampleNo, reportId: reportId,
+                    jsonSearch: json, jsonSearch1: json1, sampleStatusCode: sampleStatusCode
+                };
+                handle = EditJs2;
+                try {
+                    ajax(json_data, handle, "Experiment/Experiment.ashx", "json");
+                }
+                catch (e) {
+                    layer.msg(e.message, { time: 2000 });
+                }
+            }
+        }
+        function EditJs2(data) {
+            layer.closeAll('loading');
+            layer.load(1, {
+                shade: [0.3, '#000']
+            });
+            if (data.state == "1") {
+                layer.alert(data.msg, { icon: 6 });
+                if (saveType == "0") {
+                    $("#btn_save").removeAttr("disabled");
+                    $("#btn_save2").removeAttr("disabled");
+                    //因为刷新 太慢，暂时刷新
+                    //setTimeout(function () {
+                    //    window.location.reload();
+                    //}, 1500); 
+                }
+                if (saveType == "1") {
+                    var reportId = GetQueryString("reportId");
+                    var taskId = "1611599";
+                    setTimeout(function () {
+                        var testingOrderNos = "HY18-250156";
+                        var testingOrderId = "993477";
+                        var sampleNos = "HY18-250156-01";
+                        var sampleIds = "1487876";
+                        var IsFB = "0";
+                        var src = "?reportId=" + reportId + "&testingOrderNo=" + testingOrderNos + "&testingOrderId=" + testingOrderId + "&sampleNo=" + sampleNos + "&sampleId=" + sampleIds + "&taskId=" + taskId + "&testingItemId=" + testingItemIds;
+                        if (IsFB == "1") {
+                            window.location.href = "../Task/NonStandardReport.aspx" + src;
+                        } else {
+                            window.location.href = "../Task/TestReport.html" + src;
+                        }
+                    }, 1500)
+                }
+                else {
+                    layer.closeAll('loading');
+                }
+            } else {
+                layer.closeAll('loading');
+                $("#btn_save").removeAttr("disabled");
+                $("#btn_save2").removeAttr("disabled");
+            }
+        }
+        //比较标准值
+        var standardValue = 0;
+        var Operator_last = "";
+        function checkValue(ob) {
+            $(ob).find("td[data-id]").each(function () {
+                var resultNum = 0;
+                var systemJudge = $(this).data("pd");   //是否系统判断 0：否，1：是
+                var code = $(this).data("id").split('-')[1];
+                var obj = $(this).parent().find("td[data-value]");    //这儿
+                var value = $(obj).attr("data-value");
+                if ($(obj).find("input[type='hidden'][data-value='" + value + "b']").length > 0)
+                    standardValue = $(obj).find("input[type='hidden'][data-value='" + value + "b']").val();
+                var Operator = $(obj).find("input[type='hidden'][data-value='" + value + "a']").val();
+                if (Operator != undefined)
+                    Operator_last = Operator;
+                var result1 = 0;
+                var result2 = "";
+                var length = $(this).find("input[type='text']").length;
+                var reg = /^\d+(\.{1}\d+)?$/;
+
+                for (var i = 0; i < length; i++) {
+                    var value1 = $(this).find("input[type='text']").eq(i).val();
+                    if (reg.test(value1) && value1 != "") {
+                        result1 += Number(value1);
+                    } else {
+                        resultNum = 0;
+                        result2 = value1;
+                        length = -1;
+                        break;
+                    }
+                }
+                if (length > 1 && Number(result1) >= 0)
+                    result1 = result1 / length;
+                if (Number(systemJudge) == 1) {
+                    switch (Operator_last) {
+                        case "==":
+                            if (standardValue == result2) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "=":
+                            if ((standardValue == result2) || (result1 != "" && standardValue == result1)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case ">":
+                            if (result1 > Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+
+                        case "<":
+                            if (result1 < Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case ">=":
+                            if (result1 >= Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "≥":
+                            if (result1 >= Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "<=":
+                            if (result1 <= Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "≤":
+                            if (result1 <= Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "!=":
+                            if (result1 != Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "≠":
+                            if (result2 != Number(standardValue)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        case "～":
+                            standardValue = standardValue.replace("~", "～");
+                            var NumA = standardValue.substr(0, standardValue.indexOf("～"));
+                            var NumB = standardValue.substr(standardValue.indexOf("～") + 1);
+                            if (result1 >= Number(NumA) && result1 <= Number(NumB)) {
+                                resultNum = 1;
+                            } else {
+                                resultNum = 2;
+                            }
+                            break;
+                        default:
+                            resultNum = 0;
+                            break;
+                    }
+                } else if (Number(systemJudge) == 0) {
+                    resultNum = -1;  //不判断时，就为空
+                }
+                if (resultNum == 1 || result2 == "未检出")
+                    $(this).parents("table").find("td[data-code1='" + code + "'] select.resultJudge").val("合格");
+                else if (resultNum == 2)
+                    $(this).parents("table").find("td[data-code1='" + code + "'] select.resultJudge").val("不合格");
+                else if (resultNum == 0)
+                    $(this).parents("table").find("td[data-code1='" + code + "'] select.resultJudge").val("--");
+                else
+                    $(this).parents("table").find("td[data-code1='" + code + "'] select.resultJudge").val("");
+            });
+        }
+
+        function formulaValue(obj) {
+            $(obj).find("td[data-id] input[formulaname]").each(function () {
+                type($(this).attr("formulaname"), this);
+            });
+        }
+
+        function eidtsamples() {
+            var testingOrderNo = "HY18-250156";
+            var testingOrderId = "993477";
+            var sampleNo = "HY18-250156-01";
+            var sampleId = "1487876";
+            var sampleName = encodeURI($("#txt_sampleName").val());
+            var index = layer.open({
+                title: '样品信息修改',
+                type: 2,
+                area: ['80%', '80%'],
+                fix: true, //固定
+                content: '../SamplesBase/SamplesInfo.html?testingOrderNo=' + testingOrderNo + '&sampleNo=' +
+                    sampleNo + '&testingOrderId=' + testingOrderId + '&sampleId=' + sampleId + '&sampleName=' + sampleName,
+                end: function () {
+                    location.reload();
+                }
+            });
+        }
+
+        //获取当前数据的实时状态
+        function getStatus() {
+            var taskId = GetQueryString("taskId");
+            var sampleId = "1487876";
+            var reportId = GetQueryString("reportId");
+            var json_data = {
+                method: "GetTaskStatus", taskId: taskId, sampleId: sampleId, reportId: reportId
+            };
+            handle = getStatusData;
+            try {
+                ajax(json_data, handle, "Experiment/Experiment.ashx", "json");
+            }
+            catch (e) {
+                layer.msg(e.message, { time: 2000 });
+            }
+        }
+
+        function getStatusData(data) {
+            layer.closeAll('loading');
+            if (data.state == "1") {
+                var taskStatusCode = data.status;
+                if (taskStatusCode == '5' || taskStatusCode == '3' || taskStatusCode == '0' || taskStatusCode == '1' || taskStatusCode == '9') {   //要查数据库实时状态， 
+                    $("#divbut").hide();                                                                    //新增待流转状态，也无法进行实验记录保存  2021-10-26
+                }
+                if (data.isFuTi == 1) {   //当前任务部门为副体，不可以生成报告
+                    $("#btn_save2").hide();
+                    $("#btn_jump").hide();
+                }
+                if (data.normalType == "1") {
+                    $("#btn_save2").hide();
+                } else if (data.normalType == "0") {
+                    $("#btn_jump").hide();
+                }
+            } else {
+                layer.alert(data.msg, { icon: 5 });
+            }
+        }
+
+
+        function SetSub(value) {
+            if (value.length > 0)
+                return value.substr(0, value.length - 1);
+            else
+                return value;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+
+</title><link href="../../Common/layui/css/layui.css" rel="stylesheet" />
+    <script src="../../Common/JS/jquery.min.js"></script>
+    <script src="../../Common/layui/layui.js"></script>
+    <script src="../../Common/JS/handle.js?2.0"></script>
+    <script src="../../Common/plugins/jq_print/js/jQuery.print.js"></script>
+    <style type="text/css">
+        .table label, p label { height: 35px; line-height: 35px; }
+        td > input.form-control { display: inline-block; width: auto; }
+        table.table > tbody > tr > td { padding: 0px; }
+        th { text-align: center; vertical-align: middle; }
+        td { padding-left: 3px; }
+        #pageTop { padding-bottom: 5px; }
+        #pageTop span, .font-kaiti, #tbTop tbody tr td, #tbTop table th { font-family: '楷体'; }
+        table td { font-family: '楷体'; }
+        table th { font-family: SimSun; }
+        ul { list-style: none; }
+        /*副标题*/
+        .head { height: 85px; }
+        .head h2, .head h3 { text-align: center; margin-top: 5px; }
+        .head .subtitle { font-size: 13px; }
+        .F_box { clear: both; }
+        .box { clear: both; }
+        .box h4 { line-height: 26px; }
+        .titles2, .titles1, .titles4 { height: 52px; }
+        /*页脚*/
+        .foot { height: 60px; }
+        .foot div { float: right; line-height: 20px; margin: 5px 100px 10px 0; }
+        td, th { word-break: break-all; }
+        table { border-color: #111 !important; border-spacing: 0; }
+        .table-b0 tr:first-child th, .table-b0 tr:first-child td { border-top: 0; }
+    </style>
+    <style type="text/css" media="print">
+        @page { size: A4 landscape; }
+        /*纵向打印*/
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="./PrintTestingOrderReplace.aspx?testingOrderNo=LJ01-250501&amp;testingOrderId=1007365" id="form123">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTg0NTAwMjc3Mw8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgICAw9kFgJmDxYCHgdWaXNpYmxlaGRkjNUbeQwopws2ZoHxBAZ/YqaRMrik5KNrZZ9zK7V7WSE=" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="140B6C4B" />
+        <!--<div style="position:absolute;top:5px; right:15%; border:1px solid #000000; width:60px;height:60px;">二维码</div>-->
+<div align="center" id="tbTop">
+    <br />
+    <table width="100%" align="center" border="0" style="font-style:normal;font-weight:normal;font-size:12px;margin: 0 auto;" cellspacing=" 0" cellpadding="0" bordercolor="#111111">
+        <tbody>
+            <tr>
+                <td align="center" height="56" colspan="4" style="vertical-align:middle;line-height:24px;">
+                    <b style="padding-bottom:10px;font-size:24px;">工程现场检验检测委托单</b>
+                    <br />
+                    <b style="padding-bottom:10px;font-size:16px;">（通用）</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" style="font-size:12px;">
+
+    <tr height=" 40">
+        <th width="15%" height="40" align="center">委托编号</th>
+        <td width="45%" height="40" align="left">LJ01-250501 </td>
+        <th width="15%" height="40" align="center">合同编号</th>
+        <td width="25%" height="40" align="left">HT0222024001161</td>
+    </tr>
+
+    <tr height="40">
+        <th width="15%" align="center">委托单位</th>
+        <td width="45%" align="left">上海机场(集团)有限公司 </td>
+        <th width="15%" align="center">联系方式</th>
+        <td width="25%" align="left">闫爱佳 17691217707</td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">单位地址</th>
+        <td align="left" colspan="3">上海市浦东新区启航路300号</td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">工程名称</th>
+        <td width="45%" align="left">上海浦东国际机场四期扩建工程飞行区工程(一阶段)场道及附属设施工程(二标段)—东远机坪等场道及附属设施工程 </td>
+        <th width="15%" align="center">工程部位</th>
+        <td width="25%" align="left">/ </td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">工程地址</th>
+        <td align="left" colspan="3">上海浦东机场内 </td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">检验类别</th>
+        <td width="45%" align="left">现场检测 </td>
+        <th width="15%" align="center">报告类型</th>
+        <td width="25%" align="left">中文 </td>
+    </tr>
+    <tr height="80">
+        <th width="15%" align="center">检验依据<br />及项目</th>
+        <td align="left" colspan="3">LJ01-250501-01: <br/>JTG 3450-2019《公路路基路面现场测试规程》: (压实度（挖坑灌砂法）) </td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">检验机构</th>
+        <td width="45%" align="left">上海建科检验有限公司</td>
+        <th width="15%" align="center">合同评审</th>
+        <td width="25%" align="left">例行任务，无偏离 </td>
+    </tr>
+    <tr height="40">
+        <th width="15%" align="center">委托日期</th>
+        <td width="45%" align="left">2025-03-24 </td>
+        <th width="15%" align="center">检验费用</th>
+        <td width="25%" align="left">900.00元 </td>
+    </tr>
+    <tr height="80">
+        <th width="15%" align="center">备注</th>
+        <td align="left" colspan="3">五跑道道面影响区，5%水泥稳定碎石基层</br>面积:3236.81m3、</br>厚度:20cm</br>区域桩号:P360+2.25~P362+24.05/1302+36.5~1304+39.5</br>点桩号:P361+28.56/1303+5.8 高程:3.816m、</br>P361+10.02/1303+29.21高程:3.834m、</br>P360+18.26/1304+7.12高程:4.052m </br>最大干密度2.3410g/cm3，最佳含水6.18%，压实度>98% </td>
+    </tr>
+</table>
+<table style="font-size:12px;width:100%;" border="0">
+    <tr>
+        <td width="60%" align="left">&nbsp;地址：申富路568号 &nbsp;&nbsp;邮编：201108&nbsp;&nbsp;电话：54425641</td>
+        <td align="left" rowspan="2">接待人：<img style='width:90px;height:45px;' src='/FileUpload/User/李晓明-024510.jpg' /></td>
+    </tr>
+    <tr>
+        <td width="60%">&nbsp;地址：宛平南路75号&nbsp;邮编：200032&nbsp;&nbsp;电话：64390809-317、378</td>
+    </tr>
+</table>
+        <p class="no-print" style="text-align: center; margin-top: 10px; clear: both;">
+            
+            <input type="button" class="layui-btn layui-btn-sm" value="委托附件" onclick="orderfile()" />
+            <input type="button" class="layui-btn layui-btn-sm" value="打印" onclick="prints()" />
+            
+        </p>
+
+    </form>
+    <script type="text/javascript">
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return "";
+        }
+        var x = true
+        var acl = "";
+        var bcl = "";
+        function orderfile() {
+            var testingOrderId = GetQueryString("testingOrderId");
+            var index = layer.open({
+                title: '委托附件',
+                type: 2,
+                area: ['80%', '80%'],
+                fix: true, //固定
+                maxmin: false,
+                content: 'TestingOrderAttachment.html?v=1&testingOrderId=' + testingOrderId,
+                end: function () {
+                }
+            });
+        }
+        function pagePrint() {
+            if (x) {
+                var topHtml = $("#tbTop").html();
+                //for (var i = 0; i < $("#tbInfo .tbSamples").length; i++) {
+
+                //}
+
+                var infoHtml = "<table id=\"tbPageInfo\" border=\"1\" align=\"center\" cellpadding=\"3\"  cellspacing=\"0\" style=\"border-collapse:collapse;margin: 0 auto;\" bordercolor=\"#111111\" width=\"99%\">";
+                $("#tbInfo .tbSamples").each(function () {
+                    infoHtml += "<tr  align=\"center\" class=\"tbSamples\" style=\"height: 30px;\">" + $(this).html() + "</tr>"
+                    $(this).remove();
+                })
+                infoHtml += "</table>";
+                //alert(infoHtml);
+                acl = $(".apendTr td:eq(0)").attr("colspan");
+                $(".apendTr td:eq(0)").removeAttr("colspan");
+                bcl = $(".apendTr td:eq(1)").attr("colspan");
+                $(".apendTr td:eq(1)").removeAttr("colspan");
+                if (Number(acl) + Number(bcl) > 0) {
+                    $(".apendTr").after("<tr align=\"center\" class=\"detail\" style=\"height: 30px;\ id=\"detail\"><th>样品信息</th><td colspan=" + (Number(acl) + Number(bcl)+1) +">详情见附页</td></tr>")
+                }
+                else {
+                    $(".apendTr").after("<tr align=\"center\" class=\"detail\" style=\"height: 30px;\ id=\"detail\"><th>样品信息</th><td colspan=\"3\">详情见附页</td></tr>") 
+                }
+                //var infoHtml = $("#tbInfo").html();
+                var topHtml = topHtml.replace("第1页", "第2页");
+                //$("#tbInfo").html("<table border=\"1\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\" style=\"font-size:12px;border-collapse:collapse;border-top: white;\" bordercolor=\"#111111\" width=\"99%\"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;详情见附页</td></tr></table>")
+                $("#form123").append("<div style=\"page-break-after:always;\" id=\"divPage\"></div>");
+
+                //分离基材
+                var jicai = "";
+                if ($("#baseMaterial").length > 0) {
+                    jicai = '<table border="1" id="baseMaterial" align="center" cellpadding="0" cellspacing="0" class="table-b0" style="font-size:12px;border-top:0" width="99%">';
+                    jicai += $("#baseMaterial").html() + "</table>";
+                    $("#baseMaterial").remove();
+                }
+                $("#form123").append("<div id=\"pageAll\"><div id=\"pageTop\">" + topHtml + "</div><div id=\"pageInfo\">" + infoHtml + jicai + "</div></div>");
+
+                $($("#pageInfo").find("table")[0]).attr("style", "font-size:12px;border-collapse:collapse;");
+                $("#btnPage").val("取消分页");
+                $("#pageTop b:eq(0)").text($("#pageTop b:eq(0)").text() + " - 附页");
+                x = false;
+            } else {
+                var infoHtml = $("#tbPageInfo").html().replace("<tbody>", "").replace("</tbody>", "");
+                var jicai = "";
+                if ($("#baseMaterial").length > 0) {
+                    jicai = '<table border="1" id="baseMaterial" align="center" cellpadding="0" cellspacing="0" class="table-b0" style="font-size:12px;border-top:0" width="100%">';
+                    jicai += $("#baseMaterial").html() + "</table>";
+                }
+                $(".apendTr").after(infoHtml);
+                $(".apendTr td:eq(0)").attr("colspan", acl);
+                $(".apendTr td:eq(1)").attr("colspan", bcl);
+                $("#tbInfo .detail").remove();
+                $("#tbInfo").after(jicai);
+                //$("#tbInfo").html(infoHtml)
+                $("#pageAll").remove();
+                $("#divPage").remove();
+                $($("#tbInfo").find("table")[0]).attr("style", "font-size:12px;border-collapse:collapse;border-top: white;");
+                $("#btnPage").val("分页打印")
+                x = true;
+
+            }
+
+        }
+        $(function () {
+
+
+        })
+        function prints() {
+            //window.print();
+            $("#form123").print({
+                //stylesheet: "../CSS/printstylesheet.css",
+                noPrintSelector: ".no-print"
+            });
+        }
+    </script>
+</body>
+</html>
+
