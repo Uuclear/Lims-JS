@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         任务查询页表格增强
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.3
 // @description  在任务查询页表格中增加规格型号、成型日期、龄期和实验日期列，删除信息沟通列，增加排序功能
 // @author       You
-// @match        *://*/*quests/quests1.html*
+// @match        http://10.1.228.22/UI/Task/TaskManagement.html*
 // @grant        none
 // ==/UserScript==
 
@@ -12,60 +12,45 @@
     'use strict';
     
     let tableModified = false;
-    
-    // 当页面加载完成后执行
-    window.addEventListener('load', function() {
-        // 等待表格初始化完成
-        waitForTableInit();
-    });
+    let originalSearchFunction;
     
     // 等待表格初始化完成
     function waitForTableInit() {
         if (typeof $('#table').bootstrapTable === 'function' && $('#table').data('bootstrap.table')) {
-            // 表格已初始化，执行修改
-            setTimeout(function() {
-                // 修改表格结构，不触发查询
-                modifyTableStructure();
-                tableModified = true;
-                
-                // 监听后续的查询操作
-                const searchButton = document.querySelector('input[value="查询"]');
-                if (searchButton && !searchButton.dataset.eventBound) {
-                    searchButton.dataset.eventBound = 'true';
-                    searchButton.addEventListener('click', function() {
-                        // 在查询后确保表格结构保持修改状态
-                        setTimeout(function() {
-                            if (!checkColumnsModified()) {
-                                modifyTableStructure();
-                            }
-                        }, 500);
-                    });
-                }
-            }, 1000); // 给表格一些时间完全初始化
+            // 表格已初始化，保存原始搜索函数并进行拦截
+            if (typeof window.Search === 'function' && !originalSearchFunction) {
+                originalSearchFunction = window.Search;
+                window.Search = function() {
+                    // 第一次调用Search时修改表格
+                    if (!tableModified) {
+                        modifyTable();
+                        tableModified = true;
+                    }
+                    // 调用原始搜索函数
+                    originalSearchFunction.apply(this, arguments);
+                };
+            }
+            
+            // 监听查询按钮点击事件
+            const searchButton = document.querySelector('input[value="查询"]');
+            if (searchButton && !searchButton.dataset.eventBound) {
+                searchButton.dataset.eventBound = 'true';
+                searchButton.addEventListener('click', function() {
+                    if (!tableModified) {
+                        setTimeout(modifyTable, 300);
+                        tableModified = true;
+                    }
+                });
+            }
         } else {
             setTimeout(waitForTableInit, 300);
         }
     }
     
-    // 检查表格列是否已被修改
-    function checkColumnsModified() {
+    function modifyTable() {
+        // 获取表格的列配置
         var $table = $('#table');
         var columns = $table.bootstrapTable('getOptions').columns[0];
-        
-        // 检查是否有 specification 列，这是我们添加的第一个列
-        for (let i = 0; i < columns.length; i++) {
-            if (columns[i].field === 'specification') {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    // 仅修改表格结构，不触发数据刷新
-    function modifyTableStructure() {
-        var $table = $('#table');
-        var columns = $table.bootstrapTable('getOptions').columns[0];
-        var modified = false;
         
         // 查找要删除的列索引（信息沟通列）
         let commColumnIndex = -1;
@@ -79,7 +64,6 @@
         // 删除信息沟通列
         if (commColumnIndex !== -1) {
             columns.splice(commColumnIndex, 1);
-            modified = true;
         }
         
         // 查找剩余天数列的索引
@@ -92,7 +76,7 @@
         }
         
         // 在剩余天数列后添加新列
-        if (remainingDayIndex !== -1 && !checkColumnsModified()) {
+        if (remainingDayIndex !== -1) {
             // 添加规格型号列
             columns.splice(remainingDayIndex + 1, 0, {
                 field: 'specification',
@@ -155,8 +139,6 @@
                     return '--';
                 }
             });
-            
-            modified = true;
         }
         
         // 给所有列添加排序功能（除了复选框列）
@@ -166,26 +148,23 @@
             }
         });
         
-        if (modified) {
-            // 仅更新列结构，不刷新数据
-            $table.bootstrapTable('refreshOptions', {
-                columns: [columns]
-            });
-            
-            // 确保表格头部的排序样式正确显示
-            setTimeout(function() {
-                addSortableClassToHeaders();
-            }, 300);
-        }
+        // 刷新表格
+        $table.bootstrapTable('refreshOptions', {
+            columns: [columns]
+        });
+        
+        // 确保表格头部的排序样式正确显示
+        setTimeout(function() {
+            addSortableClassToHeaders();
+        }, 300);
     }
     
     function addSortableClassToHeaders() {
         const headers = document.querySelectorAll('#table th .th-inner');
         headers.forEach(function(header) {
             // 检查是否是复选框列
-            const parentTh = header.closest('th');
-            if (parentTh && (parentTh.getAttribute('data-field') === 'state' || 
-                parentTh.querySelector('.fht-cell input'))) {
+            if (header.parentElement.getAttribute('data-field') === 'state' || 
+                header.parentElement.querySelector('.fht-cell input')) {
                 // 是复选框列，不添加排序类
                 if (header.classList.contains('sortable')) {
                     header.classList.remove('sortable', 'both', 'asc', 'desc');
@@ -241,13 +220,9 @@
     // 观察DOM变化，确保排序样式在表格重新加载后仍然有效
     const observer = new MutationObserver(function(mutations) {
         for (let mutation of mutations) {
-            if (mutation.type === 'childList' && document.querySelector('#table th')) {
-                // 检查表格结构是否需要修改
-                if (!checkColumnsModified() && tableModified) {
-                    modifyTableStructure();
-                }
-                
-                // 更新表头排序样式
+            if (mutation.type === 'childList' && 
+                document.querySelector('#table th') && 
+                tableModified) {
                 addSortableClassToHeaders();
             }
         }
@@ -257,4 +232,7 @@
         childList: true,
         subtree: true
     });
+    
+    // 开始执行
+    waitForTableInit();
 })();
