@@ -1,0 +1,293 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+
+</title>
+    <script src="../../Common/JS/jquery.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/OA.js"></script>
+    <script src="../../Common/JS/bootstrap.min.js"></script>
+    <link href="../../Common/Css/bootstrap/bootstrap.min.css" rel="stylesheet" /><link href="../../Common/Css/libs/dataTables.fixedHeader.css" rel="stylesheet" /><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/bootstrap-table.min.css" />
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <style type="text/css">
+        .form-inline .form-control.col-xs-12 { width: 100%; }
+
+        .form-inline .form-control.col-xs-8 { width: 66.6%; }
+
+        .form-inline .form-group .col-xs-2 { padding: 0px 5px; }
+
+        .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td { line-height: 30px; }
+
+        .butdiv { position: absolute; left: 35%; top: 60%; width: 79px; height: 26px; }
+
+        .div_group { display: inline-block; vertical-align: middle; width: 80%; float: left; margin-right: 20px; margin-top: 10px; }
+
+        .div_group_type { width: 28%; float: left; margin: 10px 10px; }
+
+        .col-sm-4 .form-control { width: 190px; }
+
+        .must { color: red; margin-top: 5px; }
+
+        .tb_top { width: 100%; margin-top: 20px; }
+
+        .align_center { text-align: center; }
+
+        .visible { visibility: visible; }
+    </style>
+</head>
+<body>
+    <form method="post" action="./ReportAuditInfo.aspx?type=1" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTUwNjEyODU4Mg8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBZGRIJVaxUtFOqNIJv2AUd3i9bg1KH5Y3NUpTGU0EOa6zMg==" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="3983A7B9" />
+</div>
+        <div style="width: 96%; margin-left: 2%;">
+            <h2 style="font-size: 24px;" class="align_center">待处理报告</h2>
+            <div class="panel panel-default">
+                <div class="panel-heading">查询</div>
+                <div class="panel-body" id="">
+                    <div class="div_group_type">
+                        <label class="col-sm-4 control-label" for="ds_host">报告编号</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="testingReportNo" type="text" />
+                        </div>
+                    </div>
+                    <div class="div_group_type">
+                        <label class="col-sm-4 control-label" for="ds_host">委托编号</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="testingOrderCode" type="text" />
+                        </div>
+                    </div>
+                    <div class="div_group_type">
+                        <label class="col-sm-4 control-label" for="ds_name">待处理类别</label>
+                        <div class="col-sm-4">
+                            <select id="sltType" class="form-control" data-easytip="class:easy-blue;position:right;" style="width: 175px;" onchange="Search()" data-message="此项为必填项!">
+                                <option value="1">待复核</option>
+                                <option value="2">待审核</option>
+                                <option value="3">待批准</option>
+                                <option value="5">已退回</option>
+                                <option value="6">待发放</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="" style="margin-top: 10px;" onclick="Search()">查询</button>
+                    <div class="tb_top">
+                        <table id="tbInfo" data-pagination="true" data-page-list="[ 10, 20, 30, 40, 50]" data-striped="true" data-single-select="true"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        var type;
+        $(function () {
+            type = GetQueryString("type");
+            if (type != null && type != "") {
+                $("#sltType").val(type);
+                $(".div_group_type").eq(2).hide();
+            } else {
+                type = $("#sltType").val();
+            }
+
+            GetSamplesInfo();
+        })
+
+        function GetSamplesInfo() {
+            var $table = $('#tbInfo').bootstrapTable({
+                url: "../../AjaxRequest/report/testingReportQuery.ashx",
+                queryParams: queryParamsInfo,
+                sidePagination: "client",//客户端分页
+                showColumns: true,
+                method: 'post',
+                pageSize: 10,
+                showColumns: false, //不显示下拉框（选择显示的列）
+                contentType: "application/x-www-form-urlencoded",
+                columns: [
+                    //{ field: 'supplierId', title: '操作', formatter: operation, events: actionEvents },
+                    {
+                        field: 'testingOrderCode', title: '委托编号', width: "120px", formatter: function (value, row, index) {
+                            if (row.reportApprovalStatus == null || row.reportApprovalStatus == "" || row.reportApprovalStatus == "5") {
+                                if (row.testingTypeName == "评估咨询") {
+                                    var url = '../Task/NonStandardReportUpdate_pj.aspx?testingOrderNo=' + value + '&testingOrderId=' + row.testingOrderId + '&sampleNo=' + row.sampleNo + "&sampleId=" + row.sampleId + "&taskId=" + row.taskId;
+                                    var title = "评估咨询报告修改";
+                                    return '<a title="编辑" href="#" onclick=" window.parent.xiu1(\'' + url + '\',\'' + title + '\')">' + value + '</a>&nbsp;';
+                                }
+                                else {
+                                    return '<a title="编辑" href="#" onclick="SubmitReport(\'' + row.testingReportCode + '\',\'' + row.testingReportId + '\',\'' + row.sampleId + '\',\'1\',\'' + row.isNormal + '\')">' + value + '</a>&nbsp;';
+                                }
+                            }
+                            else {
+                                return value;
+                            }
+                        }
+                    },
+                    { field: 'testingOrderUnitName', title: '委托单位' },
+                    { field: 'sampleNo', title: '样品编号', width: "135px" },
+                    {
+                        field: 'testingReportCode', title: '报告编号', width: "130px", formatter: function (value, row, index) {
+                            return value + row.isStarFlag;
+                        }
+                    },
+                    { field: 'reportDate', title: '提交日期', width: "90px", formatter: timeStamp2String },
+                    { field: 'testEndDate', title: '实验结束日期', width: "90px", formatter: timeStamp2String },
+                    { field: 'reportResultProperty', width: "30px", title: '结论性质' },
+                    {
+                        field: 'reportApprovalStatus', title: '审核状态', width: "30px", formatter: function (value, row, index) {
+                            var url = row.reportLinkParameter;
+                            var x = "";
+                            if (row.reportApprovalStatus == null || row.reportApprovalStatus == "") {
+                                x = "未提交";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "1") {
+                                x = "待复核";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "2") {
+                                x = "待审核";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "3") {
+                                x = "待批准";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "4") {
+                                x = "待打印";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "5") {
+                                x = "已退回";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "6") {
+                                x = "待发放";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "7") {
+                                x = "已发放";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "8") {
+                                x = "已归档";
+                            }
+                            if (row.reportApprovalStatus != null && row.reportApprovalStatus == "9") {
+                                x = "待接收";
+                            }
+                            return x;
+                        }
+                    },
+                    {
+                        field: 'reportLinkParameter', title: '操作', events: "actionEvents", width: 40, formatter: function (value, row, index) {
+                            var url = row.reportLinkParameter;
+                            var testingReportId = row.testingReportId;
+                            var testingReportCode = row.testingReportCode;
+                            var reportApprovalStatus = row.reportApprovalStatus;
+                            var isNormal = row.isNormal;
+                            var testingOrderCode = row.testingOrderCode;
+                            var sampleId = row.sampleId;
+                            var standBy1 = row.standBy1;
+                            //var Approva = row.Approva;    //没懂是干啥用的
+                            var x = "";
+                            if (reportApprovalStatus != null && reportApprovalStatus == "1") {
+                                x += '<a title="报告复核" href="#" onclick="AuditReport(\'' + isNormal + '\',\'' + testingReportCode + '\',\'' + testingReportId + '\',\'' + sampleId + '\',\'' + standBy1 + '\',\'2\')"><img style="width: 20px;height: 20px;" src="../images/audit.png" /></a>';
+                            }
+                            if (reportApprovalStatus != null && reportApprovalStatus == "2") {
+                                x += '<a title="报告审核" href="#" onclick="AuditReport(\'' + isNormal + '\',\'' + testingReportCode + '\',\'' + testingReportId + '\',\'' + sampleId + '\',\'' + standBy1 + '\',\'3\')"><img style="width: 20px;height: 20px;" src="../images/audit.png" /></a>';
+                            }
+                            if (reportApprovalStatus != null && reportApprovalStatus == "3") {
+                                x += '<a title="报告批准" href="#" onclick="AuditReport(\'' + isNormal + '\',\'' + testingReportCode + '\',\'' + testingReportId + '\',\'' + sampleId + '\',\'' + standBy1 + '\',\'9\')"><img style="width: 20px;height: 20px;" src="../images/audit.png" /></a>';
+                            }
+                            if (reportApprovalStatus != null && reportApprovalStatus == "6") {
+                                x += '<a title="查看" href="#" onclick="AuditReport(\'' + isNormal + '\',\'' + testingReportCode + '\',\'' + testingReportId + '\',\'' + sampleId + '\',\'' + standBy1 + '\',\'7\')"><img style="width: 20px;height: 20px;" src="../images/audit.png" /></a>';
+                            }
+                            return x;
+                        }
+                    }
+                ],
+                onLoadSuccess: function () {  //加载成功时执行  
+                    if (GetQueryString("type") == 5 || type == 5) {
+                        $('#tbInfo').bootstrapTable('hideColumn', 'reportLinkParameter');
+                    }
+                }
+            });
+        }
+        function ViewNormal(testingReportId, testingOrderNo, sampleId, type) {
+            var url = "../report/WaitBuild.aspx?testingReportId=" + testingReportId + "&sampleId=" + sampleId;
+            window.parent.xiu1(url, "打印：" + testingOrderNo);
+        }
+
+        function WaitBuild(testingReportId, testingReportCode, testingOrderNo, sampleId, status, type) {
+            window.location.href = "WaitBuild.aspx?testingReportId=" + testingReportId + "&sampleId=" + sampleId;
+        }
+        function queryParamsInfo(params) {
+            if (type == "6") {
+                return {
+                    method: "ReportAudtiByType", tx_type: 6,
+                }
+            }
+            else {
+                return {
+                    method: "ReportAudtiByType_new", testingReportCode: $("#testingReportNo").val().trim(), testingOrderCode: $("#testingOrderCode").val().trim(), type: type
+                }
+            }
+        }
+        function Search() {
+            type = $("#sltType").val();
+            $("#tbInfo").bootstrapTable('refresh');
+
+        }
+
+        function updateSucess(data) {
+            layer.closeAll('loading');
+            if (data.state == "1") {
+                layer.msg(data.msg)
+                $('#tbInfo').bootstrapTable("refresh");
+            }
+            else
+                layer.msg(data.msg)
+        }
+        function AuditReport(isNormal, reportCode, reportId, sampleId, standBy1, status) {
+            var url = "?testingReportCode=" + reportCode + "&testingReportId=" + reportId + "&reportStatus=" + status + "&isBack=0&v=2&sampleId=" + sampleId;
+            if (status == "7") {
+                url = "?testingReportCode=" + reportCode + "&testingReportId=" + reportId + "&reportStatus=" + status;
+            }
+            if (isNormal == 0) {
+                url = "AuditTestingReport_new2.aspx" + url;
+            } else if (standBy1 == "线上签名" || standBy1 == "电子科技业务章" || standBy1 == "公司电子公章") {
+                url = "AuditTestingReport_new3.aspx" + url;
+            } else {
+                url = "AuditTestingReport_new_fb.aspx" + url;
+            }
+            var index = layer.open({
+                title: '',
+                type: 2,
+                area: ['98%', '98%'],
+                fix: true, //固定
+                maxmin: false,
+                content: url,
+                end: function () {
+                    Search();
+                    parent.$("#iframe0")[0].contentWindow.RefreshNum();
+                }
+            });
+        }
+
+        function SubmitReport(reportCode, reportId, sampleId, status, isNormal) {
+            var url = "../report/AuditTestingReport_new2.aspx?testingReportCode=" + reportCode + "&&testingReportId=" + reportId + "&&reportStatus=" + status + "&isBack=1";
+            if (isNormal == "1") {
+                var codes = reportCode.split('-');
+                if (codes[0].length == 6)
+                    url = "../report/AuditTestingReport_jz_fb.aspx?testingReportCode=" + reportCode + "&testingReportId=" + reportId + "&reportStatus=" + status + "&isBack=1&sampleId=" + sampleId;
+                else
+                    url = "../report/AuditTestingReport_new_fb.aspx?testingReportCode=" + reportCode + "&testingReportId=" + reportId + "&reportStatus=" + status + "&isBack=1&sampleId=" + sampleId;
+            }
+            window.parent.xiu1(url, "提交报告");
+        }
+
+    </script>
+</body>
+</html>
+
