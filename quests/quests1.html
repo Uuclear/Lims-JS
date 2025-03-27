@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>任务管理</title>
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/jquery.nouislider.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/nanoscroller.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/bootstrap-table.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/table.css" />
+    <link href="../../Common/Css/libs/dataTables.fixedHeader.css" rel="stylesheet" />
+    <link href="../../Common/Css/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
+    <script src="../../Common/JS/jquery.js"></script>
+    <script src="../../Common/JS/bootstrap.js"></script>
+    <script src="../../Common/JS/bootstrap-select/bootstrap-select.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/bootstrap-editable.min.js"></script>
+    <script src="../JS/Task/Task.js?v=1.21"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".toggle-btn").click(function () {
+                $("#leftMeun").toggleClass("show");
+                $("#rightContent").toggleClass("pd0px");
+            })
+        })
+    </script>
+    <style>
+        .red { color: red; }
+        .bs-searchbox input { height: 26px; outline: none; }
+        .bs-searchbox input:focus { border: 1px solid #ccc; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div class="leftMeun" id="leftMeun">
+            <form style="margin-left: 10px;margin-top:10px;margin-right:10px ">
+
+                <div class="form-group text-center">
+                    <button id="reset" type="button" class="btn btn-primary" style="margin-top: 18px;">清空</button>
+                    <input class="btn btn-primary" type="button" value="查询" style="margin-top:18px" onclick="Search()" />
+                </div>
+                <div class="form-group">
+                    <label for="testingOrderNo" class="control-label ">委托单编号：</label>
+                    <div>
+                        <input type="text" class="col-xs-12 form-control" placeholder="" id="testingOrderNo" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="testingOrderNo" class="control-label ">任务编号：</label>
+                    <div>
+                        <input type="text" class="col-xs-12 form-control" placeholder="" id="sampleNo" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rptType" class="control-label ">标准编号：</label>
+                    <div>
+                        <input type="text" class="form-control" id="standardcode" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="principalPartName" class="control-label ">实验部门：</label>
+                    <div>
+                        <select id="principalPartName" class="col-xs-12 form-control" data-live-search="true">
+                            <option value="">--请选择--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="testCatatorySelect" class="control-label ">业务类别：</label>
+                    <div>
+                        <select id="testCatatorySelect" class="form-control">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label ">任务执行情况：</label>
+                    <div>
+                        <select id="taskExecutiveSelect" class="form-control">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group taskExecutor">
+                    <label class="control-label ">任务执行人：</label>
+                    <div>
+                        <input type="text" class="col-xs-12 form-control" placeholder="精确查询" id="taskExecutor" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label ">剩余天数：</label>
+                    <div>
+                        <input type="number" id="txt_day_s" value="" class="form-control" style="width:80px; display:inline-block;" />至
+                        <input type="number" id="txt_day_e" value="" class="form-control" style="width: 80px; display: inline-block;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label ">结算状态：</label>
+                    <div>
+                        <select id="setlementStatus" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="待结算">待结算</option>
+                            <option value="待确认">待确认</option>
+                            <option value="已结算">已结算</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label ">结算类型：</label>
+                    <div>
+                        <select id="setlementType" class="form-control">
+                            <option value="">请选择</option>
+                            <option value="事业部内结算">事业部内结算</option>
+                            <option value="事业部间结算">事业部间结算</option>
+                            <option value="开票结算">开票结算</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="rightContent" style="margin-top:10px;">
+            <div class="text-left" id="btn" style="display:none">
+                <a class="toggle-btn" id="nimei">
+                    <i class="search-png" aria-hidden="true" title="查询"></i>
+                </a>
+                <button type="button" class="btn btn-primary" id="btn_TaskAllocation" style="margin-left: 7px; " onclick="TaskAllocation()">任务分配</button>
+                <!--<button type="button" class="btn btn-primary" id="btn_TaskReturn" style="margin-left: 7px;" onclick="TaskReturn()">任务退回</button>-->
+                <button type="button" class="btn btn-primary" id="btn_SamplesInfo" style="margin-left: 7px; " onclick="SamplesInfo()">样品信息修改</button>
+                <button type="button" class="btn btn-primary" id="btn_WriteReport" style="margin-left: 7px; " onclick="WriteReport(this)">填写实验记录</button>
+                <button type="button" class="btn btn-primary" id="btn_TestReport" style="margin-left: 7px; " onclick="TestReport(this)">生成报告</button>
+                <button type="button" class="btn btn-primary" id="btn_endTask" style="margin-left: 7px; " onclick="endTask()">异常结束</button>
+                <button type="button" class="btn btn-primary" id="btn_sk_select" style="margin-left: 7px;" onclick="skSelect()">待检试块</button>
+                <!--<button type="button" class="btn btn-primary" id="btn_feeInfo" style="margin-left: 7px;" onclick="rateSelect()">费率详情</button>-->
+                <button type="button" class="btn btn-primary" id="btn_feeInfo" style="margin-left: 7px;" onclick="rateSelect2()">费率详情</button>
+                <button type="button" class="btn btn-primary" id="btn_import_jz" style="margin-left: 7px;" onclick="import_jz()">校准导入</button>
+                <button type="button" class="btn btn-primary" id="btn_prints" style="margin-left: 7px;" onclick="prints()">批量打印</button>
+                <button type="button" class="btn btn-primary" id="btn_itemExport" style="margin-left: 7px;" onclick="itemExport()">原始记录导出</button>
+                <button type="button" class="btn btn-primary" id="btn_listExport" style="margin-left: 7px;" onclick="listExport()">列表导出</button>
+                <button type="button" class="btn btn-primary" id="btn_applyInfo" style="margin-left: 7px;" onclick="applyInfo()">信息沟通</button>
+            </div>
+            <div style="margin-top: 10px;padding:20px;" class="rightTable">
+                <!--data-row-style="setcolor"-->
+                <table id="table" data-pagination="true" data-page-list="[ 10, 20, 30, 40, 50]" data-striped="true" data-click-to-select="true" data-editable="true" data-side-pagination="server">
+                    <thead>
+                        <tr>
+                            <th data-field="state" data-checkbox="true">选择</th>
+                            <th data-field="sampleNo" data-formatter="setcolor" data-width="195">任务编号</th>
+                            <th data-field="taskName" data-width="280" data-formatter="taskNameFormatter">任务名称</th>   <!--直接拿样品名称当任务名称使用-->
+                            <th data-field="deptName" data-width="170">任务部门</th>
+                            <th data-field="remainingDay" data-width="70" data-formatter="remainingDay">剩余天数</th>
+                            <th data-field="nextUSERS" data-width="70" data-formatter="getInfoCommnuin" data-events="actionEvents2">信息沟通</th>
+                            <th data-field="taskStatusName" data-formatter="operation1" data-width="70">任务状态</th>
+                            <!--<th data-field="taskExecutor2" data-width="100">执行负责人</th> -->
+                            <th data-field="taskId" data-formatter="operation" data-events="actionEvents" data-width="70">操作</th>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function remainingDay(value, row, index) {
+            if (row.taskStatusName == "已完成" || row.taskStatusName == "已终止" || row.isDelete || value.length == 0 || row.testingTypeCode == "协会工程") {
+                return "--";
+            } else {
+                return value;
+            }
+        }
+        function getInfoCommnuin(value, row, index) {
+            if (row.nextUSERS != "") {
+                //return "<span style='color:#FF0000'>(沟通中)</span>";
+                return '<div id="' + value + '" style="white-space:nowrap;display:inline; "><a href="#" class="op2" style="color: #FF0000" >待办人：' + row.nextUSERS + '</a>';
+            }
+            else {
+                return "";
+            }
+        }
+
+        function taskNameFormatter(value, row, index) {
+            if (row.testingTypeCode == "工程" || row.testingTypeCode == "检验" || row.testingTypeCode == "评估咨询") {
+                if (row.projectName == "") {
+                    return "(无工程名称)";
+                } else {
+                    return row.projectName;
+                }
+            } else {
+                return value;
+            }
+        }
+        (function () {
+            var url = "../../AjaxRequest/OA/PC_Department.ashx";
+            var json_data = { method: "GetPC_DepartmentName2" };
+            ajax(json_data, setDeptType, url, "json");
+
+            $("#reset").click(function () {
+                $("#testingOrderNo").val("");
+                $("#sampleNo").val("");
+                $("#standardcode").val("");
+                $("#testCatatorySelect").val("");
+                $("#taskExecutor").val("");
+                $("#principalPartName").val("").change();
+                if (GetQueryString("type") != 5 && GetQueryString("type") != 3 && GetQueryString("type") != 4 && GetQueryString("type") != 6) {
+                    $("#taskExecutiveSelect").val("");
+                }
+
+            });
+        })();
+        function setDeptType(data) {
+            layer.closeAll('loading');
+            var deptType = $("#principalPartName");
+            var option_str = "";
+
+            for (var i = 0; i < data.length; i++) {
+                option_str += '<option value=\"' + data[i].Code + '\">' + data[i].Name + '</option>';
+            }
+            deptType.append(option_str);
+            deptType.selectpicker({
+                'selectedText': 'cat'
+            });
+        }
+        //$(".J_menuItem").each(function (t) {
+        //    $(this).attr("data-index") || $(this).attr("data-index", t)
+        //});
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return null;
+        }
+        function GetSelectList(name) {
+            switch (name) {
+                case "testCatatory":
+                    handle = testCatatorySelect;
+                    break;
+                case "taskStatus":
+                    handle = taskExecutiveSelect;
+                    break;
+                default:
+            }
+            var json_data = { method: "GetSelectList", name: name };
+            ajax(json_data, handle, "../../AjaxRequest/Task/Task.ashx", "json");
+        }
+        function setcolor(value, row, index) {
+            var strclass = value;
+            var code = row.testingOrderNo.split('-');
+            var testingTypeCode = row.testingTypeCode;
+            if (row.isNormal == 1) {
+                strclass = "<span style='color:red'>" + value + "(非标)</span>";
+            }
+            if (row.testingTypeCode == "协会工程" || (testingTypeCode == "评估咨询" && code[0].includes('JK'))) {
+                if (row.normalType == 1)
+                    strclass = "<span style='color:red'>" + row.testingOrderNo + "(非标)</span>";
+                else
+                    strclass = row.testingOrderNo;
+            }
+            return strclass;
+        }
+        //加载页面
+        var pageLoad = 0;
+        $(function () {
+            var type = GetQueryString("type");
+            if (type == "5") {
+                $(".taskExecutor").hide();
+            }
+            var taskStatusCode = GetQueryString("taskStatusCode");
+            var daysRemaining = GetQueryString("daysRemaining");
+            if (daysRemaining == 2) {   //表示过期  <0
+                $("#txt_day_e").val(-1);
+            } else if (daysRemaining == 1) {   //表示过期  0>  <5
+                $("#txt_day_s").val(0);
+                $("#txt_day_e").val(5);
+            }
+            $("#btn").css("display", "inline-block");
+            if (type != '' && type != undefined && type != null) {
+                if (type < 3) {
+                    $("#taskExecutor").val(parent.$("#username").text());    //把登录名  赋值到文本框内
+                    $("#btn_SamplesInfo").css("display", "inline-block");
+                    $("#btn_WriteReport").css("display", "inline-block");
+                    //$("#btn5").hide();
+                    $("#btn_TestReport").css("display", "inline-block");
+                    $("#btn_endTask").css("display", "inline-block");
+
+                    //$("#btn_TaskAllocation").css("display", "none");
+                    //$("#btn_TaskReturn").css("display", "none");
+                } else {
+                    $("#btn_TaskAllocation").css("display", "inline-block");
+                    $("#btn_TaskReturn").css("display", "inline-block");
+                    //$("#btn_SamplesInfo").css("display", "none");
+                    //$("#btn_WriteReport").css("display", "none");
+                    //$("#btn_TestReport").css("display", "none");
+                    //$("#btn_endTask").css("display", "none");
+                    //$("#btn5").hide();
+                }
+            } else {
+                $("#btn").css("display", "inline-block");
+                $("#btn_TaskAllocation").css("display", "inline-block");
+                $("#btn_TaskReturn").css("display", "inline-block");
+                $("#btn_SamplesInfo").css("display", "inline-block");
+                $("#btn_WriteReport").css("display", "inline-block");
+                //$("#btn5").attr("display", "block");
+                $("#btn_TestReport").css("display", "inline-block");
+                $("#btn_endTask").css("display", "inline-block");
+            }
+
+            getlist();
+            if (taskStatusCode == 0) {
+                //$("#btn_TaskAllocation").css("display", "none");
+                //$("#btn_TaskReturn").css("display", "none");
+                //$("#btn_SamplesInfo").css("display", "none");
+                //$("#btn_WriteReport").css("display", "none");
+                //$("#btn_TestReport").css("display", "none");
+                //$("#btn_endTask").css("display", "none");
+                $(".rightTable").attr("style", "margin-top: -18px;padding:20px;")
+            }
+            GetSelectList("testCatatory");
+            GetSelectList("taskStatus");
+
+        })
+        //查询列表
+        function getlist(num) {
+            $('#table').bootstrapTable({
+                url: "../../AjaxRequest/Task/Task.ashx",
+                queryParams: queryParamsInfo,
+                //sidePagination: "server",//服务器分页
+                sidePagination: "click",//客户端分页
+                showColumns: false,
+                method: 'post',
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                contentType: "application/x-www-form-urlencoded",
+                //responseHandler: function (res) {
+                //    return {
+                //        "total": res.total,
+                //        "rows": res.rows
+                //    };
+                //}
+            });
+
+        }
+        function queryParamsInfo(params) {
+            pageLoad++;
+            var sampleNo = $("#sampleNo").val().trim();
+            var testingOrderNo = $("#testingOrderNo").val().trim();
+            var principalPartName = $("#principalPartName").val().trim();
+            var testingTypeCode = $("#testCatatorySelect").val().trim();
+            var taskExecutiveCode = $("#taskExecutiveSelect").val().trim();
+            var taskExecutor = $("#taskExecutor").val();
+            var standardcode = $("#standardcode").val();
+            var day_s = $("#txt_day_s").val();
+            var day_e = $("#txt_day_e").val();
+            var setlementStatus = $("#setlementStatus").val();
+            var setlementType = $("#setlementType").val();
+            var type = GetQueryString("type");
+            var back = GetQueryString("back");
+            var taskStatusCode = GetQueryString("taskStatusCode");
+            if (day_s != "" || day_e != "")
+                pageLoad = 2;
+
+            if (taskStatusCode != null || back != null || type != null)
+                pageLoad = 2;
+            return {
+                method: "GetTaskManagementList", testingOrderNo: testingOrderNo, sampleNo: sampleNo, standardcode: standardcode, back: back,
+                principalPartName: principalPartName, testingTypeCode: testingTypeCode, setlementStatus: setlementStatus, setlementType: setlementType,
+                taskExecutiveCode: taskExecutiveCode, taskExecutor: taskExecutor, day_s: day_s, day_e: day_e, type: type, taskStatusCode: taskStatusCode
+                //, pageNum: (params.offset / params.limit) + 1
+                , pageLoad: pageLoad
+                //pageSize: params.limit,
+            }
+        }
+
+        function operation(value) {
+            return '<div id="' + value + '" style="white-space:nowrap;display:inline; "><a href="#" class="op1">查看详情</a>';
+        }
+        function operation1(value, row, index) {
+            if (!row.isDelete) {
+                if (value == "退回委托") {
+                    return "<span style='color:#FF0000'>" + row.editor + ":" + row.remark.replace("退回原因附加说明:", "") + "(" + FormatTime(row.editTime) + ")</span>";
+                } else if (value == "已退回") {
+                    return "<span style='color:#FF0000'>已退回</span>";
+                } else {
+                    return value;
+                }
+            } else {
+                return "<span style='color:#FF0000'>已取消</span>";
+            }
+        }
+        window.actionEvents = {
+            'click .op1': function (e, value, row, index) {
+                var src = '../Task/TaskDetails.html?testingOrderId=' + row.testingOrderId + '&sampleId=' + row.sampleId + '&taskId=' + row.taskId;
+                if (row.testingTypeCode == "收样" || row.testingTypeCode == "抽样") {
+                    src = '../Task/TaskDetailsSample.html?testingOrderId=' + row.testingOrderId + '&sampleId=' + row.sampleId + '&taskId=' + row.taskId + '&productTypeid=' + row.productTypeid + '&testingTypeCode=' + row.testingTypeCode;
+                } else if (row.testingTypeCode == "工程" || row.testingTypeCode == "检验") {
+                    src = '../Task/TaskDetailsEngineering.html?testingOrderId=' + row.testingOrderId + '&sampleId=' + row.sampleId + '&taskId=' + row.taskId;
+                }
+                else if (row.testingTypeCode == "评估咨询") {
+                    src = '../Task/TaskDetailsEngineering_pj.html?testingOrderId=' + row.testingOrderId + '&sampleId=' + row.sampleId + '&taskId=' + row.taskId;
+                }
+                else if (row.testingTypeCode == "认证抽样") {
+                    src = '../Task/TaskDetailsSample_rz.html?testingOrderId=' + row.testingOrderId + '&sampleId=' + row.sampleId + '&taskId=' + row.taskId + '&productTypeid=' + row.productTypeid + '&testingTypeCode=' + row.testingTypeCode;
+                }
+
+                window.parent.xiu1(src, "详情：" + row.sampleNo);
+            }
+        }
+        function SettaskStatus() {
+            var taskStatusCode = GetQueryString("taskStatusCode");
+            if (taskStatusCode != "" && taskStatusCode != null && taskStatusCode != undefined) {
+                $("#taskExecutiveSelect").val(taskStatusCode);
+            }
+
+        }
+
+        function TaskAllocation() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length == 0) {
+                layer.alert("请选择一行数据进行操作", { icon: 5 });
+            } else {
+                var taskIds = "";
+                var deptCode = "";
+                for (var i = 0; i < selects.length; i++) {
+                    if (selects[i].taskStatusCode == 5 || selects[0].taskStatusCode == 0 || selects[i].taskStatusCode == 9) {
+                        layer.msg("不能对待流转/退回委托数据进行此操作！");
+                        return;
+                    }
+                    if (deptCode == "") {
+                        deptCode = selects[i].deptCode;
+                    }
+                    if (deptCode != selects[i].deptCode) {
+                        layer.msg("部门不同，不能进行批量分配！");
+                        return;
+                    }
+                    taskIds += selects[i].taskId + ",";
+                }
+                if (selects.length == 1) {
+                    var title = "";
+                    var isNormal = parseInt(selects[0].isNormal);
+                    var normalType = parseInt(selects[0].normalType);
+                    var testingTypeCode = selects[0].testingTypeCode;
+                    var src = '?type=1&testingOrderId=' + selects[0].testingOrderId + '&testingOrderNo=' + selects[0].testingOrderNo + '&sampleNo=' +
+                        selects[0].sampleNo + '&sampleId=' + selects[0].sampleId + '&taskId=' + selects[0].taskId + '&deptCode=' + selects[0].deptCode;
+                    if (isNormal == 0 || normalType == 0) {
+                        if (testingTypeCode == "工程" || testingTypeCode == "检验" || testingTypeCode == "评估咨询") {
+                            src = '../Task/TaskAllocation_new2.html' + src;
+                        } else {
+                            src = '../Task/TaskAllocation_new.html' + src;
+                        }
+                        if (testingTypeCode == "协会工程")
+                            title = selects[0].testingOrderNo;
+                        else
+                            title = selects[0].sampleNo;
+                    } else {
+                        if (testingTypeCode == "工程" || testingTypeCode == "检验" || testingTypeCode == "评估咨询" || testingTypeCode == "协会工程") {
+                            src = '../Task/TaskAllocation2.html' + src;
+                        } else {
+                            src = '../Task/TaskAllocation.html' + src;
+                        }
+                        title = selects[0].testingOrderNo;
+                    }
+                    window.parent.xiu1(src, "分配：" + title);
+                } else {
+                    taskIds = taskIds.substring(0, taskIds.length - 1);
+                    var src = '../Task/TaskBatchAllocation.html?taskId=' + taskIds + '&deptCode=' + deptCode;
+                    window.parent.xiu1(src, "批量分配");
+                }
+            }
+        }
+        function TaskChanges() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.alert("请选择一行数据进行操作", { icon: 5 });
+            } else {
+                var src = '../Task/TaskChanges.html?testingOrderNo=' + selects[0].testingOrderNo + '&sampleNo=' + selects[0].sampleNo;
+                window.parent.xiu1(src, "变更：" + selects[0].sampleNo);
+            }
+        }
+        function TaskReturn() {
+            var taskId = "";
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects == '') {
+                layer.msg("未选择数据！");
+            } else {
+                for (var i = 0; i < selects.length; i++) {
+                    if (selects[i].testingTypeCode == "协会委托") {
+                        layer.alert("协会委托不能进行任务退回", { icon: 5 });
+                        return;
+                    }
+                    if (i != selects.length - 1) {
+                        if (selects[i].taskStatusCode == 5 || selects[0].taskStatusCode == 3 || selects[0].taskStatusCode == 0 || selects[0].taskStatusCode == 9) {
+                            layer.msg("不能对待流转/退回委托/终止委托/已完成数据进行此操作！");
+                            return;
+                        }
+                        taskId += selects[i].taskId + ',';
+                    } else {
+                        if (selects[i].taskStatusCode == 5 || selects[0].taskStatusCode == 3 || selects[0].taskStatusCode == 0 || selects[0].taskStatusCode == 9) {
+                            layer.msg("不能对待流转/退回委托/终止委托/已完成数据进行此操作！");
+                            return;
+                        }
+                        taskId += selects[i].taskId;
+                    }
+                }
+                var src = '../Task/TaskReturn.html?taskId=' + taskId;
+                window.parent.xiu1(src, "任务退回");
+            }
+        }
+
+        function SamplesInfo() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.msg("请先选一行");
+            } else {
+                var testingTypeCode = selects[0].testingTypeCode;
+                if (testingTypeCode == "工程" || testingTypeCode == "检验" || testingTypeCode == "评估咨询") {
+                    layer.alert("工程或检验无样品信息可修改", { icon: 5 });
+                    return;
+                }
+                var src = '../SamplesBase/SamplesInfo.html?testingOrderNo=' + selects[0].testingOrderNo
+                    + '&sampleNo=' + selects[0].sampleNo + '&sampleName=' + encodeURI(selects[0].sampleName)
+                    + '&sampleId=' + selects[0].sampleId + '&testingOrderId=' + selects[0].testingOrderId
+                    + "&taskStatusCode=" + selects[0].taskStatusCode + '&type=1';   //type=1,表示从当前页面进入的
+                window.parent.xiu1(src, "样品：" + selects[0].sampleNo);
+            }
+        }
+        function TestReport(obj) {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.alert("请选择一行数据进行操作", { icon: 5 });
+            } else if (selects[0].taskStatusCode == 5 || selects[0].taskStatusCode == 0 || (selects[0].taskStatusCode == 3 && testingTypeCode == "协会工程") || selects[0].taskStatusCode == 9) {
+                layer.msg("不能对待流转/退回委托/终止委托/已完成数据进行此操作！");
+            } else {
+                var testingOrderNo = selects[0].testingOrderNo;
+                var testingOrderId = selects[0].testingOrderId;
+                var sampleNo = selects[0].sampleNo;
+                var sampleId = selects[0].sampleId;
+                var taskId = selects[0].taskId;
+                var isNormal = selects[0].isNormal;
+                var testingTypeCode = selects[0].testingTypeCode;
+                var src = '?testingOrderNo=' + testingOrderNo + '&testingOrderId=' + testingOrderId + '&sampleNo=' + sampleNo + "&sampleId=" + sampleId + "&taskId=" + taskId;
+                if (isNormal == "0" && testingTypeCode != "校准" && testingTypeCode != "协会委托") {
+                    src = '../Task/TestReport.html' + src;
+                    window.parent.xiu1(src, "报告：" + sampleNo);
+                } else if (testingTypeCode == "校准") {
+                    layer.alert("暂时不支持", { icon: 5 });
+                } else if (testingTypeCode == "协会委托") {
+                    layer.alert("协会数据，无法进行此操作！", { icon: 5 });
+                } else if (testingTypeCode == "校准") {
+                    layer.alert("暂时不支持", { icon: 5 });
+                } else if (testingTypeCode == "评估咨询") {
+                    src = '../Task/NonStandardReport_pj.aspx' + src;
+                    window.parent.xiu1(src, "报告：" + testingOrderNo);
+                } else if (testingTypeCode == "认证抽样") {
+                    src = '../Task/NonStandardReport_rz.aspx' + src;
+                    window.parent.xiu1(src, "报告：" + sampleNo);
+                } else if (testingTypeCode == "协会工程") {
+                    src = '../Task/NonStandardReport_xhgc.aspx' + src;
+                    window.parent.xiu1(src, "报告：" + testingOrderNo);
+                } else {
+                    src = '../Task/NonStandardReport.aspx' + src;
+                    window.parent.xiu1(src, "报告：" + sampleNo);
+                }
+            }
+        }
+
+        //填写实验记录
+        var clickNum = 0, iii = 0;
+        function WriteReport(obj) {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects == '') {
+                layer.msg("请先选一行");
+            } else if (selects.length != 1) {
+                layer.msg("只能选一行");
+            } else {
+                var sampleId = selects[0].sampleId;
+                var sampleNo = selects[0].sampleNo;
+                var taskId = selects[0].taskId;
+                var sampleName = encodeURI(selects[0].sampleName);
+                var testingOrderNo = selects[0].testingOrderNo;
+                var taskStatusCode = selects[0].taskStatusCode;
+                var testingOrderId = selects[0].testingOrderId;
+                var testingTypeCode = selects[0].testingTypeCode;
+                var deptCode = selects[0].deptCode;
+                var src = "";
+                if (testingTypeCode == "收样" || testingTypeCode == "电商") {
+                    src = "../Experiment/ExperimentResult.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&taskStatusCode=" + taskStatusCode + "&RWindex=1";
+                } else if (testingTypeCode == "抽样") {
+                    src = "../Experiment/ExperimentResult2.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&taskStatusCode=" + taskStatusCode + "&RWindex=1";
+                }
+                else if (testingTypeCode == "认证抽样") {
+                    src = "../Experiment/ExperimentResult2_rz.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&taskStatusCode=" + taskStatusCode + "&RWindex=1";
+                } else if (testingTypeCode == "协会委托") {
+                    layer.alert("协会数据，无法进行此操作！", { icon: 5 });
+                    return;
+                } else if (testingTypeCode == "校准") {
+                    src = "../Experiment/ExperimentResult_jz.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&taskStatusCode=" + taskStatusCode;
+                } else if (testingTypeCode == "评估咨询") {
+                    src = "../Experiment/ExperimentResult_pj.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&sampleName=" + sampleName + "&taskStatusCode=" + taskStatusCode + "&RWindex=1";
+                }
+                else {
+                    src = "../Experiment/ExperimentResult3.aspx?sampleId=" + sampleId + "&taskId=" + taskId + "&deptCode=" + deptCode + "&sampleName=" + sampleName + "&taskStatusCode=" + taskStatusCode + "&RWindex=1";
+                }
+                window.parent.xiu1(src, deptCode + "：" + sampleNo);
+            }
+        }
+        //搜索
+        function Search() {
+            var type = GetQueryString("type");
+            var taskStatusCode = GetQueryString("taskStatusCode");
+            //getlist(2);
+            $('#table').bootstrapTable('refreshOptions', { pageNumber: 1 });//刷新
+        }
+        //按回车触发的事件
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                Search();
+            }
+        });
+
+        function skSelect() {
+            layer.open({
+                type: 2,
+                title: '待检试块',
+                shadeClose: true,
+                shade: 0.3,
+                area: ['90%', '90%'],
+                content: 'taskList_sk.html' //iframe的url
+            });
+        }
+        function rateSelect() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.msg("请先选一行数据进行操作");
+            } else {
+                var taskId = selects[0].taskId;
+                var sampleId = selects[0].sampleId;
+                var src = "../Task/DetailsOfmissionCosts.aspx?taskId=" + taskId + "&sampleId=" + sampleId;
+                window.parent.xiu1(src, "任务资费详情：" + taskId);
+            }
+        }
+        function rateSelect2() {
+            var taskId = ""; var sampleId = "";
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects == '') {
+                layer.msg("未选择数据！");
+            } else {
+                for (var i = 0; i < selects.length; i++) {
+                    taskId += ',' + selects[i].taskId;
+                    sampleId += ',' + selects[i].sampleId;
+                }
+                if (selects.length > 0) {
+                    taskId = taskId.substring(1, taskId.length);
+                    sampleId = sampleId.substring(1, sampleId.length);
+                }
+                var src = "../Task/DetailsOfmissionCosts.aspx?taskId=" + taskId + "&sampleId=" + sampleId;
+                window.parent.xiu1(src, "费率详情");
+            }
+        }
+        function import_jz() {
+            layer.open({
+                type: 2,
+                title: '校准批量导入',
+                shadeClose: true,
+                shade: 0.3,
+                area: ['90%', '90%'],
+                content: '../Experiment/ExperimentImport_jz.html',
+                end: function () {
+                    Search();
+                }
+            });
+        }
+
+        //批量批量任务详情
+        function prints() {
+            var taskId = "0";
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects == '') {
+                layer.msg("未选择数据！");
+            } else {
+                for (var i = 0; i < selects.length; i++) {
+                    taskId += ',' + selects[i].taskId;
+                }
+                var src = '../Task/TaskDetails.aspx?taskId=' + taskId;
+                window.parent.xiu1(src, "批量打印");
+            }
+        }
+
+        function itemExport() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.msg("请先选一行数据进行操作");
+            } else {
+                layer.open({
+                    type: 2,
+                    title: '项目参数文件',
+                    shadeClose: true,
+                    shade: 0.3,
+                    area: ['80%', '80%'],
+                    content: '../ItemParameters/ActivateFileInfo.html?sampleId=' + selects[0].sampleId,
+                    end: function () {
+                    }
+                });
+            }
+        }
+        //列表导出
+        function listExport() {
+            var rows = $("#table").bootstrapTable('getSelections');
+            if (rows == "") {
+                rows = $("#table").bootstrapTable('getData');
+            }
+            var data1 = [];
+            if (rows != null && rows.length > 0) {
+                if (rows.length > 65536) {
+                    layer.alert("导出数据量过大，请拆分导出！");
+                    return;
+                }
+                for (var i = 0; i < rows.length; i++) {
+                    var model1 = {};
+                    model1.任务编号 = rows[i].sampleNo;
+                    if (rows[i].isNormal == "1") {
+                        model1.任务编号 = rows[i].sampleNo + "(非标)";
+                    }
+                    model1.业务类型 = rows[i].testingTypeCode;
+                    model1.任务名称 = rows[i].taskName;
+                    if (rows[i].testingTypeCode == "工程" || rows[i].testingTypeCode == "检验" || rows[i].testingTypeCode == "评估咨询") {
+                        if (rows[i].projectName == "") {
+                            model1.任务名称 = "(无工程名称)";
+                        }
+                        else {
+                            model1.任务名称 = rows[i].projectName;
+                        }
+                    }
+                    model1.部门代码 = rows[i].deptCode;
+                    model1.任务部门 = rows[i].deptName;
+                    model1.任务天数 = rows[i].expectedDay;
+                    model1.剩余天数 = rows[i].remainingDay + "";
+                    if (rows[i].taskStatusName == "已完成" || rows[i].taskStatusName == "已终止" || rows[i].isDelete || rows[i].remainingDay.length == 0) {
+                        model1.剩余天数 = "--";
+                    }
+                    model1.信息沟通 = rows[i].nextUSERS;
+                    if (rows[i].nextUSERS != "") {
+                        model1.信息沟通 = "待办人：" + rows[i].nextUSERS;
+                    }
+                    model1.任务状态 = rows[i].taskStatusName;
+                    if (!(rows[i].isDelete)) {
+                        if (rows[i].taskStatusName == "退回委托") {
+                            model1.任务状态 = rows[i].editor + ":" + rows[i].remark.replace("退回原因附加说明:", "") + "(" + FormatTime(rows[i].editTime) + ")";
+                        }
+                    }
+                    else {
+                        model1.任务状态 = "已取消";
+                    }
+                    data1.push(model1);
+                }
+                var data = JSON.stringify(data1); 
+                var handle = downloadFile;
+                var json_data = { method: "GetTaskListExport", data: data };
+                ajax(json_data, handle, "../../AjaxRequest/Task/Task.ashx", "json");
+            }
+            else {
+                layer.alert("没有查到数据，无法导出", { icon: 5 });
+                return;
+            }
+        }
+        function downloadFile(data) {
+            layer.closeAll("loading");
+            if (data.src) {
+                window.open(data.src);
+            } else {
+                layer.alert(data.msg);
+            }
+        }
+        function applyInfo() {
+            var selects = $("#table").bootstrapTable('getSelections');
+            if (selects.length != 1) {
+                layer.msg("请选择一行数据进行操作");
+            } else {
+                var taskId = selects[0].taskId;
+                var src = '../OA/AddInfoCommunication.aspx?typeName=任务管理&Id=' + taskId;
+                layer.open({
+                    type: 2,
+                    title: '消息沟通',
+                    shadeClose: true,
+                    shade: 0.3,
+                    area: ['80%', '80%'],
+                    content: src,
+                    end: function () {
+
+                    }
+                });
+                //window.parent.xiu1(src, "消息沟通");
+            }
+        }
+
+        //异常结束
+        function endTask() {
+            var rows = $("#table").bootstrapTable('getSelections');
+            if (rows.length != 1) {
+                layer.alert("请选择一条数据进行操作！", { icon: 5 });
+                return;
+            }
+            if (rows[0].taskStatusName == "进行中" || rows[0].taskStatusName == "已退回") {
+                layer.confirm('您正在对任务编号' + rows[0].testingOrderNo + '进行异常结束操作，异常结束后该任务不可生成报告，不影响正常结算管理与绩效管理，是否确认？',
+                    { icon: 3, title: '提示' }, function () {
+                        var json_data = { method: "TaskAbnormalEnd", taskId: rows[0].taskId, sampleId: rows[0].sampleId };
+                        ajax(json_data, endData, "../../AjaxRequest/Task/Task.ashx", "json");
+                    })
+            } else {
+                layer.alert("仅进行中、已退回的任务可以异常结束！", { icon: 5 });
+            }
+        }
+        //保存handle
+        function endData(data) {
+            layer.closeAll('loading');
+            if (data.state == 1) {
+                layer.alert(data.msg, { icon: 6 });
+                $('#table').bootstrapTable('refresh');//刷新
+            }
+            else {
+                layer.alert(data.msg, { icon: 5 });
+            }
+        }
+
+        window.actionEvents2 = {
+            'click .op2': function (e, value, row, index) {
+                var src = '../OA/infoCommunicationList.html?type=1&Id=' + row.taskId;
+                window.parent.xiu1(src, "沟通列表：" + row.sampleNo + "(taskId:" + row.taskId + ")");
+            }
+        }
+
+    </script>
+</body>
+</html>

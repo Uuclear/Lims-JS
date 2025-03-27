@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" />
+    <script src="../../Common/JS/jquery.min.js"></script>
+    <script src="../../Common/JS/bootstrap.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/handle.js"></script>
+    <script src="../JS/Task/Task.js"></script>
+    <script src="../../Common/plugins/jq_print/js/jQuery.print.js"></script>
+    <style type="text/css" media="print">
+        div#disdiv h1 { display: block !important; }
+        #lbl_remark, #lbl_specification { table-layout: fixed; word-break: break-all; word-wrap: break-word; }
+        .table td { padding: 2px 0px !important; }
+        label, span, td, th { font-size: 10px; }
+        #tb td { min-width: 120px; }
+    </style>
+
+</head>
+<body>
+    <form id="form2">
+
+        <div id="disdiv" style="margin-top: 10px;padding:20px;"> 
+            <h2 class="text-center">检测任务单</h2>
+            <div style="text-align:center;" id="div_testingType"> 
+            </div>
+            <table class="text-center table table-bordered" id="tb">
+                <tr>
+                    <td style="width:10%">
+                        <label>样品名称</label>
+                    </td>
+                    <td style="width:40%">
+                        <span id="lbl_sampleName"></span>
+                    </td>
+                    <td style="width:10%">
+                        <label>样品编号</label>
+                    </td>
+                    <td style="width:40%">
+                        <span id="lbl_sampleNo"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>规格型号</label>
+                    </td>
+                    <td>
+                        <span id="lbl_specification"></span>
+                    </td>
+                    <td>
+                        <label>等级</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleLevel"></span>
+                    </td>
+                </tr>
+                <tr class="cyty cypd cymf AllClass">
+                    <td>
+                        <label>抽样数量</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleQuantityCY"></span>
+                    </td>
+                    <td>
+                        <label>到样日期</label>
+                    </td>
+                    <td>
+                        <span id="lbl_samplingDateCY"></span>
+                    </td>
+                </tr>
+                <tr class="cysk AllClass">
+                    <td>
+                        <label>抽样数量</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleQuantityCYsk"></span>
+                    </td>
+                    <td>
+                        <label>成型日期</label>
+                    </td>
+                    <td>
+                        <span id="formatDate"></span>
+                    </td>
+                </tr>
+                <tr class="sysk AllClass">
+                    <td>
+                        <label>样品数量</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleQuantitySYsk"></span>
+                    </td>
+                    <td>
+                        <label>成型日期</label>
+                    </td>
+                    <td>
+                        <span id="formatDateSy"></span>
+                    </td>
+                </tr>
+                <tr class="cysk sysk AllClass">
+                    <td>
+                        <label>试块记号</label>
+                    </td>
+                    <td>
+                        <span id="sampleRemark"></span>
+                    </td>
+                    <td>
+                        <label>龄期</label>
+                    </td>
+                    <td>
+                        <span id="agePeriod"></span>
+                    </td>
+                </tr>
+                <tr class="cysk sysk AllClass">
+                    <td>
+                        <label>养护条件</label>
+                    </td>
+                    <td>
+                        <span id="maintainCondition"></span>
+                    </td>
+                    <td>
+                        <label>实验日期</label>
+                    </td>
+                    <td>
+                        <span id="formatDateAgePeriod"></span>
+                    </td>
+                </tr>
+                <tr class="syty sypd symf AllClass">
+                    <td>
+                        <label>样品数量</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleQuantity"></span>
+                    </td>
+                    <td>
+                        <label>到样时间</label>
+                    </td>
+                    <td>
+                        <span id="lbl_samplingDate"></span>
+                    </td>
+                </tr>
+                <tr class="cyty cypd cymf syty sypd symf AllClass">
+                    <td>
+                        <label>样品状态</label>
+                    </td>
+                    <td>
+                        <span id="lbl_sampleStatusCode"></span>
+                    </td>
+                    <td>
+                        <label>检测期限</label>
+                    </td>
+                    <td>
+                        <span id="lbl_expectedDay"></span>
+                    </td>
+                </tr>
+                <tr class="cypd sypd AllClass">
+                    <td>
+                        <label>取样部位</label>
+                    </td>
+                    <td colspan="3">
+                        <span id="quYangBuWei"></span>
+                    </td>
+                </tr>
+                <tr class="cypd sypd AllClass">
+                    <td>
+                        <label>固化时间</label>
+                    </td>
+                    <td>
+                        <span id="gHDate"></span>
+                    </td>
+                    <td>
+                        <label>取样日期</label>
+                    </td>
+                    <td>
+                        <span id="qyDate"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>检测机构</label>
+                    </td>
+                    <td colspan="3" style="text-align:left;">
+                        <span id="testingInstituteName"></span>
+                        <!--<span id=""></span>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>判定规则</label>
+                    </td>
+                    <td colspan="3" style="text-align:left;">
+                        <span id="span_judgmentBasis" style="line-height:20px; display:inline-block;"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>委托备注</label>
+                    </td>
+                    <td colspan="3" style="text-align:left;">
+                        <span id="lbl_remark" style="line-height:20px; display:inline-block;"></span>
+                        <!--<span id=""></span>-->
+                    </td>
+                </tr>
+                <tr class="symf cymf AllClass">
+                    <td>
+                        <label>基材备注</label>
+                    </td>
+                    <td colspan="3" style="text-align:left;">
+                        <span id="jc"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>任务分配</label>
+                    </td>
+                    <td colspan="3" style="text-align:left;">
+                        <span id="lbl_taskExecutor"></span>
+                    </td>
+                </tr>
+            </table>
+            <table class="text-center table table-bordered">
+                <tr>
+                    <td colspan="5"><label>检测标准与项目</label></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <div id="div_show" style="text-align:left; line-height:20px;"></div>
+                    </td>
+                </tr>
+            </table>
+            <table class="text-center table table-bordered">
+                <tr>
+                    <td style="width:120px;"><label>检测人员</label></td>
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="print_tr text-center">
+                    <td colspan="4">
+                        <input type="button" class="btn btn-primary" value="打 印" onclick="prints(); " />
+                    </td>
+                </tr>
+            </table>
+            <label>检测日期</label>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var executorId = '';
+        var taskId = 0;
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return null;
+        }
+        //加载页面
+        $(function () {
+
+            //隐藏所有需要判断才展示得列
+            $(".AllClass").hide();
+            var testingOrderId = GetQueryString("testingOrderId");
+            taskId = GetQueryString("taskId");
+            var sampleId = GetQueryString("sampleId");
+            var x = GetQueryString("deptCode");
+
+            //区分是抽样还是收样的各种状态
+            var productTypeid = GetQueryString("productTypeid");
+            json_data = { method: "GetProductTypeReserve02", itemId: productTypeid };
+            ajax(json_data, HrefUrl, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+
+            //用于获得检测人员
+            var json_data = { method: "GetSamplesTestingBasisType", testingOrderId: testingOrderId, sampleId: sampleId };
+            ajax(json_data, GetSamplesTestingItemType2, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            //获得大部分详情
+            var json_data = { method: "GetSamplesBaseList", testingOrderId: testingOrderId, sampleId: sampleId };
+            ajax(json_data, GetSamplesBaseFrom, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            //查看详情    显示委托备注 检测期限 与执行人信息（样品状态，委托备注）
+            var json_data = { method: "GetTaskExcuterTestingOrder", testingOrderId: testingOrderId, sampleId: sampleId, taskId: taskId };
+            ajax(json_data, GetTaskExcuterTestingOrder, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            //检测标准以及项目
+            var json_data = { method: "GetSamplesTestingItemType_Task", testingOrderId: testingOrderId, sampleId: sampleId };
+            ajax(json_data, GetSamplesTestingItemType, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            GetTaskInfo();
+        })
+
+        //获取任务信息
+        function GetTaskInfo() {
+            var json_data = { method: "GetTaskBaseList", taskId: taskId };
+            ajax(json_data, GetTaskBaseListData, "../../AjaxRequest/Task/Task.ashx", "json");
+        }
+        function GetTaskBaseListData(data) {
+            layer.closeAll("loading");
+            data = data[0];
+            if (data.taskStatusName == "退回委托") {
+                var html = "操作人：" + data.editor;
+                html += "<br/>操作时间：" + FormatTime(data.editTime);
+                html += "<br/>" + data.taskRefuseReason;
+                if (data.remark != null && data.remark != "")
+                    html += "<br/>" + data.remark;
+                $("tr.print_tr").before('<tr class="tuihui"><td colspan="4" style="text-align: left;text-indent: 10px;">' + html + '</td></tr>');
+            }
+        }
+
+        //对表格的隐藏以及显示
+        function HrefUrl(data) {
+            layer.closeAll("loading");
+            var testingTypeCode = GetQueryString("testingTypeCode");//用来判断是收样还是抽样
+            var beginMame = ".sy";
+            if (testingTypeCode == "抽样") {
+                beginMame = ".cy";
+            }
+            switch (data.reserve02) {
+                case "跑道": $(beginMame + "pd").show(); //跑道
+                    break;
+                case "试块": $(beginMame + "sk").show(); //试块
+                    break;
+                case "密封": $(beginMame + "mf").show(); //密封
+                default: $(beginMame + "ty").show();
+            }
+        }
+        function GetSamplesBaseFrom(data) {
+            layer.closeAll('loading');
+            if (data.msg == null) {
+                $("#lbl_sampleNo").text(data[0].sampleNo);
+                $("#lbl_sampleName").html(data[0].sampleName);
+                $("#lbl_specification").html(data[0].specification);
+                $("#lbl_sampleLevel").text(data[0].sampleLevel);
+                $("#lbl_sampleQuantity").html(data[0].sampleQuantity);
+                $("#lbl_sampleStatusCode").html(data[0].sampleStatusCode);
+                $("#lbl_samplingDate").text(FormatTime(data[0].samplingDate));
+                $("#maintainCondition").text(data[0].maintainCondition);
+                $("#lbl_sampleQuantitySYsk").text(data[0].sampleQuantity);
+                $("#formatDate").text(FormatTime(data[0].formatDate));
+                $("#formatDateSy").text(FormatTime(data[0].formatDate));
+                $("#sampleRemark").text(data[0].sampleRemark);
+                $("#agePeriod").text(data[0].agePeriod);
+                $("#lbl_sampleQuantityCY").text(data[0].sampleQuantity);
+                $("#lbl_samplingDateCY").text(FormatTime(data[0].samplingDate));
+                $("#formatDateAgePeriod").text(FormatTime(DateAdd(data[0].agePeriod, data[0].formatDate)));
+            } else {
+                layer.alert(data.msg, { icon: 5 });
+            }
+        }
+        function GetTaskExcuterTestingOrder(data) {
+            layer.closeAll('loading');
+            if (data != null && data.length > 0) {
+                $("#lbl_expectedDay").text(FormatTime(data[0].timeStr) + "(" + data[0].expectedDay + "天)");
+                $("#testingInstituteName").html(data[0].testingInstituteName);
+                if (data[0].judgmentType == "需要") {
+                    $("#span_judgmentBasis").html(data[0].judgmentType + ":" + data[0].judgmentBasis);
+                }
+                else {
+                    $("#span_judgmentBasis").html(data[0].judgmentType);
+                }
+                //检验类别
+                if (data[0].testingTypeDesc != "") {
+                    var html_show = "";
+                    if (data[0].testingTypeName == "校准") {
+                        html_show = "<b>委托子类：</b>";
+                    }
+                    else {
+                        html_show = "<b>检验类别：</b>";
+                    }
+                    html_show += "<span>" + data[0].testingTypeDesc+"</span>";                   
+                    $("#div_testingType").html(html_show);
+                }
+                $("#lbl_remark").html(data[0].remark);
+                $("#lbl_taskExecutor").text(data[0].taskExecutor); 
+            }
+        }
+        function GetSamplesTestingItemType2(data) {
+            layer.closeAll('loading');
+            if (data.length > 0 && data[0].remark != "" && $("#div_show").text().trim() == "")
+                $("#div_show").html(data[0].remark);
+
+        }
+
+        function GetSamplesTestingItemType(data) {
+            layer.closeAll('loading');
+            var table_html = "", activateId = "", activateId2 = "";
+            var table_title = "<tr><td style='width:50px;'><b>序号</b></td><td style='width:30%;'><b>检测项目</b></td><td style='width:30%;'><b>认可项目</td><td><b>检测方法</td></td><td style='width:80px;'><b>认可领域</td></td></tr>";
+            for (var i = 0; i < data.length; i++) {
+                var activateId = data[i].activateId;
+                var bz_code = data[i].testingbasisCode;
+                var bz_name = data[i].testingbasisChiName;
+                var jcxm_name = data[i].testingItemName;
+                var rkxm_name = data[i].parameterChiName;
+                var jcff_method = data[i].testingbasisName + "　" + data[i].basisClause;　　//这里空格是全角的
+                var rklr_code = data[i].parameterFieldCode;
+                var rklr_name = data[i].parameterFieldName;
+                if (activateId == "") {
+                    continue;
+                }
+                if (activateId != activateId2) {
+                    table_html += "<tr><td colspan='5' style='text-align:left;'>" + bz_code + " " + bz_name + " （ID：" + activateId + "）</td></tr>";
+                    table_html += table_title;
+                    activateId2 = activateId;
+                }
+                table_html += "<tr><td>" + (i + 1) + "</td><td style='text-align:left;'>" + jcxm_name + "</td><td style='text-align:left;'>" + rkxm_name + "</td>"
+                    + "<td style='text-align:left;'>" + jcff_method + "</td><td style='text-align:left;' title='" + rklr_name + "'>" + rklr_code + "</td></tr>";
+            }
+            if (table_html != "") {
+                $("#div_show").parents("tr").after(table_html).remove();
+            }
+        }
+        function prints() {
+            //var html = $("#txt_show").val();
+            //html = html.replace(/\r\n/g, "<br>").replace(/\n/g, "<br>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+            //$("#div_show").html(html);
+            //$("#txt_show").hide();
+            $("div#disdiv").print({
+                noPrintSelector: "tr.print_tr,tr.tuihui"
+            });
+            //$("#txt_show").show();
+            //$("#div_show").html("");
+        }
+
+        function htmldecode(str) {
+            if (str != null) {
+                str = str.toString();
+                str = str.replace(/&/g, "&amp;");
+                str = str.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                str = str.replace(/</gi, '&lt;');
+                str = str.replace(/>/gi, '&gt;');
+                str = str.replace(/ /gi, '&nbsp;');
+                str = str.replace(/\r\n/gi, '<br />')
+                str = str.replace(/\n/gi, '<br />');
+            }
+            return str;
+        }
+
+
+        //实验日期
+        function DateAdd(number, date) {
+            var date2 = new Date(date);
+            date2.setDate(date2.getDate() + number);
+            return date2.toLocaleDateString();
+        }
+    </script>
+
+</body>
+</html>
