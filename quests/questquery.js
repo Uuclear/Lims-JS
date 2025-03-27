@@ -4,7 +4,7 @@
 // @version      0.3
 // @description  在任务查询页表格中增加规格型号、成型日期、龄期和实验日期列，删除信息沟通列，增加排序功能
 // @author       You
-// @match        *://*/*quests/quests1.html*
+// @match        http://10.1.228.22/UI/Task/TaskManagement.html*
 // @grant        none
 // ==/UserScript==
 
