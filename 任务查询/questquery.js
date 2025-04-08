@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         任务查询页表格增强
 // @namespace    http://tampermonkey.net/
-// @version      0.3
-// @description  在任务查询页表格中增加规格型号、成型日期、龄期和实验日期列，删除信息沟通列，增加排序功能
+// @version      0.4
+// @description  在任务查询页表格中增加规格型号、成型日期、龄期和实验日期列，删除信息沟通列，增加排序功能，增加批量修改功能
 // @author       You
 // @match        http://10.1.228.22/UI/Task/TaskManagement.html*
 // @grant        none
@@ -13,6 +13,7 @@
     
     let tableModified = false;
     let originalSearchFunction;
+    let originalBatchSamplesInfoFunction;
     
     // 等待表格初始化完成
     function waitForTableInit() {
@@ -29,6 +30,12 @@
                     // 调用原始搜索函数
                     originalSearchFunction.apply(this, arguments);
                 };
+            }
+            
+            // 保存并重写批量修改函数
+            if (typeof window.BatchSamplesInfo === 'function' && !originalBatchSamplesInfoFunction) {
+                originalBatchSamplesInfoFunction = window.BatchSamplesInfo;
+                window.BatchSamplesInfo = batchSamplesInfo;
             }
             
             // 监听查询按钮点击事件
@@ -232,6 +239,142 @@
         childList: true,
         subtree: true
     });
+    
+    // 批量修改函数
+    function batchSamplesInfo() {
+        const selects = $("#table").bootstrapTable('getSelections');
+        if (selects.length === 0) {
+            layer.msg("请选择要修改的任务");
+            return;
+        }
+        
+        // 创建进度条
+        const progressLayer = layer.open({
+            type: 1,
+            title: '批量修改进度',
+            content: '<div style="padding: 20px;"><div class="progress"><div class="progress-bar" role="progressbar" style="width: 0%"></div></div><div class="progress-text" style="text-align: center; margin-top: 10px;">0/' + selects.length + '</div></div>',
+            area: ['400px', '150px']
+        });
+        
+        let completed = 0;
+        const total = selects.length;
+        
+        // 逐个处理选中的任务
+        selects.forEach((row, index) => {
+            setTimeout(() => {
+                if (row.specification) {
+                    const specParts = row.specification.split(' ');
+                    let grade = '';
+                    let type = '';
+                    let spec = '';
+                    let condition = '';
+                    
+                    // 解析规格型号信息
+                    specParts.forEach(part => {
+                        if (part.includes('水下')) {
+                            grade = part.replace('水下', '');
+                            condition = '需提高等级';
+                        } else if (part.includes('等级')) {
+                            grade = part;
+                            condition = '不需提高等级';
+                        } else if (part.includes('规格')) {
+                            spec = part;
+                        } else if (part.includes('种类')) {
+                            type = part;
+                        }
+                    });
+                    
+                    // 构建要保存的数据
+                    const jsonData = [{
+                        testingBasisCode: row.testingBasisCode,
+                        testingBasisName: row.testingBasisName,
+                        productDespTypeCode: 'GRADE',
+                        productDespTypeName: '等级',
+                        productDespValue: grade,
+                        productDespId: grade,
+                        activateId: row.activateId,
+                        testingBasisId: row.testingBasisId
+                    }, {
+                        testingBasisCode: row.testingBasisCode,
+                        testingBasisName: row.testingBasisName,
+                        productDespTypeCode: 'TYPE',
+                        productDespTypeName: '种类',
+                        productDespValue: type,
+                        productDespId: type,
+                        activateId: row.activateId,
+                        testingBasisId: row.testingBasisId
+                    }, {
+                        testingBasisCode: row.testingBasisCode,
+                        testingBasisName: row.testingBasisName,
+                        productDespTypeCode: 'SPEC',
+                        productDespTypeName: '规格',
+                        productDespValue: spec,
+                        productDespId: spec,
+                        activateId: row.activateId,
+                        testingBasisId: row.testingBasisId
+                    }, {
+                        testingBasisCode: row.testingBasisCode,
+                        testingBasisName: row.testingBasisName,
+                        productDespTypeCode: 'CONDITION',
+                        productDespTypeName: '实验条件一',
+                        productDespValue: condition,
+                        productDespId: condition,
+                        activateId: row.activateId,
+                        testingBasisId: row.testingBasisId
+                    }];
+                    
+                    // 发送保存请求
+                    $.ajax({
+                        url: "../../AjaxRequest/SamplesBase/SamplesBase.ashx",
+                        type: "POST",
+                        data: {
+                            method: "SaveAddSamplesInfo",
+                            jsonData: JSON.stringify(jsonData),
+                            len: jsonData.length,
+                            testingOrderNo: row.testingOrderNo,
+                            sampleNo: row.sampleNo,
+                            testingOrderId: row.testingOrderId,
+                            sampleId: row.sampleId
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            completed++;
+                            const progress = Math.round((completed / total) * 100);
+                            $('.progress-bar').css('width', progress + '%');
+                            $('.progress-text').text(completed + '/' + total);
+                            
+                            if (completed === total) {
+                                setTimeout(() => {
+                                    layer.close(progressLayer);
+                                    layer.msg('批量修改完成');
+                                    $('#table').bootstrapTable('refresh');
+                                }, 500);
+                            }
+                        },
+                        error: function() {
+                            completed++;
+                            if (completed === total) {
+                                setTimeout(() => {
+                                    layer.close(progressLayer);
+                                    layer.msg('批量修改完成，部分任务可能修改失败');
+                                    $('#table').bootstrapTable('refresh');
+                                }, 500);
+                            }
+                        }
+                    });
+                } else {
+                    completed++;
+                    if (completed === total) {
+                        setTimeout(() => {
+                            layer.close(progressLayer);
+                            layer.msg('批量修改完成，部分任务可能修改失败');
+                            $('#table').bootstrapTable('refresh');
+                        }, 500);
+                    }
+                }
+            }, index * 500); // 添加延迟，避免请求过于密集
+        });
+    }
     
     // 开始执行
     waitForTableInit();
