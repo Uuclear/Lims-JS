@@ -33,7 +33,7 @@ params = {
     'testingOrderNo': '',     # 委托编号
     'testingOrderUnit': '',   # 委托单位
     'testingSamplesNo': '',   # 样品编号
-    'testingReportsNo': 'LJ018-250035',  # 报告编号
+    'testingReportsNo': 'LJ018-25003',  # 报告编号
     'testingType': '',        # 业务类型
     'productType': '',        # 产品大类
     'testingType2': '',       # 检验类别
@@ -81,16 +81,38 @@ try:
     try:
         result = response.json()
         print("\n查询结果:")
-        # 如果结果是数组,提取关键信息
+        # 如果结果是数组,提取更多信息
         if isinstance(result, list):
             print(f"找到 {len(result)} 条记录")
             for i, item in enumerate(result):
                 print(f"\n记录 {i+1}:")
-                # 打印关键字段
-                for key in ['testingOrderNo', 'testingOrderContractNo', 'testingOrderUnitName', 
-                           'projectName', 'testingOrderTime', 'testingInstituteName']:
+                
+                # 展示所有可用字段
+                for key, value in item.items():
+                    print(f"{key}: {value}")
+                
+                # 如果想要更有条理地显示，可以按类别组织信息
+                """
+                print("\n== 委托信息 ==")
+                委托字段 = ['testingOrderId', 'testingOrderNo', 'testingOrderContractNo', 'testingOrderUnitName', 
+                       'projectName', 'testingOrderTime', 'testingInstituteName', 'totalFee', 
+                       'sampleCount', 'reportCount', 'testingOrderStatusCode', 'changeStatus']
+                for key in 委托字段:
                     if key in item:
                         print(f"{key}: {item[key]}")
+                        
+                print("\n== 样品信息 ==")
+                样品字段 = ['testingSamplesNo', 'SampleName', 'Manufacturer', 'TypeSpecification']
+                for key in 样品字段:
+                    if key in item:
+                        print(f"{key}: {item[key]}")
+                
+                print("\n== 报告信息 ==")
+                报告字段 = ['testingReportsNo', 'GenerationDate', 'ReportProperties', 'Reviewer', 'Approver']
+                for key in 报告字段:
+                    if key in item:
+                        print(f"{key}: {item[key]}")
+                """
         else:
             print(json.dumps(result, indent=2, ensure_ascii=False))
     except json.JSONDecodeError:
