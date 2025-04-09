@@ -330,13 +330,15 @@
                     setTimeout(() => {
                         try {
                             // 解析规格信息
-                            const specParts = row.specification.split(',');
+                            const specStr = row.specification.replace(/，/g, ','); // 将中文逗号替换为英文逗号
+                            const specParts = specStr.split(',');
                             let grade = '';
                             let type = '';
                             let spec = '';
                             let condition = '';
 
-                            console.log('原始规格信息：', specParts);
+                            console.log('原始规格信息：', row.specification);
+                            console.log('处理后的规格信息：', specParts);
 
                             // 解析规格型号信息
                             specParts.forEach(part => {
