@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>检测项目报告</title>
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/jquery.nouislider.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/nanoscroller.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/bootstrap-table.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/table.css" />
+    <link href="../../Common/Css/libs/dataTables.fixedHeader.css" rel="stylesheet" />
+
+    <script src="../../Common/JS/jquery.min.js"></script>
+    <script src="../../Common/JS/bootstrap.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/bootstrap-editable.min.js"></script>
+    <script src="../../Common/JS/jquery.nanoscroller.min.js"></script>
+
+    <script src="../../Common/JS/scripts.js"></script>
+    <script src="../JS/Task/Task.js"></script>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+    <div style="margin-top: 10px;padding:20px;">
+        <form id="form1" class="form-inline">
+            <table id="tb" data-striped="true" style="width:100%" class="table table-bordered">
+                <tr>
+                    <td width="5%"></td>
+                    <td>
+                        <label class="col-xs-10 text-center">检测项目</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div>
+                            <input type="checkbox" id="ckAll" style="margin-left: 1%;" name="Checkbox" onclick="CheckAll(this)">
+                            <label>全选</label>
+
+                            <input type="checkbox" id="NonStandard" disabled="disabled" style="margin-left: 3%;">
+                            <label>非标准</label>
+                            <span style="margin-left:15px;">工程/检验/评估咨询算非标准</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div id="html"></div>
+            <div class="text-center">
+                <!--<button type="button" class="btn btn-primary btn-sm" onclick="Cancel()">上一步</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;-->
+                <button type="button" id="btn_next" class="btn btn-primary btn-sm" onclick="Next(this)" disabled="disabled">下一步</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        var testingOrderNo;
+        var testingOrderId;
+        var sampleNo;
+        var sampleId;
+        var testingItemIdList = "";
+        var testingBasisIdList = "";
+        var len = 0;
+        var testingbasisList = "";
+        var testingData = new Array();
+        var value = new Array();
+        var testingTypeCode2 = "";
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return null;
+        }
+        var flg = false;
+        //加载页面
+        $(function () {
+            testingOrderNo = GetQueryString("testingOrderNo");
+            testingOrderId = GetQueryString("testingOrderId");
+            sampleNo = GetQueryString("sampleNo");
+            sampleId = GetQueryString("sampleId");
+            if (testingOrderNo != "" && sampleNo != "") {
+                GetTestingItemList();
+            }
+            getStatus();
+        })
+
+        //获取当前数据的实时状态
+        function getStatus() {
+            var taskId = GetQueryString("taskId");
+            var reportId = GetQueryString("reportId");
+            if (taskId != "" || Number(sampleId) > 0) {
+                var json_data = {
+                    method: "GetTaskStatus", taskId: taskId, sampleId: sampleId, reportId: reportId
+                };
+                handle = getStatusData;
+                try {
+                    ajax(json_data, handle, "/AjaxRequest/Experiment/Experiment.ashx", "json");
+                }
+                catch (e) {
+                    layer.msg(e.message, { time: 2000 });
+                }
+            }
+        }
+
+        function getStatusData(data) {
+            layer.closeAll('loading');
+            if (data.state == "1") {
+                var taskStatusCode = data.status;
+                if (taskStatusCode == '5' || taskStatusCode == '3' || taskStatusCode == '0' || taskStatusCode == '9') {   //要查数据库实时状态
+                    $("#btn_next").attr('disabled', 'disabled');
+                } else {
+                    $("#btn_next").removeAttr('disabled');
+                }
+            } else {
+            }
+        }
+        function CheckAllBasis() {
+            var reportId = GetQueryString("reportId");
+            var json_data = { method: "checkbutton", testingOrderId: testingOrderId, reportId: reportId };
+            var handle = CheckAllSucess;
+            ajax(json_data, handle, "../../AjaxRequest/Task/Task.ashx", "json");
+        }
+        function CheckAllSucess(data) {
+            layer.closeAll('loading');
+            if (data != null && data != "") {
+                if (data.state == "0") {
+                    $("#ckAll").prop("checked", true);
+                    $("#tb input[type='checkbox'][name='Checkbox']").prop('checked', $("#ckAll").prop('checked'));
+                    CheckNomorl();
+                    $("#tb input[type='checkbox'][name='Checkbox']").prop('disabled', 'disabled');
+                } else {
+                    $("#ckAll").prop("checked", true);
+                    $("#tb input[type='checkbox'][name='Checkbox']").prop('checked', $("#ckAll").prop('checked'));
+                    CheckNomorl();
+                }
+
+                var taskId = GetQueryString("taskId");
+                if (taskId == "") {
+                    if (data.code == "1") {    //暂时先改这样
+                        $("#btn_next").attr('disabled', 'disabled');
+                    } else if (data.code == "0") {
+                        $("#btn_next").removeAttr('disabled');
+                    }
+                }
+            }
+        }
+        function GetTestingbasisList() {
+            var json_data = { method: "GetTestingbasisList", testingOrderId: testingOrderId, sampleId: sampleId };
+            var handle = GetTestingbasisListHandle;
+            ajax(json_data, handle, "../../AjaxRequest/Task/Task.ashx", "json");
+        }
+        var testingTypeCode = "";
+        //function GetTestingbasisListHandle(data) {
+        //    layer.closeAll('loading');
+        //    if (data != null && data != "") {
+        //        len = data.length;
+        //        testingbasisList = data;
+        //        var Html = "";
+        //        for (var i = 0; i < len; i++) {
+        //            if (data[i].testingBasisCode == "00000") {
+        //                flg = true;
+        //            }
+        //            testingTypeCode = data[i].testingTypeCode;
+        //            Html += '<tr id="tr' + data[i].sampleTestingBasisId + '"><td colspan="2"><div><label style="margin-left: 1%;">' + data[i].testingBasisName + '</label></div></td></tr>';
+        //            GetTestingItemList(data[i].testingBasisId);
+        //        }
+        //        $("#tb").append(Html);
+        //        if (flg || (testingTypeCode == "工程" || testingTypeCode == "检验")) {
+        //            if (testingTypeCode == "工程" || testingTypeCode == "检验") {
+        //                $("#NonStandard").prop("disabled", true);
+        //            } else {
+        //                $("#NonStandard").prop("disabled", false);
+        //            }
+        //            $("#NonStandard").prop("checked", true);
+        //        }
+
+        //    }
+        //}
+        function GetTestingItemList() {
+            var testingItemIds = GetQueryString("testingItemId");
+            var json_data = { method: "GetTestingItemList", testingOrderId: testingOrderId, sampleId: sampleId };
+            var handle = GetTestingItemListHandle;
+            ajax(json_data, handle, "../../AjaxRequest/Task/Task.ashx", "json");
+        }
+        //function GetTestingItemListHandle(data) {
+        //    layer.closeAll('loading');
+        //    if (data != null && data.state == "1") {
+        //        var list1 = data.list1;
+        //        var list2 = data.list2;
+        //        var Html = "";
+        //        var srt = "";
+        //        for (var i = 0; i < data.length; i++) {
+
+        //            var name1 = data[i].testingItemParentName;
+        //            var name2 = data[i].testingItemName;
+        //            var name = name1 + "-" + name2;
+        //            if (name == "-" + name2) {
+        //                name = name2;
+        //            } else if (name == "-") {
+        //                name = "";
+        //            }
+        //            var standardValue = "0";
+        //            if (data[i].standardValue == "0") {   //不启用就是没有标准值，就不需要匹配标准网上模版
+        //                standardValue = "1";
+        //            }
+        //            if (standardValue == "1") {
+        //                srt = "<span style='color:Red;margin-left:20px;'>(未启用标准值)</span>";
+        //            } else {
+        //                srt = "";
+        //            }
+        //            if (testingTypeCode == "工程" || testingTypeCode == "检验") {
+        //                standardValue = "1";
+        //            }
+        //            Html = '<tr><td align="center"><input type="checkbox" Name="Checkbox" data="checkbox" onclick="CheckNomorl()" isNomorl="' + standardValue + '" value="' + i + '">';
+        //            Html += '<input type="hidden" value="' + data[i].testingItemId + '"></td>';
+        //            Html += '<td><label class="col-xs-10 text-left">' + name + srt + '</label></td></tr>';
+        //            $("#tr" + data[i].sampleTestingBasisId).after(Html);
+        //            testingData.push({ Id: i, testingBasisId: data[i].testingBasisId, testingItemId: data[i].testingItemId, testingItemParentName: data[i].testingItemParentName });
+        //        }
+        //        CheckAllBasis();
+        //    }
+        //}
+
+        function GetTestingItemListHandle(data) {
+            layer.closeAll('loading');
+            if (data != null && data.state == "1") {
+                var list1 = data.data1;
+                var list2 = data.data2;
+                var list3 = data.data3;
+                var Html = "<table class='table'>";
+                var srt = "";
+                for (var i = 0; i < list2.length; i++) {
+                    var sealName = list2[i].sealName;
+                    var sealId = list2[i].sealId;
+                    if (i == 0) {
+                        Html += "<tr><td>&nbsp;</td><td sealId='" + sealId + "' width='15%'>" + sealName + "</td>";
+                    } else if (i < (list2.length - 1)) {
+                        Html += "<td sealId='" + sealId + "' width='15%'>" + sealName + "</td>";
+                    } else {
+                        Html += "<td sealId='" + sealId + "' width='15%'>" + sealName + "</td></tr>";
+                    }
+                }
+                Html += "</table>";
+                $("#html").html(Html);
+                Html = "";
+                for (var i = 0; i < list3.length; i++) {
+                    var sealIds = list3[i].sealids;
+                    var testingbasisCode = list3[i].testingbasisCode;
+                    var testingItemName = list3[i].testingItemName;
+                    var testingbasisId = list3[i].testingbasisId;
+                    var testingitemid = list3[i].testingitemid;
+                    var testingTypeCode = list3[i].testingTypeCode;
+                    var standardValue = "0";
+                    if (list3[i].standardValue == "0") {   //不启用就是没有标准值，就不需要匹配标准网上模版
+                        standardValue = "1";
+                    }
+                    if (standardValue == "1") {
+                        testingItemName += "<span style='color:Red;margin-left:20px;'>(未启用标准值)</span>";
+                    } else {
+                        srt = "";
+                    }
+                    testingTypeCode2 = testingTypeCode;
+                    if (testingTypeCode == "工程" || testingTypeCode == "检验" || testingTypeCode == "评估咨询") {
+                        standardValue = "1";
+                    }
+                    Html += "<tr><td testingbasisId='" + testingbasisId + "'  testingitemid='" + testingitemid + "' isNomorl='" + standardValue + "'>" + testingbasisCode + " -- " + testingItemName + "</td>";
+                    $("#html tr td:gt(0)").each(function () {
+                        var sealId = $(this).attr("sealId");
+                        if (sealIds.indexOf("[" + sealId + "]") > -1) {
+                            Html += "<td><input type='checkbox' checked='checked' disabled='true' /></td>";
+                        } else {
+                            Html += "<td>&nbsp;</td>";
+                        }
+                    })
+                    Html += "</tr>";
+                    testingData.push({ Id: i, testingBasisId: testingbasisId, testingItemId: testingitemid });
+                }
+                $("#html table").append(Html);
+                CheckAllBasis();
+            }
+        }
+
+        function CheckAll(obj) {
+            $("#tb input[type='checkbox'][name='Checkbox']").prop('checked', $(obj).prop('checked'));
+            CheckNomorl()
+        }
+
+        function CheckNomorl() {
+            var i = 0;
+            $("#html table tr:gt(0)").each(function () {
+                if ($(this).find("td:eq(0)").attr("isNomorl") == "1") {
+                    i++;
+                }
+            })
+            if (i == 0) {
+                $("#NonStandard").prop("checked", false);
+            } else {
+                $("#NonStandard").prop("checked", true);
+            }
+
+            if (testingTypeCode2 == "工程" || testingTypeCode2 == "检验" || testingTypeCode2 == "评估咨询") {
+                $("#NonStandard").prop("checked", true);
+            }
+        }
+
+        function Next(obj) {
+            $(obj).attr("disabled", "disabled");
+            var testingOrderNo = GetQueryString("testingOrderNo");
+            var sampleNo = GetQueryString("sampleNo");
+            var testingOrderId = GetQueryString("testingOrderId");
+            var sampleId = GetQueryString("sampleId");
+            var taskId = GetQueryString("taskId");
+            var NonStandard = $("#NonStandard").prop("checked");
+
+            if (NonStandard) {
+                if (testingTypeCode2 == "评估咨询") {
+                    window.location.href = "../Task/NonStandardReport_pj.aspx?testingOrderId=" + testingOrderId + "&sampleId=" + sampleId + "&testingOrderNo=" + testingOrderNo + "&sampleNo=" + sampleNo + "&taskId=" + taskId;
+                }
+                else if (testingTypeCode2 == "认证抽样")  {
+                    window.location.href = "../Task/NonStandardReport_rz.aspx?testingOrderId=" + testingOrderId + "&sampleId=" + sampleId + "&testingOrderNo=" + testingOrderNo + "&sampleNo=" + sampleNo + "&taskId=" + taskId;
+                }
+                else {
+                 window.location.href = "../Task/NonStandardReport.aspx?testingOrderId=" + testingOrderId + "&sampleId=" + sampleId + "&testingOrderNo=" + testingOrderNo + "&sampleNo=" + sampleNo + "&taskId=" + taskId;
+                }
+                return;
+            }            
+            var Checkbox = $("#html table tr:gt(0)");
+            testingBasisIdList = "";
+            testingItemIdList = "";
+            for (var i = 0; i < Checkbox.length; i++) {
+                if (testingBasisIdList != "" && testingItemIdList != "") {
+                    testingBasisIdList += ",";
+                    testingItemIdList += ",";
+                }
+                testingBasisIdList += testingData[i].testingBasisId;
+                //不能直接用对象中的项目ID，顺序不对
+                testingItemIdList += $(Checkbox).eq(i).find("td:eq(0)").attr("testingitemid");
+            }
+            if (testingBasisIdList != "" && testingBasisIdList != null && testingItemIdList != "" && testingItemIdList != null) {
+                var reportId = GetQueryString("reportId");
+                layer.load(1, {
+                    shade: [0.3, '#000']
+                });
+                window.location.href = "../Experiment/ExperimentResultThird.aspx?reportId=" + reportId + "&testingBasisId=" + testingBasisIdList + "&sampleid=" + sampleId + "&testingItemId=" + testingItemIdList + "&sampleNo=" + sampleNo + "&taskId=" + taskId;
+            } else {
+                layer.alert("请选择!");
+                $(obj).removeAttr("disabled");
+            }
+        }
+        function Cancel() {
+            window.history.back(-1);
+        }
+
+    </script>
+
+
+
+</body>
+</html>

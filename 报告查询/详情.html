@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/compiled/theme_styles.css" />
+    <link rel="stylesheet" href="../../Common/Css/jQueryEasyform/easyform.css" type="text/css" />
+    <link href="../../Common/JS/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/jquery.nouislider.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/libs/nanoscroller.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/bootstrap-table.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/table.css" />
+    <link href="../../Common/Css/libs/dataTables.fixedHeader.css" rel="stylesheet" />
+
+    <script src="../../Common/JS/OA.js"></script>
+    <script src="../Admin_Template/js/jquery.js"></script>
+    <script src="../../Common/JS/layer.js"></script>
+    <script src="../../Common/JS/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/basicInfo/table.css" />
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../../Common/JS/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script src="../../Common/JS/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../Common/JS/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js"></script>
+    <script src="../../Common/JS/jquery.nanoscroller.min.js"></script>
+    <script src="../../Common/JS/scripts.js"></script>
+    <script src="../../Common/JS/laydate/laydate.js"></script>
+    <script src="../../Common/JS/jQueryEasyform/easyform.js"></script>
+    <script src="../JS/TestingOrder/TestingOrder.js?v=01"></script>
+    <script src="../../Common/JS/bootstrap-treeview.js"></script>
+    <style type="text/css">
+        .form-group { margin-bottom: 0px !important; }
+
+        .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td { padding: 0 !important; margin: 0 !important; line-height: 2.428571 !important; }
+
+        .table > tbody > tr > td { padding: 0px 0px !important; text-align: center; }
+
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 { padding: 0px !important; }
+
+        input { border: 0px !important; outline: none !important; height: 100% !important; }
+
+        .form-control { border-radius: 0px !important; height: 44px !important; }
+    </style>
+
+</head>
+<body>
+    <form id="from1" name="from1">
+        <p>
+            <input type="button" class="btn btn-primary" value="样品图片" onclick="imgShow()" />
+        </p>
+        <div id="">
+            <table class="table table-bordered" id="tb">
+                <tr>
+                    <td style="width:10%;  ">
+                        <label for="sampleName" class=" text-center">样品名称</label>
+                    </td>
+                    <td style="width:15%;  ">
+                        <input type="text" id="sampleName" class="col-xs-12 form-control" maxlength="100" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:10%;  ">
+                        <label for="sampleNo" class=" text-center">样品编号</label>
+
+                    </td>
+                    <td style="width:15%;  ">
+                        <input type="text" style="width:100%;padding:6px 12px!important;" id="sampleNo" class="col-xs-12 form-control" placeholder="此项为必填项" data-easytip="class:easy-blue;position:right;" data-message="此项为必填项!" />
+                        <input type="text" id="sampleId" class="col-xs-12 form-control hidden" data-easyform="null;" placeholder="样品ID" disabled />
+
+                    </td>
+                    <td style="width:10%;  ">
+                        <label for="depositaryCode" class="text-center">存放地点</label>
+
+                    </td>
+                    <td style="width:15%;  ">
+                        <input type="text" id="depositaryCode" class="col-xs-12 form-control" style="width: 100% !important;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:10%;  ">
+                        <label for="samplingDate" class="text-center">到样日期</label>
+
+                    </td>
+                    <td style="width:15%;  ">
+                        <input type="text" id="samplingDate" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="specification" class=" text-center">型号规格</label>
+                    </td>
+                    <td>
+                        <input type="text" id="specification" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td>
+                        <label for="sampleLevel" class="text-center">等级</label>
+
+                    </td>
+                    <td>
+                        <input type="text" id="sampleLevel" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td>
+                        <label for="trademark" class="text-center">商标</label>
+
+                    </td>
+                    <td>
+                        <input type="text" id="trademark" class="col-xs-12 form-control" style="width: 100% !important;padding:6px 12px!important;" />
+
+                    </td>
+                    <td>
+                        <label for="batchNo" class="text-center">批号</label>
+
+                    </td>
+                    <td>
+                        <input type="text" id="batchNo" class="col-xs-12 form-control" maxlength="50" style="width: 100% !important;padding:6px 12px!important;" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="productiveUnit" class="text-center">生产单位</label>
+
+                    </td>
+                    <td>
+                        <input type="text" id="productiveUnit" class="col-xs-12 form-control" style="width: 100% !important;padding:6px 12px!important;" />
+
+                    </td>
+                    <td>
+                        <label for="productiveDate" class="text-center">生产日期</label>
+
+                    </td>
+                    <td>
+                        <input class="col-xs-12 form-control" type="text" id="productiveDate" style="width:100%;padding:6px 12px!important;" data-easyform="null;">
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleStatusName" class=" text-center">样品外观</label>
+
+                    </td>
+                    <td colspan="3">
+                        <input type="text" id="sampleStatusName" class="col-xs-12 form-control" style="width: 100% !important;padding:6px 12px!important;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleQuantity" class="text-center">样品数量</label>
+                    </td>
+                    <td>
+                        <input type="text" style="width:100%;padding:6px 12px!important;" id="sampleQuantity" class="col-xs-12 form-control" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="representQuantity" class="text-center">代表数量</label>
+
+                    </td>
+                    <td class="col-cl-2">
+                        <input type="text" style="width:100%;padding:6px 12px!important;" id="representQuantity" class="col-xs-12 form-control" />
+
+                    </td>
+                    <td>
+                        <label for="sampleStatusCode" class=" text-center">样品状态</label>
+
+                    </td>
+                    <td colspan="3">
+                        <input type="text" style="width:100%;padding:2px 12px!important;" name=" name" value=" " id="sampleStatusCode" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleRemark" class="text-center">试块记号</label>
+
+                    </td>
+                    <td>
+                        <input type="text" id="sampleRemark" class="col-xs-12 form-control" placeholder="" style="width: 100% !important;padding:6px 12px!important;" data-easyform="null;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="maintainCondition" class="text-center">养护条件</label>
+
+                    </td>
+                    <td class="col-cl-2">
+                        <input type="text" id="maintainCondition" class="col-xs-12 form-control" placeholder="" style="width: 100% !important;padding:6px 12px!important;" data-easyform="null;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="agePeriod" class="text-center">龄期</label>
+
+                    </td>
+                    <td style="width:170px;">
+                        <input type="text" id="agePeriod" class="col-xs-12 form-control" placeholder="" style="width: 100% !important;padding:6px 12px!important;" data-easyform="null;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="formatDate" class="text-center">成型日期</label>
+                    </td>
+                    <td style="width:140px;">
+                        <input style="width:100%;padding:6px 12px!important;" class="col-xs-12 form-control" type="text" id="formatDate" data-easyform="null;" readonly>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left" style="border: 0;"><h5>实验主体</h5></td>
+                </tr>
+                <tr>
+                    <td style="width:90px;">
+                        <label for="sampleName" class=" text-center">领样人</label>
+                    </td>
+                    <td>
+                        <input type="text" id="sampleReceiver1" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">领样时间</label>
+
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="handoverDate1" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">检测部门</label>
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="sampleLabName1" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:90px;  ">
+                        <label for="sampleName" class=" text-center">留样人</label>
+                    </td>
+                    <td>
+                        <input type="text" id="sampleReceiver7" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">留样时间</label>
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="handoverDate7" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">结余数量</label>
+
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="sampleLabName7" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:90px;  ">
+                        <label for="sampleName" class=" text-center">留样期限</label>
+                    </td>
+                    <td>
+                        <input type="text" id="residualPeriod" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">留样库</label>
+                    </td>
+                    <td class="col-xs-3" colspan="5">
+                        <input type="text" id="placeName" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:90px;  ">
+                        <label for="sampleName" class=" text-center">处理人</label>
+                    </td>
+                    <td>
+                        <input type="text" id="sampleReceiver8" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">处理时间</label>
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="handoverDate8" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />
+
+                    </td>
+                    <td style="width:90px; padding:0px 1px; ">
+                        <label for="sampleNo" class=" text-center">处理期限</label>
+                    </td>
+                    <td class="col-xs-3" colspan="3">
+                        <input type="text" id="sampleLabName8" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" value="" />
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </form>
+
+
+    <script>
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return decodeURI(r[2]);
+            return null;
+        }
+        $(function () {
+            $("input[type='text']").each(function () {
+                $(this).attr("readonly", "readonly")
+            });
+
+            var sampleId = GetQueryString("sampleid");
+            //var sampleNo = GetQueryString("sampleNo");
+            var json_data = { method: "GetSamplesBaseList", testingOrderNo: '', sampleId: sampleId };
+            ajax(json_data, GetSamplesBaseFrom, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+        })
+        function imgShow() {
+            var sampleId = GetQueryString("sampleid");
+            layer.open({
+                title: '样品信息附件查看',
+                type: 2,
+                area: ['90%', '90%'],
+                fix: true, //固定
+                maxmin: false,
+                content: '/UI/SamplesBase/SampleBaseUploadFile.html?sampleId=' + sampleId + '&v=1',
+                end: function () {
+                }
+            });
+        }
+        function GetSamplesBaseFrom(data) {
+            layer.closeAll('loading');
+            if (data.msg == null) {
+
+                $("#sampleNo").val(data[0].sampleNo);
+                $("#sampleName").val(data[0].sampleName);
+                $("#specification").val(data[0].specification);
+                $("#productiveUnit").val(data[0].productiveUnit);
+                $("#trademark").val(data[0].trademark);
+                $("#representQuantity").val(data[0].representQuantity);
+                $("#depositaryCode").val(data[0].depositaryName);
+                $("#sampleLevel").val(data[0].sampleLevel);
+                $("#sampleQuantity").val(data[0].sampleQuantity);
+                $("#batchNo").val(data[0].batchNo);
+                $("#maintainCondition").val(data[0].maintainCondition);
+                $("#sampleShelfNo").val(data[0].sampleShelfNo);
+                $("#sampleStatusCode").val(data[0].sampleStatusCode);
+                $("#sampleStatusName").val(data[0].sampleStatusName);
+                $("#productiveDate").val(data[0].productiveDate);
+                if (data[0].samplingDate != "" && data[0].samplingDate != undefined) {
+                    $("#samplingDate").val(timeStamp2String(data[0].samplingDate));
+                }
+
+                //$("#sampleProcessStatusCode").val(data[0].sampleProcessStatusCode);
+                $("#sampleRemark").val(data[0].sampleRemark);
+                //$("#formatDate").val(data[0].formatDate);
+                if (data[0].formatDate != "" && data[0].formatDate != undefined) {
+                    $("#formatDate").val(timeStamp2String(data[0].formatDate));
+                }
+                $("#agePeriod").val(data[0].agePeriod);
+                if (data[0].testingTypeCode == "抽样") {   //如果为抽样，把样品外观改成 单位地址 2018-08-31
+                    $("label[for='sampleStatusName']").text("单位地址");
+                }
+
+
+                //主体信息查询
+                json_data = { method: "GetSamplesSubject", sampleId: data[0].sampleId };
+                ajax(json_data, GetSamplesSubject, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+                //副体信息查询  分组  循环行
+                json_data = { method: "GetSamplesVicebodyGroup", sampleId: data[0].sampleId };
+                ajax(json_data, GetSamplesVicebodyGroup, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            } else {
+                layer.alert(data.msg, { icon: 5 });
+                //select examiner,createtime,creator from jk_experiment_base where sampleNo='DQ02-170006-01'
+            }
+        }
+        function GetSamplesSubject(data) {
+            layer.closeAll('loading');
+
+            if (data != null && data.length > 0) {
+                //handoverType
+                for (var i = 0; i < data.length; i++) {
+                    switch (data[i].handoverType) {
+                        case "1":
+                            $("#sampleReceiver1").val(data[i].sampleReceiver);
+                            $("#handoverDate1").val(timeStamp2String(data[i].handoverDate));
+                            if ($("#sampleLabName1").val() == "") {
+                                $("#sampleLabName1").val(data[i].sampleLabName);
+                            }
+                            break;
+                        case "7":
+                            $("#sampleReceiver7").val(data[i].sampleReceiver);
+                            $("#handoverDate7").val(timeStamp2String(data[i].handoverDate));
+                            $("#sampleLabName7").val(data[i].residualAmount);
+                            $("#residualPeriod").val(data[i].residualPeriod + "天");
+                            $("#placeName").val(data[i].placeName);
+                            break;
+                        case "8":
+                            $("#sampleReceiver8").val(data[i].sampleReceiver);
+                            $("#handoverDate8").val(timeStamp2String(data[i].handoverDate));
+                            break;
+                    }
+                    var day = parseInt(data[i].residualPeriod);
+                    var time = new Date(data[i].handoverDate);
+                    time = time.setDate(time.getDate() + day);
+                    $("#sampleLabName8").val(timeStamp2String(time));
+                }
+            }
+
+        }
+        //循环  生成tr
+        var ptname = [];
+        function GetSamplesVicebodyGroup(data) {
+            layer.closeAll('loading');
+            var sampleId = GetQueryString("sampleid");
+            if (data != null && data.length > 0) {
+                var html1 = '<tr id="tr"><td class="text-left" style="border: 0;"><h5>实验副体</h5></td></tr>';
+                for (var i = 0; i < data.length; i++) {
+                    ptname.push(data[i].partName);
+                    html1 += '<tr><td style="width:90px; "><label for="sampleName" class=" text-center">领样人</label> </td>';
+                    html1 += '<td ><input type="text" id="sampleReceiver2' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" value=' + data[i].sampleReceiver + ' />';
+                    html1 += '</td><td style="width:90px; padding:0px 1px; ">';
+                    html1 += '<label for="sampleNo" class=" text-center">领样时间</label></td><td class="col-xs-3" colspan="3">';
+                    html1 += '<input type="text" id="handoverDate2' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += '</td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">检测部门</label></td><td class="col-xs-3" colspan="3">';
+                    html1 += '<input type="text" id="sampleLabName2' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" /></td></tr>';
+                    html1 += '<tr><td style="width:90px;  "><label for="sampleName" class=" text-center">留样人</label>';
+                    html1 += '</td><td ><input type="text" id="sampleReceiver7' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += '   </td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">留样时间</label></td><td class="col-xs-3" colspan="3">';
+                    html1 += '  <input type="text" id="handoverDate7' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += '  </td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">结余数量</label>';
+                    html1 += '</td><td class="col-xs-3" colspan="3"><input type="text" id="sampleLabName7' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += ' </td></tr>';
+                    html1 += '<tr><td style="width:90px;">';
+                    html1 += '<label for="sampleName" class=" text-center">留样期限</label>';
+                    html1 += '</td><td>';
+                    html1 += '<input type="text" id="residualPeriod2" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" placeholder="" /></td>';
+                    html1 += '<td style="width:110px; padding:0px 1px; ">';
+                    html1 += '<label for="sampleNo" class=" text-center">留样库</label>';
+                    html1 += '</td><td class="col-xs-3" colspan="5">';
+                    html1 += '<input type="text" id="placeName2" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += '</td></tr>';
+                    html1 += '  <tr><td style="width:90px;"><label for="sampleName" class=" text-center">处理人</label></td><td ><input type="text" id="sampleReceiver8' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += '    </td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">处理时间</label>';
+                    html1 += '</td><td class="col-xs-3" colspan="3"><input type="text" id="handoverDate8' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+                    html1 += ' </td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">处理期限</label>';
+                    html1 += '   </td><td class="col-xs-3" colspan="3"><input type="text" id="sampleLabName8' + i + '" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" value="我是处理时间" />';
+                    html1 += '   </td> </tr>';
+                }
+                $("#tb tbody").append(html1);
+                //副体信息查询
+                json_data = { method: "GetSamplesVicebody", sampleId: sampleId };
+                ajax(json_data, GetSamplesVicebody, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+            }
+            //主检人信息
+            json_data = { method: "GetExaminer", sampleId: sampleId };
+            ajax(json_data, GetExaminer, "../../AjaxRequest/TestingOrders/TestingOrders.ashx", "json");
+
+        }
+
+        function GetSamplesVicebody(data) {
+            layer.closeAll('loading');
+            if (data != null && data.length > 0) {
+                for (var i = 0; i < ptname.length; i++) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (data[j].partName == ptname[i]) {
+                            switch (data[j].handoverType) {
+                                case "2":
+                                    $("#sampleReceiver2" + i).val(data[j].sampleReceiver);
+                                    $("#handoverDate2" + i).val(timeStamp2String(data[j].handoverDate));
+                                    $("#sampleLabName2" + i).val(data[j].partName);
+                                    break;
+                                case "7":
+                                    $("#sampleReceiver7" + i).val(data[j].sampleReceiver);
+                                    $("#handoverDate7" + i).val(timeStamp2String(data[j].handoverDate));
+                                    $("#sampleLabName7" + i).val(data[j].residualAmount);
+                                    $("#residualPeriod2").val(data[i].residualPeriod + "天");
+                                    $("#placeName2").val(data[i].placeName);
+                                    break;
+                                case "8":
+                                    $("#sampleReceiver8" + i).val(data[j].sampleReceiver);
+                                    $("#handoverDate8" + i).val(timeStamp2String(data[j].handoverDate));
+                                    break;
+                            }
+                            var day = parseInt(data[i].residualPeriod);
+                            var time = new Date(data[i].handoverDate);
+                            time = time.setDate(time.getDate() + day);
+                            $("#sampleLabName8" + i).val(timeStamp2String(time));
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        function GetExaminer(data) {
+            layer.closeAll('loading');
+            var html = ' <tr><td><label for="sampleName">主检人</label>';
+            html += '</td><td ><input type="text" id="examiner" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+            html += '</td><td style="width:90px; padding:0px 1px; "><label for="sampleNo">实验数据录入人</label></td><td class="col-xs-3" colspan="3">';
+            html += '<input type="text" id="creator" class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" />';
+            html += '</td><td style="width:90px; padding:0px 1px; "><label for="sampleNo" class=" text-center">录入时间</label></td><td class="col-xs-3" colspan="3">';
+            html += '<input type="text" id="createtime"  class="col-xs-12 form-control" style="width:100%;padding:6px 12px!important;" /></td></tr>';
+            $("#tb tbody").append(html);
+            if (data != null && data.length > 0) {
+                $("#examiner").val(data[0].examiner);
+                $("#createtime").val(timeStamp2String(data[0].createtime));
+                $("#creator").val(data[0].creator);
+            }
+            $("input[type='text']").each(function () {
+                $(this).attr("readonly", "readonly");
+            });
+        }
+    </script>
+</body>
+</html>

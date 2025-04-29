@@ -1,0 +1,965 @@
+
+function ajax(jsondata, handle, url, datatype) {
+    try {
+        layer.load();
+    } catch (e) {
+
+    }
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请尝试重新登录再试" + errorThrown, { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+function ajaxPlus(jsondata, handle, url, datatype, element) {
+    try {
+        layer.load();
+    } catch (e) {
+
+    }
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        async: false,
+        success: function (data) {
+            handle(data, element)
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请尝试重新登录再试" + errorThrown, { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+function ajax1(jsondata, handle, url, datatype) {
+    try {
+        layer.load();
+    } catch (e) {
+
+    }
+    $.ajax({
+        type: "POST",
+        url: "../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请求数据错误", { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+//同步
+function ajax2(jsondata, handle, url, datatype) {
+    layer.load();
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        async: false,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请尝试重新登录再试", { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+//异步，没有进度图标
+function ajax3(jsondata, handle, url, datatype) {
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请尝试重新登录再试" + errorThrown, { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+function logout(data) {
+    layer.closeAll('loading');
+    if (data.state == "0")
+        layer.alert(data.msg, { icon: 5 });
+    else if (data.state == "1") {
+        location.href = "../Login.html";
+
+    }
+    else if (data.state == "2") {
+        layer.alert(data.msg, { icon: 5 });
+    }
+}
+
+function getResult(data) {
+    layer.closeAll('loading');
+    if (data.state == "0")
+        layer.alert(data.msg, { icon: 5 });
+    else if (data.state == "1") {
+
+        if (data.msg == "保存成功") {
+            // layer.msg(data.msg, { time: 1000 });
+            // layer.alert(data.msg);
+            // alert(data.msg);
+            layer.alert('保存成功', { icon: 1 }, function (index) {
+                layer.close(0);
+                window.external.DialogResult = rpt_json; //设置ShowHtmlModalDialog的返回值
+                window.opener = null;
+                window.open('', '_self');
+                window.close();
+                return;
+
+            });
+
+        }
+        else {
+            // layer.msg(data.msg, {time: 1000});
+            // layer.alert(data.msg);
+            // alert(data.msg);
+            layer.alert(data.msg, { icon: 1 }, function (index) {
+                layer.close(0);
+                window.external.DialogResult = rpt_json; //设置ShowHtmlModalDialog的返回值
+                window.opener = null;
+                window.open('', '_self');
+                window.close();
+                return;
+
+            });
+        }
+        //$("#tj").attr("disabled", true);
+
+        //
+
+    }
+    else {
+        layer.alert(data.msg, { icon: 5 });
+    }
+
+}
+function sleep(d) {
+    for (var t = Date.now(); Date.now() - t <= d;);
+}
+
+function getResult1(data) {
+    layer.closeAll('loading');
+    if (data.state == "0")
+        layer.alert(data.msg, { icon: 5 });
+    else if (data.state == "1") {
+
+        if (data.msg == "保存成功") {
+            // layer.msg(data.msg, { time: 1000 });
+            // layer.alert(data.msg);
+            // alert(data.msg);
+
+            layer.alert('保存成功', { icon: 1 });
+        }
+        else {
+            // layer.msg(data.msg, {time: 1000});
+            // layer.alert(data.msg);
+            // alert(data.msg);
+            layer.alert(data.msg, { icon: 1 });
+        }
+        //$("#tj").attr("disabled", true);
+
+        //
+
+    }
+    else {
+        layer.alert(data.msg, { icon: 5 });
+    }
+
+}
+
+function getCellData(data) {
+    layer.closeAll('loading');
+    if (data.state == "0")
+        layer.alert(data.msg, { icon: 5 });
+    else if (data.state == "1") {
+        $("#input3").val(data.testingBasisId);
+        $("#input4").val(data.testingProjectId);
+        $("#input5").val(data.testingItemId);
+        $("#input6").val(data.othesDimId);
+        //if ($("#input4").val().trim()!="")
+        //$("#input4").attr("disabled", "disabled");
+
+
+    }
+    else {
+        layer.alert(data.msg, { icon: 5 });
+    }
+
+}
+
+function getMenu(data) {
+    layer.closeAll('loading');
+    $("#sidebar-nav").html(data);
+    jQuery.getScript("../../Common/JS/scripts.js")
+    //document.getElementById("sidebar-nav").innerHTML = data;
+    //$("#menu").html(data);
+
+    //layer.alert(data, { icon: 5 });
+
+
+}
+function getMenu2(data) {
+    layer.closeAll('loading');
+    $("#side-menu").append(data);
+    jQuery.getScript("../../Common/JS/hplus.min.js?v=4.0.0")
+    jQuery.getScript("../../Common/JS/contabs.min.js")
+}
+//filevalue有值情况下  初始页面左侧菜单
+function getMenu3_1(data) {
+    layer.closeAll('loading');
+    $("#my_menu").append(data);
+
+    $("div.link").click(function () {
+        $(this).parent().parent().find(".submenu").slideUp("slow"); //所有元素向上隐藏
+        $(this).parent().children(".submenu").slideToggle("slow"); // 找到当前元素进行展开
+        $(".link").removeClass("action"); //移除所有样式
+        $(this).addClass("action"); //当前添加样式
+        $(this).parent().parent().find("img").attr("src", "../../Common/Images/nav-left.png");
+        $(this).find("img").attr("src", "../../Common/Images/nav-bottom.png");
+        getFileName2(this);
+    });
+    $(".submenu>li>a").click(function () {
+        $(".submenu>li>a").removeClass("action");
+        $(this).addClass("action");
+        getFileName(this);
+    })
+}
+//初始页面左侧菜单默认点击第一行
+function getMenu3(data) {
+    layer.closeAll('loading');
+    $("#my_menu").append(data);
+
+    $("div.link").click(function () {
+        $(this).parent().parent().find(".submenu").slideUp("slow"); //所有元素向上隐藏
+        $(this).parent().children(".submenu").slideToggle("slow"); // 找到当前元素进行展开
+        $(".link").removeClass("action"); //移除所有样式
+        $(this).addClass("action"); //当前添加样式
+        $(this).parent().parent().find("img").attr("src", "../../Common/Images/nav-left.png");
+        $(this).find("img").attr("src", "../../Common/Images/nav-bottom.png");
+        getFileName2(this);
+    });
+    $(".submenu>li>a").click(function () {
+        $(".submenu>li>a").removeClass("action");
+        $(this).addClass("action");
+        getFileName(this);
+    })
+    $("div.link:eq(0)").click();
+}
+function getRptList(data) {
+    layer.closeAll('loading');
+    $('#table').bootstrapTable({
+        data: data
+    });
+}
+//刷新后调用
+function getRptList2(data) {
+    layer.closeAll('loading');
+    $('#table').bootstrapTable('load', data);
+}
+
+function getRptType(data) {
+    layer.closeAll('loading');
+    var rptType = $("#rptType");
+    var option_str = "";
+    for (var i = 0; i < data.length; i++) {
+        option_str += '<option value=\"' + data[i].itemCode + '\">' + data[i].itemName + '</option>';
+    }
+    rptType.append(option_str);
+
+}
+function gebusType(data) {
+    layer.closeAll('loading');
+    var rptType = $("#businessType");
+    var option_str = "";
+    for (var i = 0; i < data.length; i++) {
+        option_str += '<option value=\"' + data[i].itemCode + '\">' + data[i].itemName + '</option>';
+    }
+    rptType.append(option_str);
+
+}
+function getproductTypeAndBusinessType(data) {
+    layer.closeAll('loading');
+    var rptType = $("#rptType");
+    var businessType = $("#businessType");
+    var option_str = "";
+    try {
+
+        for (var i = 0; i < data.length; i++) {
+            if ($.trim(data[i].dictionaryCode) == 'productType')
+                rptType.append('<option value=\"' + data[i].itemCode + '\">' + data[i].itemName + '</option>');
+            else {
+                businessType.append('<option value=\"' + data[i].itemCode + '\">' + data[i].itemName + '</option>');
+            }
+
+        }
+
+    }
+    catch (e) {
+
+        layer.msg(e.message, { time: 2000 });
+    }
+
+
+
+}
+
+function getTestingObject(data) {
+    layer.closeAll('loading');
+    var testingObject = $("#testingObject");
+    var option_str = "";
+    for (var i = 0; i < data.length; i++) {
+        option_str += '<option value=\"' + data[i].testingObjectCode + '\">' + data[i].testingObjectName + '</option>';
+    }
+    testingObject.append(option_str);
+
+}
+
+function getTestingBasis(data) {
+
+    layer.closeAll('loading');
+
+
+    $('#table').bootstrapTable({
+
+        data: data
+
+
+    });
+}
+
+function getTestingBasisByKey(data) {
+
+    layer.closeAll('loading');
+
+    $('#table').bootstrapTable('load', data);
+
+}
+
+function getTestingItem(data) {
+
+    layer.closeAll('loading');
+
+    $('#treeview4').treeview({
+        //multiSelect:true,
+        color: "#428bca",
+        enableLinks: false,
+        data: data
+    });
+
+    // $('#treeview4').on('nodeSelected', function (event, node) {
+    //
+    // });
+    $("#search").on("click", function () {
+        var pattern = $('#key').val();
+        var options = {
+            ignoreCase: true,
+            exactMatch: false,
+            revealResults: true
+        };
+        var results = $('#treeview4').treeview('search', [pattern, options]);
+
+
+    });
+
+    $("#nodeselect").on("click", function () {
+
+        var results = $('#treeview4').treeview('getSelected');
+        if ($.trim(results) == "") {
+            layer.msg("请选择检测项目", { time: 2000 });
+
+        }
+        else {
+            var layerindex = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.$('#input4').val(results[0].href);
+            parent.layer.close(layerindex);
+        }
+
+
+    });
+
+
+}
+function getTestingItemBytestingObjectCode(data) {
+
+    layer.closeAll('loading');
+
+    $('#treeview4').treeview({
+
+        color: "#428bca",
+        enableLinks: false,
+        data: data
+    });
+
+    // $('#treeview4').on('nodeSelected', function (event, node) {
+    //
+    // });
+    $("#search").on("click", function () {
+        var pattern = $('#key').val();
+        var options = {
+            ignoreCase: true,
+            exactMatch: false,
+            revealResults: true
+        };
+        var results = $('#treeview4').treeview('search', [pattern, options]);
+
+
+    });
+
+    $("#nodeselect").on("click", function () {
+
+        var results = $('#treeview4').treeview('getSelected');
+        if ($.trim(results) == "") {
+            layer.msg("请选择检测项目", { time: 2000 });
+
+        }
+        else {
+            var layerindex = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.$('#input4').val(results[0].href);
+            parent.layer.close(layerindex);
+        }
+
+
+    });
+
+
+}
+
+
+function getTestingParameter(data) {
+    layer.closeAll('loading');
+    $('#treeview4').treeview({
+
+        color: "#428bca",
+        enableLinks: false,
+        data: data
+    });
+
+    $("#search").on("click", function () {
+        var pattern = $('#key').val();
+        var options = {
+            ignoreCase: true,
+            exactMatch: false,
+            revealResults: true
+        };
+        var results = $('#treeview4').treeview('search', [pattern, options]);
+
+
+    });
+
+    $("#bt1").on("click", function () {
+
+        var results = $('#treeview4').treeview('getSelected');
+        if ($.trim(results) == "") {
+            layer.msg("请选择检测项目参数", { time: 2000 });
+
+        }
+        else {
+            var layerindex = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.$('#input5').val(results[0].href);
+            parent.layer.close(layerindex);
+        }
+
+
+    });
+
+
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+//获取cookie
+function getCookie(c_name) {
+    if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+            c_start = c_start + c_name.length + 1
+            c_end = document.cookie.indexOf(";", c_start)
+            if (c_end == -1) c_end = document.cookie.length
+            return document.cookie.substring(c_start, c_end)
+        }
+    }
+    return ""
+}
+
+
+function getCookie1(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+    if (arr = document.cookie.match(reg))
+
+        return (arr[2]);
+    else
+        return null;
+}
+//清除cookie  
+function clearCookie(name) {
+    setCookie(name, "", -1);
+}
+function checkCookie() {
+    var user = getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+        user = prompt("Please enter your name:", "");
+        if (user != "" && user != null) {
+            setCookie("username", user, 365);
+        }
+    }
+}
+
+function RatingEditJs(data) {
+    layer.closeAll('loading');
+    if (data.state == "1") {
+        layer.confirm(data.msg + ' 是否跳转到列表页？', {
+            btn: ['跳转', '取消'] //按钮
+        }, function () {
+            window.location = "RatingList.aspx"
+        }, function () {
+
+        });
+    }
+    else
+        layer.alert(data.msg, { icon: 5 });
+}
+function CheckEditJs(data) {
+    layer.closeAll('loading');
+    if (data.state == "1") {
+        layer.alert(data.msg, { icon: 6 });
+    }
+    else
+        layer.alert(data.msg, { icon: 5 });
+}
+//测试方法（用来弹出返回的方法）
+function testJs(data) {
+    layer.closeAll('loading');
+    if (data.state == "1")
+        layer.alert(data.name, { icon: 6 });
+    else
+        layer.alert(data.msg, { icon: 6 });
+}
+
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]);
+    return null;
+}
+function GetQueryString2(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]);
+    return "";
+}
+
+//时间格式不需要时分秒：
+function FormatTime(val) {
+    if (val == "" || val == undefined || val == null) {
+        return "";
+    }
+    if (val.indexOf("Date") > 0) {
+        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //月份为0-11，所以+1，月份小于10时补个0
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        return date.getFullYear() + "-" + month + "-" + currentDate;
+    } else {
+        //判断是否含有星期几这种字眼
+        if (val.indexOf("星期") > 0) {
+            val = val.substr(0, val.indexOf("星期"));
+        }
+        var datetime = new Date(val);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+        return year + "-" + month + "-" + date;
+    }
+}
+
+
+//时间格式,需要时分秒：
+function FormatTime2(val) {
+    if (val == "" || val == undefined || val == null) {
+        return "";
+    }
+    if (val.indexOf("Date") > 0) {
+        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //月份为0-11，所以+1，月份小于10时补个0
+        var year = datetime.getFullYear();
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        var min = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        var s = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        return year + "-" + month + "-" + currentDate + " " + hour + ":" + min + ":" + s;
+    } else {
+        //判断是否含有星期几这种字眼
+        if (val.indexOf("星期") > 0) {
+            val = val.substr(0, val.indexOf("星期"));
+        }
+        val = val.replace('T', ' ');
+        var datetime = new Date(val);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        var currentDate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+        var hour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+        var min = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+        var s = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
+        return year + "-" + month + "-" + currentDate + " " + hour + ":" + min + ":" + s;
+    }
+}
+
+//时间格式,年月：
+function FormatTime3(val) {
+    if (val == "" || val == undefined || val == null) {
+        return "";
+    }
+    if (val.indexOf("Date") > 0) {
+        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //月份为0-11，所以+1，月份小于10时补个0
+        var year = datetime.getFullYear();
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        return year + "-" + month;
+    } else {
+        //判断是否含有星期几这种字眼
+        if (val.indexOf("星期") > 0) {
+            val = val.substr(0, val.indexOf("星期"));
+        }
+        val = val.replace('T', ' ');
+        var datetime = new Date(val);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        return year + "-" + month;
+    }
+}
+
+//生成业务单号
+//2017-08-18修改：为了尾号尽可能不同，把时间戳放到后面
+function bussinessNo(userId) {
+    //    userId = null;
+    var timestamp = (new Date()).valueOf().toString().substr(0, 10);
+    if (userId == null || userId == undefined || userId == "") {
+        return "123465789"
+    }
+    var num = userId.toString().length;
+    var str = num.toString() + userId.toString() + timestamp;
+    if (str.length < 17) {
+        str = str + produceRandom(17 - str.length);
+    }
+    return str;
+}
+function produceRandom(n) {
+    var num = "";
+    for (var i = 0; i < n; i++) {
+        num += Math.floor(Math.random() * 10);
+    }
+    return num;
+}
+
+//生成时间戳
+function itemNo() {
+    var timestamp = (new Date()).valueOf().toString().substr(0, 10);
+    return timestamp;
+}
+
+//判断是否含有特殊字符(用于开票)
+function ContainSpecialCharacter(StringContent) {
+    if (StringContent != null && StringContent != "" && StringContent != undefined) {
+        if (StringContent.indexOf("&") > 0 || StringContent.indexOf("|") > 0 || StringContent.indexOf("<") > 0 || StringContent.indexOf(">") > 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+
+//加密
+function compile(code) {
+    if (code == null || code == "" || code == undefined) {
+        return code;
+    }
+    var c = String.fromCharCode(code.charCodeAt(0) + code.length);
+    for (var i = 1; i < code.length; i++) {
+        c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1));
+    }
+    return escape(c);
+}
+
+//解密
+function uncompile(code) {
+    if (code == null || code == "" || code == undefined) {
+        return code;
+    }
+    code = unescape(code);
+    var c = String.fromCharCode(code.charCodeAt(0) - code.length);
+    for (var i = 1; i < code.length; i++) {
+        c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));
+    }
+    return c;
+}
+
+//前台加密,用于前台加密，后台解密
+function encode(str) {
+    // 对字符串进行编码
+    var encode = encodeURI(str);
+    var base64 = btoa(encode);
+    return base64;
+}
+//主加密函数  
+function encrypt(str) {
+    var encryptStr = "";
+    encryptStr += produceRandom(3);
+    if (str == null || str.length == 0)
+        return "";
+    var temp = encode16(encodeURI(str)).split("{");
+    var numLength = temp[0].length;
+    numLength = numLength.toString(16);
+    if (numLength.length == 1) {
+        numLength = "0" + numLength;
+    } else if (numLength.length > 2) {
+        return "";
+    }
+    encryptStr += numLength;
+
+    if (temp[1] == "0") {
+        encryptStr += 0;
+    } else if (temp[1] == "1") {
+        encryptStr += 1;
+    }
+
+    encryptStr += temp[0];
+
+    if (encryptStr.length < 20) {
+        var ran = produceRandom(20 - encryptStr.length);
+        encryptStr += ran;
+    }
+    return encryptStr;
+}
+/*解密为加密的逆过程 
+*/
+function decodeValue(value) {
+    if (value == "") {
+        return "";
+    }
+    if (value.length < 20) {
+        return value;
+    }
+    var charLength = value.substr(3, 2);
+    var charLen = parseInt(charLength, 16);
+    var type = parseInt(value.substr(5, 1));
+    var valueEnc = value.substr(6, charLen);
+    if (type == 0) {
+        var trueValue = parseInt(valueEnc, 16);
+        return trueValue;
+    } else {
+        var sb = "";
+        var valueEncArray = valueEnc.split("");
+        for (var i = 0; i < valueEncArray.length; i += 2) {
+            var value10 = parseInt(valueEncArray[i] + valueEncArray[i + 1], 16);
+            sb += String.fromCharCode(value10);
+        }
+        return sb.toString();
+    }
+}
+function encode16(str) {
+    str = str.toLowerCase();
+    if (str.match(/^[-+]?\d*$/) == null) {
+        var s = str.split("");
+        var temp = "";
+        for (var i = 0; i < s.length; i++) {
+            s[i] = s[i].charCodeAt();
+            s[i] = s[i].toString(16);
+            temp = temp + s[i];
+        }
+        return temp + "{" + 1;
+    } else {
+        str = parseInt(str).toString(16);
+    }
+    return str + "{" + 0;
+}
+
+//num 1 加密，2 解密
+function numDecode(str, num) {
+    var arr = ['l', 'e', 'f', 'v', '6', '2', '1', 'a', 'd', 'h'];
+    var value = "";
+    var b = String(str).split('');
+    if (num == 1) {
+        for (var i = 0; i < b.length; i++) {
+            value += arr[b[i]];
+        }
+    } else if (num == 2) {
+        for (var i = 0; i < b.length; i++) {
+            value += $.inArray(b[i], arr);
+        }
+    }
+    return value;
+}
+
+$(function () {
+    // 假设你的cookie名称为'theme'，值可以是'dark'或'light' 
+    var cookieValue = parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+    cookieValue = parent.parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+    cookieValue = parent.parent.parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+}) 
+
+function menuFunction(userId, menuId) {
+
+    //var data = ["btn_new", "btn_submit"];
+    var data = [];
+    for (var i = 0; i < data.length; i++) {
+        $("#" + data[i]).hide();
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/Index/Main.ashx",
+        dataType: "json",
+        data: { method: "GetMenuFunction", userId: userId, menuId: menuId },
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#" + data[i].operationCode).hide();
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请求数据错误", { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+function ajaxMenu(jsondata, handle, url, datatype) {
+
+    layer.load();
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请求数据错误", { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}

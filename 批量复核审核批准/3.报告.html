@@ -1,0 +1,696 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	标准报告生成
+</title><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-moban/common.css" /><link rel="stylesheet" type="text/css" href="../../Common/Css/bootstrap-table/table.css" /><link href="../CSS/basicInfo/table.css" rel="stylesheet" /><link href="../../Common/layui/css/layui.css" rel="stylesheet" />
+    <script type="text/javascript" src="../Admin_Template/js/jquery.js"></script>
+    <script type="text/javascript" src="../../Common/JS/bootstrap.js"></script>
+    <script src="../../Common/layui/layui.all.js"></script>
+    <script type="text/javascript" src="../../Common/JS/utf8-net/ueditor.config.js?v=1.0"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="../../Common/JS/utf8-net/ueditor.all.js"></script>
+    <script src="../../Common/JS/handle.js"></script>
+    <style type="text/css">
+        table.table tr td { line-height: 35px; }
+
+        div.primary { width: 90%; height: 80%; left: 0px; }
+
+        .layui-layer-tab div.layui-layer-content { overflow: auto; }
+
+        td { word-break: break-all; vertical-align: middle; }
+        .mnselect, .mnselect0 { clear: both; position: relative; width: 100%; height: 34px; font-size: 14px; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); cursor: pointer; }
+        .mnselect h5, .mnselect0 h5 { margin: 0; padding-right: 30px; padding-left: 10px; height: 34px; line-height: 34px; width: 100%; overflow: hidden; }
+        .mnselect:before, .mnselect0:before { position: absolute; top: 13px; right: 10px; border-style: solid; border-color: #333 transparent transparent transparent; border-width: 6px 3px; content: ""; }
+        .mnselect ul, .mnselect0 ul { display: none; position: absolute; top: 34px; left: 0; max-height: 300px; width: 100%; overflow-y: auto; background-color: #fff; background-image: none; border: 1px solid #ccc; z-index: 9999; border-radius: 4px; list-style: none; padding: 5px; }
+        .mnselect ul li, .mnselect0 ul li { padding: 0 0 5px; width: 100%; }
+        .mnselect ul li:hover, .mnselect0 ul li:hover { background: #337ab7; color: #fff; }
+        .checkbox-inline input[type=checkbox] { position: relative; top: 2px; }
+        #txt_standBy4 span { border-radius: 5px; border: 1px solid #ccc; padding: 5px 12px; margin-right: 5px; }
+        #txt_standBy4 span i { color: #ccc; position: relative; top: -7px; left: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <form method="post" action="./ExperimentResultThird.aspx?reportId=&amp;testingBasisId=44504&amp;sampleid=1503748&amp;testingItemId=91006&amp;sampleNo=HY18-250227-01&amp;taskId=1629027" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTg0MzA3NzI5NA8WAh4TVmFsaWRhdGVSZXF1ZXN0TW9kZQIBFgICAw9kFggCAw8WAh4FdmFsdWUFC0hZMTgtMjUwMjI3ZAIFDxAPFgYeDkRhdGFWYWx1ZUZpZWxkBQp0ZW1wbGF0ZUlkHg1EYXRhVGV4dEZpZWxkBQx0ZW1wbGF0ZU5hbWUeC18hRGF0YUJvdW5kZ2QQFQFI5qOA6aqM5YWs5Y+4Le+8iOivleWdl++8iemAgeagt+mAmueUqC3kuK3mlofmiqXlkYrmqKHmnb8gSkNCRyA4LTA2MS0yMDI0FQEFMjAzMjIUKwMBZ2RkAhEPEA8WCB8CBQhwYXJ0Q29kZR8DBQhwYXJ0TmFtZR8EZx4HRW5hYmxlZGhkEBUBEOacuuWcuue7hCDkuLvkvZMVAQRTMTJBFCsDAWcWAWZkAhIPEA8WAh8FaGQQFQEJ6IOh6LeD6L+bFQEEMzg3NBQrAwFnFgFmZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUHaXNOZXdOb3laKBQa9N3m/QmZ0nl6N2YtYpro6Ud64omqW/Z9V5Vr" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="795CB0FA" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdABMs29WRknU47fxIkWtzaQIVCeu/8kQesg3ECXvfayJZv3gVW8Up6XzIDoUZ5wRm0xknMGZUhS2ivAx3efW1jPO0CuynBus8o7p68qRQ/hyXi3BhbWZL12KPHJuMZG6A8g48G9q3wSYYvOPcY7nmC+43zmFWZIOZ71d++LbjA3oeGdFQjZBUR1dHdOu699/BFGL6eQwf49xh/HDM1zj7rmP8/CGdQXCY37kuoQZWf4p1skzpHRjTv1CV6TWga/Cp+7UhwgaAkde7j0ltAdiOGxJhToAP/kwstkSLikPW7/JOq1Djs2ul0OaEHFmIpBOOt/mADC+qeNYdtlehS7Ziae5tmsrTByt8PbjxIgnaIReI2o6mWXiNTibGThjbdXfv0hXJIM9PTyuL9wCEQrlhQhOk+EzGvk5G2j+lyv5KOqbr9+7xzOfW8ejgYUN0THA137g=" />
+</div>
+        <div style="width: 94%; margin-left: 2%;">
+            <h3 class="text-center">报告基本信息</h3>
+            <table class="table">
+                <tr>
+                    <td style="width: 130px;">
+                        <label for="exampleInputName2">报告编号：</label>
+                    </td>
+                    <td>
+                        <div id="divInsert" style="">
+                            <input name="txt_testingReportCode" type="text" id="txt_testingReportCode" disabled="disabled" class="col-xs-12 form-control" style="float: left; width: 80%;" />
+                            <input name="txt_isStarFlag" type="text" id="txt_isStarFlag" disabled="disabled" class="col-xs-12 form-control" style="float: left; width: 20%;" />
+                        </div>
+                        
+                    </td>
+                    <td style="width: 130px;">
+                        <label for="exampleInputName2">委托单号：</label>
+                    </td>
+                    <td>
+                        <input name="txt_testingOrderNo" type="text" id="txt_testingOrderNo" class="col-xs-12 form-control" disabled="disabled" value="HY18-250227" />
+                        <input name="hid_testingOrderId" type="hidden" id="hid_testingOrderId" value="1005035" />
+                    </td>
+                    <td style="width: 130px;">
+                        <label for="exampleInputName7">选择模版：</label>
+                    </td>
+                    <td>
+                        <select name="ddl_template" id="ddl_template" class="col-xs-12 form-control" onchange="ShowThirdData()">
+	<option value="20322">检验公司-（试块）送样通用-中文报告模板 JCBG 8-061-2024</option>
+
+</select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 130px;">
+                        <label for="exampleInputName7">实验开始时间：</label>
+                    </td>
+                    <td>
+                        <input name="hid_testingReportId" type="hidden" id="hid_testingReportId" value="0" />
+                        <input name="txt_testStartDate" type="text" id="txt_testStartDate" class="col-xs-12 form-control" data-date-format="yyyy-mm-dd" autocomplete="off" />
+                    </td>
+                    <td>
+                        <label for="exampleInputName2">实验结束日期：</label>
+                    </td>
+                    <td>
+                        <input name="txt_testEndDate" type="text" id="txt_testEndDate" class="col-xs-12 form-control" data-date-format="yyyy-mm-dd" onblur="showValue(this)" autocomplete="off" />
+                    </td>
+                    <td>
+                        <label for="exampleInputName2">报告结论性质：</label>
+                    </td>
+                    <td>
+                        <select name="ddl_reportResultProperty" id="ddl_reportResultProperty" class="col-xs-12 form-control">
+	<option value="合格">合格</option>
+	<option value="不合格">不合格</option>
+	<option value="--">--</option>
+</select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">检测地点：</label>
+                    </td>
+                    <td colspan="5">
+                        <p id="txt_standBy4"><span value='0'>上海市河滨北路370号</span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">印章选择：</label></td>
+                    <td colspan="5" id="ReportSeal"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">判定依据：</label>
+                        <input name="hid_determineIds" type="hidden" id="hid_determineIds" />
+                    </td>
+                    <td colspan="5" id="ProductStandards"></td>
+                </tr>
+                
+                <tr name="onerow" style="display: none;">
+                    <td>
+                        <label for="exampleInputName2">实物质量判定：</label>
+                    </td>
+                    <td colspan="5">
+                        <textarea name="txt_standBy1" id="txt_standBy1" class="col-xs-12 form-control" style="height: 50px;"></textarea>
+                    </td>
+                </tr>
+                <tr name="onerow" style="display: none;">
+                    <td>
+                        <label for="exampleInputName2">标识判定：</label>
+                    </td>
+                    <td colspan="5">
+                        <textarea name="txt_standBy2" id="txt_standBy2" class="col-xs-12 form-control" style="height: 80px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">检验结论：</label>
+                    </td>
+                    <td colspan="5" style="line-height: initial;">
+                        <textarea name="txt_testingResult" id="txt_testingResult" class="col-xs-12" style="height: 100px; padding: 0px;" maxlength="250"></textarea>
+                        
+                        <!-- 实例化编辑器 -->
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('txt_testingResult', {
+                                maximumWords: 500,
+                                autoHeightEnabled: true,
+                                pasteplain: true,//是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+                                wordOverFlowMsg: '<span style="color:red;">字符超出最大允许值，无法保存！</span>',
+                                initialFrameWidth: "100%",
+                                //initialFrameHeight: "140px",
+                                enableAutoSave: false,//启用自动保存
+                                elementPathEnabled: false  //是否启用元素路径
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">备 注：</label>
+                    </td>
+                    <td colspan="5" style="line-height: initial;">
+                        <textarea name="txt_remark" id="txt_remark" class="col-xs-12" style="height: 100px; padding: 0px;" maxlength="250"></textarea>
+                        
+                        
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('txt_remark', {
+                                maximumWords: 1000,
+                                autoHeightEnabled: true,
+                                pasteplain: true,//是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+                                wordOverFlowMsg: '<span style="color:red;">字符超出最大允许值，无法保存！</span>',
+                                initialFrameWidth: "100%",
+                                //initialFrameHeight: "140px",
+                                enableAutoSave: false,//启用自动保存
+                                elementPathEnabled: false   //是否启用元素路径
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">说 明：</label>
+                    </td>
+                    <td colspan="5" style="line-height: initial;">
+                        <textarea name="txt_standBy5" id="txt_standBy5" class="col-xs-12" style="height: 100px; padding: 0px;"></textarea>
+                        
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('txt_standBy5', {
+                                maximumWords: 3000,
+                                autoHeightEnabled: true,
+                                pasteplain: true,//是否默认为纯文本粘贴。false为不使用纯文本粘贴，true为使用纯文本粘贴
+                                wordOverFlowMsg: '<span style="color:red;">字符超出最大允许值，无法保存！</span>',
+                                initialFrameWidth: "100%",
+                                //initialFrameHeight: "140px",
+                                enableAutoSave: false,   //启用自动保存
+                                elementPathEnabled: false  //是否启用元素路径
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="exampleInputName2">检验部门</label>
+                    </td>
+                    <td>
+                        <select name="ddl_dep" id="ddl_dep" disabled="disabled" class="aspNetDisabled col-xs-12 form-control" onchange="setDDLUserName()" style="width: 100%; padding: 6px 12px!important;">
+	<option selected="selected" value="S12A">机场组 主体</option>
+
+</select>
+                    </td>
+                    <td>
+                        <label for="exampleInputName2">编制人</label>
+                    </td>
+                    <td>
+                        <select name="ddl_username" id="ddl_username" disabled="disabled" class="aspNetDisabled col-xs-12 form-control" style="width: 100%; padding: 6px 12px!important;">
+	<option selected="selected" value="3874">胡跃进</option>
+
+</select>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr id="hiddeTr" style="display:none;">
+                    <td>
+                        <label for="exampleInputName2">超期说明：</label>
+                        <p style="color:red;">提交日期-试验结束>=10自然日</p>
+                    </td>
+                    <td colspan="5">
+                        <textarea name="overdueDescription" id="overdueDescription" class="col-xs-12 form-control" style="height: 50px;" maxlength="200"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <p class="text-center">
+                <input id="btn_return" type="button" class="btn btn-primary" onclick="history.back(-1)" value="上一步" />
+                <input id="btn_generate" type="button" class="btn btn-primary" onclick="Save()" value="提交报告并增加附件" />
+                
+            </p>
+
+            <br />
+            <br />
+            <br />
+        </div>
+        <script type="text/javascript">
+
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+                //常规用法
+                laydate.render({
+                    elem: '#txt_testEndDate'
+                });
+                laydate.render({
+                    elem: '#txt_testStartDate',
+                    min:'2025-03-20'
+                });
+            });
+            function GetQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURI(r[2]);
+                return "";
+            }
+            $(function () {
+                var h = "";
+                $("#isNewNo").click(function () {
+                    if ($(this).prop("checked")) {
+                        h = $("#divUpdate").html();
+                        $("#divUpdate").html("<input type =\"text\" id=\"txt_testingReportCode\" disabled=\"disabled\" class=\"col-xs-12 form-control\"/>");
+                    } else {
+                        $("#divUpdate").html(h);
+                        h = "";
+                    }
+                })
+                $(".mnselect h5").click(function () {
+                    $(".mnselect ul").hide();
+                    $(this).next("ul").toggle();
+                });
+                $(".mnselect0 h5").click(function () {
+                    $(".mnselect0 ul").hide();
+                    $(this).next("ul").toggle();
+                });
+                $(".mnselect ul li").click(function () {
+                    var text = $(this).html();
+                    $(this).parents(".mnselect ul").hide();
+                    $(this).parents(".mnselect").children("h5").html(text);
+                    var id = $(this).parents("td").find("textarea").attr("name");
+                    var value = UE.getEditor(id).getContent();
+                    UE.getEditor(id).setContent(value + text);
+                });
+                //2020-08-10   地点变为自动匹配，不需要人为选择
+                //$(".mnselect0 ul li").click(function () { //检测地点的点击
+                //    var text = $(this).text();
+                //    var value = $(this).attr("value");
+                //    var span_html = "<span value='" + value + "'>" + text + "<i>×</i></span>";
+                //    var num = 0;
+                //    $("#txt_standBy4 span").each(function () {
+                //        var value1 = $(this).attr("value");
+                //        if (value < value1 && num == 0) {
+                //            $(this).before(span_html);
+                //            num++;
+                //        } else if (value == value1) {
+                //            num++;
+                //        }
+                //    })
+                //    if (num == 0) {
+                //        $("#txt_standBy4").append(span_html);
+                //    }
+                //    $(".mnselect0 ul").hide();
+                //});
+
+                //2020-08-10   地点变为自动匹配，不需要删除
+                //$(document).on('click', '#txt_standBy4 span i', function () {  //检测地点删除   
+                //    $(this).parent().remove();
+                //})
+                $("body").click(function () {
+                    $(".mnselect ul").hide();
+                    $(".mnselect0 ul").hide();
+                });
+                $(".mnselect,.mnselect0").click(function (e) {
+                    e.stopPropagation();
+                });
+                GetReportSealList();
+                GetProductStandardList();
+                ShowThirdData();
+            })
+            function jielun(obj) {
+                var value = UE.getEditor('txt_testingResult').getContent();
+                UE.getEditor('txt_testingResult').setContent(value + $(obj).val());
+            }
+            function beizhu(obj) {
+                var value = UE.getEditor('txt_remark').getContent();
+                UE.getEditor('txt_remark').setContent(value + $(obj).val());
+            }
+            function shuoming(obj) {
+                var value = UE.getEditor('txt_standBy5').getContent();
+                UE.getEditor('txt_standBy5').setContent(value + $(obj).val());
+            }
+            function ShowThirdData() {
+                var value = $("#ddl_template").val();
+                json_data = {
+                    method: "getReportTemplateInfo", templateId: value
+                };
+                try {
+                    ajax(json_data, function (data) {
+                        layer.closeAll("loading");
+                        if (data.length > 0 && data[0].templateFormate == "1") {
+                            $("tr[name='onerow']").show();
+                        } else {
+                            $("tr[name='onerow']").hide();
+                        }
+                    }, "ReportDesign/report.ashx", "json");
+                }
+                catch (e) {
+                    layer.msg(e.message, { time: 2000 });
+                }
+            }
+            function Save() {
+                if (!showValue("#txt_testEndDate"))
+                    return;
+                //if (!showValue2("#txt_reportDate"))
+                //    return;
+                if (!showValue3())
+                    return;
+                var userId = $("#ddl_username").val();
+                var userName = $("#ddl_username option:selected").text();
+                var testStartDate = $("#txt_testStartDate").val();      //实验开始时间
+                var testEndDate = $("#txt_testEndDate").val();      //实验结束日期
+                var overdueDescription = $("#overdueDescription").val().trim();
+                var isStarFlag = "";
+                if ($("#txt_isStarFlag").val() != "" && $("#txt_isStarFlag").val() != undefined) {
+                    isStarFlag = $("#txt_isStarFlag").val();
+                }
+                if (isStarFlag == "") {
+                    var today = getDateTime('today');      //当前日期 
+                    var days = getDays(testEndDate, today);
+                    if (days > 10) {
+                        $("#hiddeTr").show();
+                        if (overdueDescription == "") {
+                            layer.alert("提交日期-试验结束>=10自然日<br/>请输入超期说明！");
+                            $("#overdueDescription").focus();
+                            return;
+                        }
+                        else {
+                            overdueDescription = "超期说明：" + overdueDescription;
+                        }
+                    }
+                    else {
+                        $("#hiddeTr").hide();
+                        overdueDescription = "";
+                    }
+                }
+                var reportResultProperty = $("#ddl_reportResultProperty").val();      //报告结论性质
+                var standBy1 = $("#txt_standBy1").val();      //实物质量判定
+                var standBy2 = $("#txt_standBy2").val();      //标识判定
+                var standBy3 = $("#ddl_template").val();      //模版ID
+                var standBy4 = "";      //检测地点
+                $("#txt_standBy4 span").each(function () {
+                    //standBy4 += $(this).text().replace("×", "") + "、";
+                    standBy4 += $(this).text() + "、";
+                });
+                var testingResult = UE.getEditor('txt_testingResult').getContent();    //检验结论
+                var remark = UE.getEditor('txt_remark').getContent();    //备 注
+                var testingReportId = $("#hid_testingReportId").val();      //主键ID
+                var standBy5 = UE.getEditor('txt_standBy5').getContent();    //说明
+                if (standBy3 == "" || standBy3 == undefined) {
+                    layer.alert("模版为空，报告无法生成！");
+                    return;
+                }
+                if (standBy4 == "" || standBy4 == "、") {
+                    layer.alert("检测地点必须填写！");
+                    return;
+                } else {
+                    standBy4 = standBy4.substr(0, standBy4.length - 1);
+                }
+                var testingReportCode = "";
+                var ShowEn = "0";
+                if (ShowEn == "1") {
+                    testingReportCode = $("#a").val() + $("#b").val();
+                }
+                var determineIds = "";
+                $("#ProductStandards input[type='checkbox']:checked").each(function () {
+                    determineIds += $(this).val() + ",";
+                })
+                if (determineIds.length > 0)
+                    determineIds = determineIds.substr(0, determineIds.length - 1);
+                testingReportCode = $("#txt_testingReportCode").val();      //检测报告编号
+                var methodIds = $("#txt_MethodStandards").val();
+                var sampleid = GetQueryString("sampleid");
+                var testingBasisIds = GetQueryString("testingBasisId");
+                var testingItemIds = GetQueryString("testingItemId");
+                var taskId = GetQueryString("taskId");
+                var testingOrderNo = $("#txt_testingOrderNo").val();
+                var testingOrderId = $("#hid_testingOrderId").val();
+                $("#btn_generate").attr("disabled", "disabled");    //禁用提交按钮，避免多次点击
+                json_data = {
+                    method: "Edit", testStartDate: testStartDate, testEndDate: testEndDate, methodIds: methodIds,
+                    reportResultProperty: reportResultProperty, testingResult: testingResult, taskId: taskId, determineIds: determineIds,
+                    remark: remark, userId: userId, userName: userName, testingBasisIds: testingBasisIds, testingItemIds: testingItemIds,
+                    standBy1: standBy1, standBy2: standBy2, standBy3: standBy3, standBy4: standBy4, standBy5: standBy5,
+                    testingReportId: testingReportId, sampleid: sampleid, testingReportCode: testingReportCode,
+                    testingOrderNo: testingOrderNo, testingOrderId: testingOrderId, overdueDescription: overdueDescription
+                };
+                ajax(json_data, EditJsnew, "ReportDesign/report.ashx", "json");
+            }
+            var zhuti;
+            //部门的级联
+            function setDDLUserName() {
+                var deptCode = $("#ddl_dep").val();
+                json_data = {
+                    method: "setDDLUserName", deptCode: deptCode
+                };
+                handle = getDeptInfo;
+                try {
+                    ajax(json_data, handle, "ReportDesign/report.ashx", "json");
+                }
+                catch (e) {
+                    layer.msg(e.message, { time: 2000 });
+                }
+            }
+            function getDeptInfo(data) {
+                layer.closeAll('loading');
+                $("#ddl_username option").remove();
+                var deptType = $("#ddl_username");
+                var option_str = "";
+                for (var i = 0; i < data.length; i++) {
+                    option_str += '<option value=\"' + data[i].Id + '\">' + data[i].Name + '</option>';
+                }
+                deptType.append(option_str);
+                if (zhuti != '') {
+                    deptType.val(zhuti);
+                }
+                $("#ddl_username option:first").prop("selected", "selected");
+            }
+
+            function EditJsnew(data) {
+                layer.closeAll('loading');
+                if (data.state == "1") {
+                    $("#txt_testingReportCode").val(data.code);
+                    $("#hid_testingReportId").val(data.id);
+                    SaveSeal();
+                }
+                else {
+                    $("#btn_generate").removeAttr("disabled");    //解禁
+                    layer.msg(data.msg);
+                }
+            }
+            function SaveSeal() {
+                var list_model = [];
+                var testingReportId = $("#hid_testingReportId").val();
+                $("#ReportSeal input[type='checkbox']:checked").each(function () {
+                    var sealUrl = $(this).data("url");
+                    var sealId = $(this).val();
+                    var sealName = $(this).data("name");
+                    var model = {};
+                    model.sealId = sealId;
+                    model.sealUrl = sealUrl;
+                    model.sealName = sealName;
+                    model.testingReportId = testingReportId;
+                    list_model.push(model);
+                })
+                list_model = JSON.stringify(list_model);
+                var json_data = {
+                    method: "saveReportSeal",
+                    testingReportId: testingReportId,
+                    list_model: list_model
+                }
+                ajax(json_data, saveHandle, "../../AjaxRequest/Experiment/printConfigure.ashx", "json");
+            }
+            function saveHandle(data) {
+                layer.closeAll('loading');
+                if (data.state == "1") {
+                    layer.msg(data.msg, { icon: 1 });
+                }
+                else {
+                    $("#btn_generate").removeAttr("disabled");    //解禁
+                    layer.msg(data.msg, { icon: 5 });
+                }
+                var sampleNo = GetQueryString("sampleNo");
+                var sampleid = GetQueryString("sampleid");
+                var testingBasisCode = GetQueryString("testingBasisCode");
+                var testingItemCode = GetQueryString("testingItemCode");
+                var testingBasisIds = GetQueryString("testingBasisId");
+                var testingItemIds = GetQueryString("testingItemId");
+                var testingReportCode = $("#txt_testingReportCode").val();
+                var reportId = $("#hid_testingReportId").val();
+
+                setTimeout(function () {
+                    window.location.href = "Reportattachment.html?reportId=" + reportId + "&testingBasisId=" + testingBasisIds + "&sampleid=" + sampleid + "&testingItemId=" + testingItemIds + "&testingReportCode=" + testingReportCode + "&sampleNo=" + sampleNo;
+                }, 1500)
+            }
+            function showValue(obj) {
+                var start = $("#txt_testStartDate").val();
+                if (start == "") {
+                    layer.msg("请填写开始日期");
+                    $(obj).val("");
+                    $("#txt_testStartDate").focus();
+                    return false;
+                }
+                if ($(obj).value != "") {
+                    var end = $(obj).val();
+                    var x = getDays(start, end);
+                    if (new Date(end.replace(/\-/g, '\/')) < new Date(start.replace(/\-/g, '\/'))) {
+                        layer.msg("结束日期必须大于等于开始日期");
+                        $(obj).val("");
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function showValue2(obj) {
+                var start = $("#txt_testEndDate").val();
+                if (start == "") {
+                    layer.msg("请填写结束日期");
+                    $(obj).val("");
+                    $("#txt_testEndDate").focus();
+                    return false;
+                }
+                if ($(obj).value != "") {
+                    var end = $(obj).val();
+                    var x = getDays(start, end);
+                    if (new Date(end.replace(/\-/g, '\/')) < new Date(start.replace(/\-/g, '\/'))) {
+                        layer.msg("报告日期必须大于等于实验结束日期");
+                        $(obj).val("");
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function showValue3() {
+                var start = $("#txt_testEndDate").val();
+                if (start == "") {
+                    layer.msg("请填写结束日期");
+                    $("#txt_testEndDate").focus();
+                    return false;
+                }
+                var date = new Date();
+                var seperator1 = "-";
+                var seperator2 = ":";
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var end = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+                if (start != "") {
+                    if (new Date(end) < new Date(start.replace(/\-/g, '\/'))) {
+                        layer.msg("结束日期必须小于等于当前日期");
+                        $("#txt_testEndDate").val("");
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function getDays(strDateStart, strDateEnd) {
+                var strSeparator = "-"; //日期分隔符
+                var oDate1;
+                var oDate2;
+                var iDays;
+                oDate1 = strDateStart.split(strSeparator);
+                oDate2 = strDateEnd.split(strSeparator);
+                var strDateS = new Date(oDate1[0], oDate1[1] - 1, oDate1[2]);
+                var strDateE = new Date(oDate2[0], oDate2[1] - 1, oDate2[2]);
+                iDays = parseInt(Math.abs(strDateS - strDateE) / 1000 / 60 / 60 / 24)//把相差的毫秒数转换为天数 
+                return iDays + 1;
+            }
+            function getDateTime(type) {
+                var date = new Date();
+                if (type == "today") {
+                    var Y = date.getFullYear();
+                    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+                    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+                    return Y + "-" + M + "-" + D;
+                }
+            }
+            function GetReportSealList() {
+                var testingBasisIds = GetQueryString("testingBasisId");
+                var testingItemIds = GetQueryString("testingItemId");
+                var testingOrderId = $("#hid_testingOrderId").val();
+                var testingReportId = $("#hid_testingReportId").val();      //主键ID
+                var json_data = {
+                    method: "GetReportSeal",
+                    testingOrderId: testingOrderId,
+                    testingItemId: testingItemIds,
+                    testingBasisId: testingBasisIds,
+                    testingReportId: testingReportId
+                };
+                var handle = GetReportSealHandle;
+                ajax(json_data, handle, "../../AjaxRequest/Experiment/printConfigure.ashx", "json");
+            }
+            function GetReportSealHandle(da) {
+                layer.closeAll('loading');
+                var data = da.data1;
+                var html = "";
+                if (data != null && data.length > 0) {
+                    html += "<table style='width:100%;' border='1'>";
+                    html += "<tr>";
+                    html += "<td style='text-align:center;'>";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<label class="checkbox-inline">';
+                        html += '<input type="checkbox" name="inlineCheckbox" checked="checked" value="' + data[i].sealId + '" data-url="' + data[i].sealUrl + '" data-name="' + data[i].sealName + '">' + data[i].sealName;
+                        html += '</label>';
+                    }
+                    html += "</td></tr></table>";
+                    $("#ReportSeal").html(html);
+                }
+                var data1 = da.data2;
+            }
+
+            function GetProductStandardList() {
+                var testingItemIds = GetQueryString("testingItemId");
+                var json_data = {
+                    method: "GetProductStandards",
+                    testingItemId: testingItemIds
+                };
+                var handle = GetProductStandardsHandle;
+                ajax(json_data, handle, "../../AjaxRequest/ReportDesign/report.ashx", "json");
+            }
+            function GetProductStandardsHandle(data) {
+                layer.closeAll('loading');
+                var html = "";
+                if (data != null && data.length > 0) {
+                    html += "<table style='width:100%;' border='1'>";
+                    html += "<tr>";
+                    html += "<td style='text-align:center;'>";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<label class="checkbox-inline">';
+                        html += '<input type="checkbox" name="inlineCheckbox2" checked="checked" value="' + data[i].testingbasisId + '"">' + data[i].testingbasisCode + data[i].testingbasisChiName + '</label>';
+                    }
+                    html += "</td></tr></table>";
+                    $("#ProductStandards").html(html);
+                    var testingReportId = $("#hid_testingReportId").val();      //主键ID
+                    if (Number(testingReportId) > 0) {   //如果为修改，则需要初始化
+                        var value = $("#hid_determineIds").val();
+                        var arr = new Array();
+                        arr = value.split(',');
+                        $("#ProductStandards input[type='checkbox']").prop("checked", false);
+                        for (var i = 0; i < arr.length; i++) {
+                            var id = arr[i];
+                            $("#ProductStandards input[type='checkbox']").each(function () {
+                                if ($(this).val() == id)
+                                    $(this).prop("checked", true);
+                            })
+                        }
+                    }
+                }
+            }
+
+        </script>
+    </form>
+</body>
+</html>

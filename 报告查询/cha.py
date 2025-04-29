@@ -86,7 +86,7 @@ try:
             print(f"找到 {len(result)} 条记录")
             for i, item in enumerate(result):
                 print(f"\n记录 {i+1}:")
-                
+                """
                 # 展示所有可用字段
                 for key, value in item.items():
                     print(f"{key}: {value}")
@@ -112,7 +112,7 @@ try:
                 for key in 报告字段:
                     if key in item:
                         print(f"{key}: {item[key]}")
-                """
+                
         else:
             print(json.dumps(result, indent=2, ensure_ascii=False))
     except json.JSONDecodeError:

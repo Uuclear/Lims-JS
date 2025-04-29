@@ -1,0 +1,159 @@
+﻿function ajax(jsondata, handle, url, datatype) {
+
+    layer.load();
+    $.ajax({
+        type: "POST",
+        url: "../../AjaxRequest/" + url,
+        dataType: datatype,
+        data: jsondata,
+        success: handle,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //session过期，强制跳转
+            if (XMLHttpRequest.responseText.indexOf('<!--isBack-->') > -1) {
+                window.parent.location.href = "http://" + window.location.host;
+                return;
+            }
+            try {
+                layer.closeAll('loading');
+                layer.alert("请求数据错误", { icon: 5 });
+            }
+            catch (e) {
+                layer.closeAll('loading');
+                layer.alert(e.message, { icon: 5 });
+            }
+
+        }
+    });
+}
+
+function timeStamp2String(val) {
+    if (val == "" || val == undefined || val == null) {
+        return "";
+    }
+    if (val.indexOf("Date") > 0) {
+        var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+        //月份为0-11，所以+1，月份小于10时补个0
+        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        return date.getFullYear() + "-" + month + "-" + currentDate;
+    } else {
+        //判断是否含有星期几这种字眼
+        if (val.indexOf("星期") > 0) {
+            val = val.substr(0, val.indexOf("星期"));
+        }
+        var datetime = new Date(val);
+        var year = datetime.getFullYear();
+        var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+        var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+        return year + "-" + month + "-" + date;
+    }
+}
+
+function getUpdate(data) {
+    layer.closeAll('loading');
+    if (data.state == "1") {
+        layer.msg(data.msg)
+    }
+    else
+        layer.msg(data.msg)
+}
+
+function getTable(data) {
+    layer.closeAll('loading');
+    //$('#table').bootstrapTable('load', data);
+    $('#table').bootstrapTable({
+        data: data
+    });
+}
+
+
+function getTableByKey(data) {
+    layer.closeAll('loading');
+
+    $('#table').bootstrapTable('load', data);
+
+}
+
+
+function getDeptType(data) {
+    layer.closeAll('loading');
+    var deptType = $("#deptType");
+    var option_str = "";
+    for (var i = 0; i < data.length; i++) {
+        option_str += '<option value=\"' + data[i].Code + '\">' + data[i].Name + '</option>';
+    }
+    deptType.append(option_str);
+}
+function getSharesById(data) {
+    layer.closeAll('loading');
+    $("#shareName").val(data[0].shareName);
+    $("#remark").val(data[0].remark);
+}
+
+
+function getDocById(data) {
+    layer.closeAll('loading');
+   
+    //$("#deptType").val(data[0].deptId);
+    $("#title").val(data[0].title);
+    $("#docCode").val(data[0].docCode);
+    $("#createTime").val(data[0].releaseTime);
+    $("#group").val(data[0].groupName);
+    $("#remark").val(data[0].remark);
+    setSelectChecked("deptType", data[0].deptName);
+}
+function setSelectChecked(selectId, text) {
+    var select = document.getElementById(selectId);
+    for (var i = 0; i < select.options.length; i++) {
+        if (select.options[i].innerHTML == text) {
+            select.options[i].selected = true;
+            break;
+        }
+    }
+};
+
+function getMaxId(data) {
+    layer.closeAll('loading');
+    $("#SealId").val(data+1);
+}
+function getMaxdocId(data) {
+    layer.closeAll('loading');
+
+    $("#docId").val(data + 1);
+}
+
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return decodeURI(r[2]);
+    return null;
+}
+
+
+$(function () {
+    // 假设你的cookie名称为'theme'，值可以是'dark'或'light' 
+    var cookieValue = parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+    cookieValue = parent.parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+    cookieValue = parent.parent.parent.$("#hid_userid").val();
+    if (cookieValue == 3406) {
+        var cssLink = document.createElement('link');
+        cssLink.href = '/Common/Css/mohu.css';
+        cssLink.rel = 'stylesheet';
+        document.head.appendChild(cssLink);
+    }
+}) 
+
+
+
